@@ -21,6 +21,7 @@ tier 2:
 - data interpretation
 - datalogging
 - Heart rate range warning
+- Battery level indicator
 
 tier 3:
 - Stopwatch
