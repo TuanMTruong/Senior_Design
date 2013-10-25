@@ -46,3 +46,19 @@ Bronson - wireless communication
 	- reliability
 	- good documentations and sources
 
+Tuan - Power block
+	- Types of battery
+		-li-ons
+		-NiMH
+	- Compare
+		- capacities
+		- charge rate
+		- reliability
+		- cost
+		- size
+		- charging style
+			- complicated charge-time graph vs straight DC charging
+	- Battery manager
+		- TI vs other
+		- talk to brandi and see which chip did she use
+		- 		
