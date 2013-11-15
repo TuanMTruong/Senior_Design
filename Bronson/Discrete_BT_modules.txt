@@ -1,0 +1,29 @@
+This is a list of the discrete bluetooth LE modules that I found in my research
+
+Module: CB-OLS424
+
+	Price: $38.40
+	Dimensions: 16x36 mm
+	Serial Interface: UART
+	Manufacturer Part #: CB-OLS426X-04-0
+	Manufacturer: ConnectBlue 
+
+Module: PAN1720
+
+	Price: $14.36
+	Dimensions: 14.5 mm x 8.2 mm x 3 mm
+	Serial Interface: I2C
+	Manufacturer Part #: ENW-89835A1KF
+	Manufacturer: Panasonic 
+
+Module: WS Bluetooth SMART Module
+	
+	Price: unkown, waiting on quote
+	Dimensions: 10.4 x 7.7 x 1.8 mm 
+	Serial Interface: UART
+	Manufacturer Part #: LBCA2ZXWSE-TEMP 
+	Manufacturer: Murata 
+
+
+After looking through the different modules, the Panasonic module seems like the best option. The Murata module would be ideal but it seems unlikely that Murata is going to offer it as a single purchase or sample.
+
