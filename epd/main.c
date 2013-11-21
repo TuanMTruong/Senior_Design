@@ -29,10 +29,16 @@
  * of drawing an image.
  */
 
+//Clock speed
+#define F_CPU 16000000UL
 
 //includes
 #include<avrio.h> 
 #include<util/delay.h>
+
+
+//global variables
+
 
 //macros
 #define CS_PIN		0
@@ -65,13 +71,40 @@ void setup_ddr(){
 //mode 0
 void setup_spi(){
 	//master, LSB first, enable
-	//clk speed = 
+	//clk speed = 16MHz / 2 = 8MHz 
+	SPCR = (1<<MSTR) | (1<<SPIE) | (1<<DORD);
+	//double spi clock speed
+	SPSR = (1<<SP2X);
+
+	return;
 }
 
 
+//100-300KHz 50% duty cycle PWM
+void setup_pwm(){
 
+	return;
+}
+
+//Adventure is upon us...
 int main(){
+	//initialize
+	setup_ddr();
+	setup_spi();
+	setup_pwm();
 
+	//variables
+	
+
+	while(1){
+
+
+
+
+
+
+	}
+	
 	return 0;
 }
 
