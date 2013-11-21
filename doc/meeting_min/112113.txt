@@ -1,0 +1,50 @@
+
+-----------------------------11/19/13 MEETING-----------------------------
+
+Tuan (By Monday)
+-Contact Ryan for reference design. 
+-Make power management block diagram
+
+Bronson (By Monday)
+-Figure out how to test bluetooth module. 
+-Make bluetooth block diagram (antenna, BT module). Be sure to match the existing block diagram. 
+
+Garrett (By Monday)
+-Look into which block I can do by the end of the term
+-Create sensor block diagram. Be sure to match the existing block diagram.
+
+
+
+-----------------------------SCRUM MEETING-----------------------------
+
+
+***   INDIVIDUAL   ***
+
+Janhavi
+-keep in mind that 50% of the work has to be done by the group
+-keep task list populated
+-each member needs to have task weights with a minimum sum of 9 per week
+
+Garrett
+-take the display block for the end of the term instead of the sensor block 
+-will continue to work on the sensor block
+
+Bronson
+-in charge of the Wireless Comm block
+
+Tuan
+-in charge of the power management block
+
+
+***   GENERAL   ***
+
+1. Testing Wireless Comm:
+	-Need to use a breakout board for CC2540
+	-write simple code to test the output from the microcontroller
+
+2. github is set up and being used. repository working correctly
+
+3. Need to build the blocks and sub-blocks
+
+4. 1 block per person needs to be fully built and able to be tested. all other blocks need to be defined.
+
