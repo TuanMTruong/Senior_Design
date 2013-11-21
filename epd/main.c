@@ -61,8 +61,11 @@ void setup_ddr(){
 }
 
 
+//SPI in master mode, max clk speed = 12MHz, min clk speed = 4MHz
+//mode 0
 void setup_spi(){
-
+	//master, LSB first, enable
+	//clk speed = 
 }
 
 
