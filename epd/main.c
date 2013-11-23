@@ -34,12 +34,13 @@
 #define F_CPU 16000000UL
 
 //includes
-#include<avrio.h> 
+#include<avr/io.h>
 #include<util/delay.h>
 
 
 //global variables
-
+enum states {CREATE_IMG, WRITE_MEM, COG_ON,COG_INIT, WRITE_EPD, CHECK_EPD, COG_OFF};
+enum states state = CREATE_IMG;
 
 //hardware macros
 #define CS_PIN		0
@@ -78,11 +79,11 @@ void setup_ddr(){
 //SPI in master mode, max clk speed = 12MHz, min clk speed = 4MHz
 //mode 0
 void setup_spi(){
-	//master, LSB first, enable
+	//master, MSB first, enable
 	//clk speed = 16MHz / 2 = 8MHz 
-	SPCR = (1<<MSTR) | (1<<SPIE) | (1<<DORD);
+	SPCR = (1<<MSTR) | (1<<SPIE);
 	//double spi clock speed
-	SPSR = (1<<SP2X);
+	SPSR = (1<<SPI2X);
 
 	return;
 }
@@ -120,19 +121,44 @@ void SPI_sendbyte(uint8_t data){
 	return;
 }
 
+<<<<<<< HEAD
+=======
+
+//Sending one byte over SPI
+void SPI_sendbyte(uint8_t data){
+	//send data
+	SPDR = data;
+	//wait till done
+	while(!(SPSR & (1<<SPIF)));
+
+	return;
+}
+
+>>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
 //Sending SPI packet of data
 void SPI_sendpacket(uint8_t *data){
 	//pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
 	while(*data){
 		SPI_sendbyte(*data);
 		data++;
 	}
+<<<<<<< HEAD
     
 	//set CS_PIN high
 	PORTB |= (1<<CS_PIN);
     
+=======
+
+	//set CS_PIN high 
+	PORTB |= (1<<CS_PIN);
+
+>>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
 	return;
 }
 
@@ -150,6 +176,7 @@ int main(){
 	//loop, forever...
 	while(1){
 		switch(state){
+<<<<<<< HEAD
             case CREATE_IMG:
                 break;
             case WRITE_MEM:
@@ -169,6 +196,27 @@ int main(){
                 
 		}
         
+=======
+		case CREATE_IMG:
+			break;
+		case WRITE_MEM:
+			break;
+		case COG_ON:
+			break;
+		case COG_INIT;
+			break;
+		case WRITE_EPD:
+			break;
+		case CHECK_EPD:
+			break;
+		case COG_OFF:
+			break;
+		case defualt:
+			break;
+
+		}
+
+>>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
 	}
 	
 	return 0;
