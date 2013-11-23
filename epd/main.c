@@ -111,18 +111,6 @@ void setup_pwm(){
 	return;
 }
 
-//Sending one byte over SPI
-void SPI_sendbyte(uint8_t data){
-	//send data
-	SPDR = data;
-	//wait till done
-	while(!(SPSR & (1<<SPIF)));
-    
-	return;
-}
-
-<<<<<<< HEAD
-=======
 
 //Sending one byte over SPI
 void SPI_sendbyte(uint8_t data){
@@ -134,31 +122,22 @@ void SPI_sendbyte(uint8_t data){
 	return;
 }
 
->>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
 //Sending SPI packet of data
 void SPI_sendpacket(uint8_t *data){
 	//pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
-<<<<<<< HEAD
     
-=======
-
->>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
 	while(*data){
 		SPI_sendbyte(*data);
 		data++;
 	}
-<<<<<<< HEAD
-    
 	//set CS_PIN high
 	PORTB |= (1<<CS_PIN);
     
-=======
 
 	//set CS_PIN high 
 	PORTB |= (1<<CS_PIN);
 
->>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
 	return;
 }
 
@@ -176,49 +155,25 @@ int main(){
 	//loop, forever...
 	while(1){
 		switch(state){
-<<<<<<< HEAD
-            case CREATE_IMG:
+		case CREATE_IMG:
                 break;
-            case WRITE_MEM:
+            	case WRITE_MEM:
                 break;
-            case COG_ON:
+            	case COG_ON:
                 break;
-            case COG_INIT;
+		case COG_INIT:
                 break;
-            case WRITE_EPD:
+            	case WRITE_EPD:
                 break;
-            case CHECK_EPD:
+            	case CHECK_EPD:
                 break;
-            case COG_OFF:
+            	case COG_OFF:
                 break;
-            case defualt:
+            	default:
                 break;
                 
 		}
-        
-=======
-		case CREATE_IMG:
-			break;
-		case WRITE_MEM:
-			break;
-		case COG_ON:
-			break;
-		case COG_INIT;
-			break;
-		case WRITE_EPD:
-			break;
-		case CHECK_EPD:
-			break;
-		case COG_OFF:
-			break;
-		case defualt:
-			break;
-
-		}
-
->>>>>>> 1ce33ffff65b107d7062f363979919d3a195f888
-	}
-	
+	}	
 	return 0;
 }
 
