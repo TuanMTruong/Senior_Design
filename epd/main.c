@@ -16,6 +16,7 @@
  * - LEDs	PC0-PC7
  * - USART_RX	PD2
  * - USART_TX	PD3
+ * - PWM_OC1A	PB5
  *
  */
 
@@ -40,13 +41,18 @@
 //global variables
 
 
-//macros
+//hardware macros
 #define CS_PIN		0
 #define SCK_PIN		1
 #define MOSI_PIN	2
 #define MISO_PIN	3
 #define RX_PIN		2
 #define TX_PIN		3
+#define PWM_PIN		5
+
+//protocol macros
+#define REG_HEADER	0x70
+#define DATA_HEADER	0x72
 
 //set up the data direction registers (1=output, 0=input)
 void setup_ddr(){
@@ -56,6 +62,8 @@ void setup_ddr(){
 	DDRB |= (1<<CS_PIN) | (1<<SCK_PIN) | (1<<MOSI_PIN);
 	//input for spi
 	DDRB &= ~(1<<MISO_PIN);
+	//set OC1A output for PWM
+	DDRB |= (1<<PWM_PIN);
 	//LEds are outputs
 	DDRC = 0xff;
 	//usart tx is output
@@ -81,10 +89,54 @@ void setup_spi(){
 
 
 //100-300KHz 50% duty cycle PWM
+//TIMER1 OC1A
 void setup_pwm(){
+	//Clear out register
+	TCCR1A = 0x00;
+	//Enable OC1A pin
+	TCCR1A |= (3<<COM1A0);
+	//Set waveform mode
+	//mode 9 pwm phase correct, top OCR1A, update at bottom
+	TCCR1A |= (1<<WGM10);
+	TCCR1B |= (1<<WGM13);
 
+	//Set timer clock sel clk/8
+	TCCR1B = 0x00;
+	TCCR1B |= (2<<CS10);
+
+	//enable timer interrupt
+	TIMSK1 = (1<<ICIE1);
+		
 	return;
 }
+
+//Sending one byte over SPI
+void SPI_sendbyte(uint8_t data){
+	//send data
+	SPDR = data;
+	//wait till done
+	while(!(SPSR & (1<<SPIF)));
+    
+	return;
+}
+
+//Sending SPI packet of data
+void SPI_sendpacket(uint8_t *data){
+	//pull CS_PIN low
+	PORTB &= ~(1<<CS_PIN);
+    
+	while(*data){
+		SPI_sendbyte(*data);
+		data++;
+	}
+    
+	//set CS_PIN high
+	PORTB |= (1<<CS_PIN);
+    
+	return;
+}
+
+
 
 //Adventure is upon us...
 int main(){
@@ -92,17 +144,31 @@ int main(){
 	setup_ddr();
 	setup_spi();
 	setup_pwm();
-
+    
 	//variables
 	
-
+	//loop, forever...
 	while(1){
-
-
-
-
-
-
+		switch(state){
+            case CREATE_IMG:
+                break;
+            case WRITE_MEM:
+                break;
+            case COG_ON:
+                break;
+            case COG_INIT;
+                break;
+            case WRITE_EPD:
+                break;
+            case CHECK_EPD:
+                break;
+            case COG_OFF:
+                break;
+            case defualt:
+                break;
+                
+		}
+        
 	}
 	
 	return 0;
