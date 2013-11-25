@@ -46,16 +46,17 @@ uint8_t test_buffer_blk[5000];
 uint8_t test_buffer_wht[5000];
 uint8_t test_buffer_nth[5000];
 
+
 //hardware macros
 #define CS_PIN		0
 #define SCK_PIN		1
 #define MOSI_PIN	2
 #define MISO_PIN	3
-#define RX_PIN		2
+#define RX_PIN		2	
 #define TX_PIN		3
 #define PWM_PIN		5
 
-#define CS_PIN		0
+//#define CS_PIN		0	//delete line, repeated
 #define BUSY_PIN	1
 #define ID_PIN		2
 #define RESET_PIN	3
@@ -112,11 +113,12 @@ void setup_pwm(){
 	//Set waveform mode
 	//mode 4 pwm CTC, top OCR1A, update at bottom
 	//TCCR1A |= (1<<WGM10);
-	TCCR1B |= (1<<WGM12);
+	TCCR1B |= (1<<WGM12);		//CTC mode? not PWM?
 
 	//Set timer clock sel clk/8
-	TCCR1B = 0x00;
-	TCCR1B |= (2<<CS10);
+	TCCR1B = 0x00;    		//reset TCCR1B?
+	TCCR1B |= (2<<CS10);		//looks to be clk/1024
+                                        //change to (1<<CS11) for clk/8
 
 	//enable timer interrupt
 	TIMSK1 = (1<<ICIE1);
@@ -145,7 +147,7 @@ void SPI_sendpacket(uint8_t header, uint8_t *data){
 	SPI_sendbyte(header);
 
 	//send data
-	while(*data){
+	while(*data){       	//what if no NULL after data array?
 		SPI_sendbyte(*data);
 		data++;
 	}
