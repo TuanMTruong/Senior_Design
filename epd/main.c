@@ -162,7 +162,7 @@ void SPI_sendpacket(uint8_t header, uint8_t *data){
 //creating a blank image buffer
 //2" display 200 x 96 pixel
 void fill_image_buff(uint8_t *buffer){
-	uint8_t pixel = 200;
+	uint8_t data_counter = 0;
 	uint8_t pixel_data = 0xff;
 	uint8_t scan_counter = 0;
 	uint8_t line_counter= 0
@@ -171,19 +171,19 @@ void fill_image_buff(uint8_t *buffer){
 	//draw 97 lines with 200 pixels
 	for(line_counter = 0; line_counter<97; line_counter++){
 		//set the even bits of image
-		for(pixel = 200; pixel <2; pixel = pixel -2){
+		for(data_counter = 0; data_counter<25; data_counter++);
 			*buffer = pixel_data;
 			buffer++;
 		}
 	
 		//set the can bits
-		for(scan_counter = 0; scan_counter>96 ; scan_counter++){
+		for(scan_counter = 0; scan_counter<24 ; scan_counter++){
 			*buffer= 0xff;
 			buffer++;
 		}
 
 		//set the odd bits of image
-		for(pixel = 1; pixel < 199; pixel = pixel +2){
+		for(data_counter =25; data_counter<50; data_counter++);
 			*buffer = pixel_data;
 			buffer++;
 		}
@@ -231,6 +231,7 @@ void startup_cog(){
 	return; 
 
 }
+
 
 void init_cog(){
 	//Check if COG is busy
@@ -331,7 +332,23 @@ void init_cog(){
 	
 }
 
+//after COG is initialized began writing data from buffer to COG to be drawn
+void write_cog(uint8_t *buffer){
+	//keeps track of which line is being written to
+	uint8_t line_counter = 0;
 
+	//start charge pump
+	SPI_sendpacket(REG_HEADER, 0x04);
+	_delay_us(10);
+	SPI_sendpacket(DATA_HEADER, 0x03);
+	_delay_us(10);
+
+	//send out each line, total of 97 lines
+	for(line_counter = 0; line_counter<97; line_counter++){
+
+
+	}
+}
 
 
 //Adventure is upon us...
