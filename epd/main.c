@@ -116,9 +116,9 @@ void setup_pwm(){
 	TCCR1B |= (1<<WGM12);		//CTC mode? not PWM?
 
 	//Set timer clock sel clk/8
-	TCCR1B = 0x00;    		//reset TCCR1B?
-	TCCR1B |= (2<<CS10);		//looks to be clk/1024
-                                        //change to (1<<CS11) for clk/8
+	TCCR1B &= ~(7<<CS10);    	
+	TCCR1B |= (2<<CS10);		
+                                        
 
 	//enable timer interrupt
 	TIMSK1 = (1<<ICIE1);
@@ -167,13 +167,13 @@ void fill_image_buff(uint8_t *buffer){
 	uint8_t data_counter = 0;
 	uint8_t pixel_data = 0xff;
 	uint8_t scan_counter = 0;
-	uint8_t line_counter= 0
+	uint8_t line_counter= 0;
 
 	//for 2" EPD resolution 200 x 97
 	//draw 97 lines with 200 pixels
 	for(line_counter = 0; line_counter<97; line_counter++){
 		//set the even bits of image
-		for(data_counter = 0; data_counter<25; data_counter++);
+		for(data_counter = 0; data_counter<25; data_counter++){
 			*buffer = pixel_data;
 			buffer++;
 		}
@@ -185,7 +185,7 @@ void fill_image_buff(uint8_t *buffer){
 		}
 
 		//set the odd bits of image
-		for(data_counter =25; data_counter<50; data_counter++);
+		for(data_counter =25; data_counter<50; data_counter++){
 			*buffer = pixel_data;
 			buffer++;
 		}

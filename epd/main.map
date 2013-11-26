@@ -7,6 +7,13 @@ Archive member included because of file (symbol)
 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
                               main.o (__do_clear_bss)
 
+Allocating common symbols
+Common symbol       size              file
+
+test_buffer_wht     0x1388            main.o
+test_buffer_blk     0x1388            main.o
+test_buffer_nth     0x1388            main.o
+
 Memory Configuration
 
 Name             Origin             Length             Attributes
@@ -117,7 +124,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x162
+.text           0x00000000      0x22e
  *(.vectors)
  .vectors       0x00000000       0x98 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtusb1286.o
                 0x00000000                __vectors
@@ -211,27 +218,31 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
                 0x000000d8                __vector_16
                 0x000000d8                __vector_18
                 0x000000d8                __vector_22
- .text          0x000000dc       0x74 main.o
+ .text          0x000000dc      0x136 main.o
                 0x000000dc                setup_ddr
                 0x000000f2                setup_spi
                 0x000000fc                setup_pwm
-                0x00000128                SPI_sendbyte
-                0x00000132                SPI_sendpacket
- .text          0x00000150        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
- .text          0x00000150        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
- .text          0x00000150        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
-                0x00000150                . = ALIGN (0x2)
+                0x00000126                SPI_sendbyte
+                0x00000130                SPI_sendpacket
+                0x00000170                fill_image_buff
+                0x000001ac                startup_cog
+                0x000001ea                init_cog
+                0x000001ec                write_cog
+ .text          0x00000212        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .text          0x00000212        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
+ .text          0x00000212        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
+                0x00000212                . = ALIGN (0x2)
  *(.text.*)
- .text.startup  0x00000150        0xe main.o
-                0x00000150                main
- .text.libgcc   0x0000015e        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
- .text.libgcc   0x0000015e        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
- .text.libgcc   0x0000015e        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
-                0x0000015e                . = ALIGN (0x2)
+ .text.startup  0x00000212       0x18 main.o
+                0x00000212                main
+ .text.libgcc   0x0000022a        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .text.libgcc   0x0000022a        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000022a        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
+                0x0000022a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000015e        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
-                0x0000015e                exit
-                0x0000015e                _exit
+ .fini9         0x0000022a        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+                0x0000022a                exit
+                0x0000022a                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -250,11 +261,11 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000015e        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .fini0         0x0000022a        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000162                _etext = .
+                0x0000022e                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000162
+.data           0x00800100        0x0 load address 0x0000022e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtusb1286.o
@@ -270,7 +281,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
                 0x00800100                _edata = .
                 0x00800100                PROVIDE (__data_end, .)
 
-.bss            0x00800100        0x2
+.bss            0x00800100     0x3a9a
                 0x00800100                PROVIDE (__bss_start, .)
  *(.bss)
  .bss           0x00800100        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtusb1286.o
@@ -281,16 +292,20 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
  .bss           0x00800102        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
  *(.bss*)
  *(COMMON)
-                0x00800102                PROVIDE (__bss_end, .)
-                0x00000162                __data_load_start = LOADADDR (.data)
-                0x00000162                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00800102     0x3a98 main.o
+                0x00800102                test_buffer_wht
+                0x0080148a                test_buffer_blk
+                0x00802812                test_buffer_nth
+                0x00803b9a                PROVIDE (__bss_end, .)
+                0x0000022e                __data_load_start = LOADADDR (.data)
+                0x0000022e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800102        0x0
-                0x00800102                PROVIDE (__noinit_start, .)
+.noinit         0x00803b9a        0x0
+                0x00803b9a                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800102                PROVIDE (__noinit_end, .)
-                0x00800102                _end = .
-                0x00800102                PROVIDE (__heap_start, .)
+                0x00803b9a                PROVIDE (__noinit_end, .)
+                0x00803b9a                _end = .
+                0x00803b9a                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -357,40 +372,40 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x3b0
+.debug_info     0x00000000      0x6cf
  *(.debug_info)
- .debug_info    0x00000000      0x16d main.o
- .debug_info    0x0000016d       0xc1 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
- .debug_info    0x0000022e       0xc1 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
- .debug_info    0x000002ef       0xc1 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
+ .debug_info    0x00000000      0x48c main.o
+ .debug_info    0x0000048c       0xc1 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .debug_info    0x0000054d       0xc1 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
+ .debug_info    0x0000060e       0xc1 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x12c
+.debug_abbrev   0x00000000      0x254
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xf0 main.o
- .debug_abbrev  0x000000f0       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
- .debug_abbrev  0x00000104       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
- .debug_abbrev  0x00000118       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
+ .debug_abbrev  0x00000000      0x218 main.o
+ .debug_abbrev  0x00000218       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .debug_abbrev  0x0000022c       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
+ .debug_abbrev  0x00000240       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
 
-.debug_line     0x00000000      0x1ef
+.debug_line     0x00000000      0x2e7
  *(.debug_line)
- .debug_line    0x00000000       0xc7 main.o
- .debug_line    0x000000c7       0x5c /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
- .debug_line    0x00000123       0x6a /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
- .debug_line    0x0000018d       0x62 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
+ .debug_line    0x00000000      0x1bf main.o
+ .debug_line    0x000001bf       0x5c /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .debug_line    0x0000021b       0x6a /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
+ .debug_line    0x00000285       0x62 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
 
-.debug_frame    0x00000000       0x80
+.debug_frame    0x00000000       0xd0
  *(.debug_frame)
- .debug_frame   0x00000000       0x80 main.o
+ .debug_frame   0x00000000       0xd0 main.o
 
-.debug_str      0x00000000      0x10d
+.debug_str      0x00000000      0x1fa
  *(.debug_str)
- .debug_str     0x00000000      0x10d main.o
-                                0x141 (size before relaxing)
+ .debug_str     0x00000000      0x1fa main.o
+                                0x233 (size before relaxing)
 
-.debug_loc      0x00000000       0x47
+.debug_loc      0x00000000      0x131
  *(.debug_loc)
- .debug_loc     0x00000000       0x47 main.o
+ .debug_loc     0x00000000      0x131 main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -460,9 +475,16 @@ __vectors                                         /usr/local/CrossPack-AVR-20130
 _exit                                             /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
 exit                                              /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
                                                   /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtusb1286.o
+fill_image_buff                                   main.o
+init_cog                                          main.o
 main                                              main.o
                                                   /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtusb1286.o
 setup_ddr                                         main.o
 setup_pwm                                         main.o
 setup_spi                                         main.o
+startup_cog                                       main.o
 state                                             main.o
+test_buffer_blk                                   main.o
+test_buffer_nth                                   main.o
+test_buffer_wht                                   main.o
+write_cog                                         main.o

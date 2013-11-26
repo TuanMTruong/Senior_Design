@@ -99,6 +99,7 @@ submission:
 clean:
 	-rm -rf $(OBJECTS) $(PROJECT).elf dep/* $(PROJECT).hex $(PROJECT).eep $(PROJECT).map
 	rm -rf html
+	rm -rf dep
 
 ## Other dependencies
 -include $(shell mkdir dep 2>/dev/null) $(wildcard dep/*)
