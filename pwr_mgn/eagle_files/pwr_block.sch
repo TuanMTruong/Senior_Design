@@ -2835,7 +2835,9 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 </classes>
 <parts>
 <part name="U$1" library="TuansLib" deviceset="BQ25010" device=""/>
-<part name="JP1" library="SparkFun-Connectors" deviceset="USB" device="-MICROB"/>
+<part name="JP1" library="SparkFun-Connectors" deviceset="USB" device="-MICROB">
+<attribute name="DESCRIPTION" value="CONN RCPT STD MICRO USB TYPE B"/>
+</part>
 <part name="SUPPLY1" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY2" library="supply2" deviceset="GND" device=""/>
 <part name="C1" library="SparkFun-Capacitors" deviceset="1NF/1000PF-50V-10%(0603)" device="" value="1nF"/>
@@ -2889,10 +2891,10 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <wire x1="12.7" y1="-45.72" x2="12.7" y2="-96.52" width="0.1524" layer="121"/>
 <wire x1="12.7" y1="-96.52" x2="-111.76" y2="-96.52" width="0.1524" layer="121"/>
 <wire x1="-111.76" y1="-96.52" x2="-111.76" y2="-45.72" width="0.1524" layer="121"/>
-<wire x1="27.94" y1="-45.72" x2="27.94" y2="-96.52" width="0.1524" layer="121"/>
-<wire x1="27.94" y1="-96.52" x2="66.04" y2="-96.52" width="0.1524" layer="121"/>
+<wire x1="22.86" y1="-45.72" x2="22.86" y2="-96.52" width="0.1524" layer="121"/>
+<wire x1="22.86" y1="-96.52" x2="66.04" y2="-96.52" width="0.1524" layer="121"/>
 <wire x1="66.04" y1="-96.52" x2="66.04" y2="-45.72" width="0.1524" layer="121"/>
-<wire x1="66.04" y1="-45.72" x2="27.94" y2="-45.72" width="0.1524" layer="121"/>
+<wire x1="66.04" y1="-45.72" x2="22.86" y2="-45.72" width="0.1524" layer="121"/>
 <wire x1="83.82" y1="-40.64" x2="83.82" y2="-96.52" width="0.1524" layer="121"/>
 <wire x1="83.82" y1="-96.52" x2="154.94" y2="-96.52" width="0.1524" layer="121"/>
 <wire x1="154.94" y1="-96.52" x2="154.94" y2="-40.64" width="0.1524" layer="121"/>
@@ -2915,7 +2917,9 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="0" y="-2.54"/>
-<instance part="JP1" gate="G$1" x="-96.52" y="5.08" rot="MR0"/>
+<instance part="JP1" gate="G$1" x="-96.52" y="5.08" rot="MR0">
+<attribute name="DESCRIPTION" x="-96.52" y="5.08" size="1.778" layer="96" rot="MR0" display="off"/>
+</instance>
 <instance part="SUPPLY1" gate="GND" x="-91.44" y="0"/>
 <instance part="SUPPLY2" gate="GND" x="-20.32" y="-27.94"/>
 <instance part="C1" gate="G$1" x="-81.28" y="0"/>
@@ -2930,11 +2934,11 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <instance part="JP11" gate="G$1" x="93.98" y="-17.78" rot="R90"/>
 <instance part="C2" gate="G$1" x="114.3" y="-12.7"/>
 <instance part="C3" gate="G$1" x="116.84" y="35.56"/>
-<instance part="R1" gate="G$1" x="45.72" y="-68.58" rot="R90"/>
+<instance part="R1" gate="G$1" x="43.18" y="-71.12" rot="R90"/>
 <instance part="R2" gate="G$1" x="96.52" y="35.56" rot="R90"/>
 <instance part="R3" gate="G$1" x="96.52" y="22.86" rot="R270"/>
 <instance part="L1" gate="G$1" x="83.82" y="43.18" rot="R90"/>
-<instance part="SUPPLY4" gate="GND" x="45.72" y="-78.74"/>
+<instance part="SUPPLY4" gate="GND" x="43.18" y="-81.28"/>
 <instance part="SUPPLY5" gate="GND" x="116.84" y="10.16"/>
 <instance part="SUPPLY6" gate="GND" x="114.3" y="-20.32"/>
 <instance part="JP10" gate="G$1" x="142.24" y="-7.62" rot="R180"/>
@@ -2998,7 +3002,7 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <pinref part="SUPPLY4" gate="GND" pin="GND"/>
-<wire x1="45.72" y1="-73.66" x2="45.72" y2="-76.2" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="-76.2" x2="43.18" y2="-78.74" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="JP2" gate="G$1" pin="1"/>
@@ -3152,11 +3156,6 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <wire x1="-33.02" y1="-60.96" x2="-27.94" y2="-60.96" width="0.1524" layer="91"/>
 <label x="-27.94" y="-60.96" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="R1" gate="G$1" pin="2"/>
-<wire x1="45.72" y1="-63.5" x2="45.72" y2="-60.96" width="0.1524" layer="91"/>
-<label x="48.26" y="-60.96" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="ISET1" class="0">
 <segment>
@@ -3168,6 +3167,11 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <pinref part="JP6" gate="G$1" pin="2"/>
 <wire x1="-33.02" y1="-58.42" x2="-27.94" y2="-58.42" width="0.1524" layer="91"/>
 <label x="-27.94" y="-58.42" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R1" gate="G$1" pin="2"/>
+<wire x1="43.18" y1="-66.04" x2="43.18" y2="-63.5" width="0.1524" layer="91"/>
+<label x="45.72" y="-63.5" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="BATT_IN" class="0">
