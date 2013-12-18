@@ -75,6 +75,9 @@ uint8_t test_buffer_nth[5000];
 #define REG_HEADER	0x70	//send before sending reg. index
 #define DATA_HEADER	0x72	//send before sending reg. data
 
+#define 1_4IN_DATA	0x00000000000FFF00
+#define 2IN_DATA	0x0000000001FFE000
+
 #define PWM_DISABLE()	TCCR1B &= ~(7<<CS10)
 #define PWM_ENABLE()	TCCR1B |= (2<<CS10)
 
@@ -115,6 +118,7 @@ void setup_spi(){
 
 //100-300KHz 50% duty cycle PWM
 //TIMER1 OC1A
+//TODO change to true PWM mode. making our own pwm right now. 
 void setup_pwm(){
 	//Clear out register
 	TCCR1A = 0x00;
@@ -159,7 +163,7 @@ void SPI_sendbyte(uint8_t data){
 //5. send DATA_HEADER
 //6. send data
 //7. set CS high
-void SPI_sendbyte(uint8_t reg_index, uint8_t data){
+void SPI_byte(uint8_t reg_index, uint8_t data){
 	//1. pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
     
@@ -208,7 +212,7 @@ void fill_pointer(uint8_t *data_ptr, uint64_t data, uint8_t num_bytes){
 //5. send DATA_HEADER
 //6. send data
 //7. set CS high
-void SPI_sendpacket(uint8_t reg_index, uint64_t data, uint8_t num_bytes){
+void SPI_bytes(uint8_t reg_index, uint64_t data, uint8_t num_bytes){
 	//1. pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
     
@@ -228,6 +232,7 @@ void SPI_sendpacket(uint8_t reg_index, uint64_t data, uint8_t num_bytes){
 
 	//6. send data
 	//TODO review with Tuan.
+	//check for busy pin between data bytes?
 	for(i=0;i<num_bytes;i++)
 		SPI_sendbyte((data & (0xFF<<(i*8)))>>(i*8));
 	}
@@ -275,7 +280,6 @@ void fill_image_buff(uint8_t *buffer){
 		//blank byte
 		*buffer = 0x00;
 		buffer++;
-
 	}
 
 	return;
@@ -313,12 +317,12 @@ void startup_cog(){
 
 	//POWER is one and the next step is to initialize COG
 	return; 
-
 }
 
 
 void init_cog(){
-	//SPI_sendpacket(uint8_t reg_index, uint8_t *data)
+	//SPI_byte(uint8_t reg_index, uint8_t data)
+	//SPI_bytes(uint8_t reg_index, uint64_t data, uint8_t num_bytes)
 	//pass data as an address. ie &data
 	uint8_t data;
 
@@ -326,65 +330,34 @@ void init_cog(){
 	while(BUSY_PIN);
 
 	//Channel Select for EPD 2"
-	SPI_sendpacket(REG_HEADER, 0x01);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x0000000001FFE000);
-	_delay_us(10);
+	SPI_bytes(0x01, 2IN_DATA, 8);
 
 	//set DC/DC Frequency 
-	SPI_sendpacket(REG_HEADER, 0x06);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0xFF);
-	_delay_us(10);
+	SPI_byte(0x06, 0xFF);
 
 	//High power mode osc setting
-	SPI_sendpacket(REG_HEADER, 0x07);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x9D);
-	_delay_us(10);
+	SPI_byte(0x07, 0x9D);
 
 	//Disable ADC
-	SPI_sendpacket(REG_HEADER, 0x08);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x00);
-	_delay_us(10);
+	SPI_byte(0x08, 0x00);
 
 	//Set Vcom Level
-	SPI_sendpacket(REG_HEADER, 0x09);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0xD000);
-	_delay_us(10);
+	SPI_bytes(0x09, 0xD000, 2);
 
 	//Gate and source Voltage level
-	SPI_sendpacket(REG_HEADER, 0x04);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x03);
-	_delay_us(10);
-
-	//toggle PWM for >= 5ms
+	SPI_bytes(0x04, 2IN_DATA, 8);
 	_delay_ms(5);
 
 	//Driver Latch on
 	//Cancel register noise
-	SPI_sendpacket(REG_HEADER, 0x03);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x01);
-	_delay_us(10);
+	SPI_byte(0x03, 0x01);
 
 	//Driver latch off
-	SPI_sendpacket(REG_HEADER, 0x03);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x00);
-	_delay_us(10);
+	SPI_byte(0x03, 0x00);
 	
 	//Start Charge pump positive Voltage
 	//VGH & VDH enable (VGh>12V & VDH >8V)
-	SPI_sendpacket(REG_HEADER, 0x05);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x01);
-	_delay_us(10);
-
-	//Let pwm toggle for >= 30ms
+	SPI_byte(0x05, 0x01);
 	_delay_ms(30);
 
 	//disable pwm
@@ -392,32 +365,19 @@ void init_cog(){
 
 	//Start charge pump negative voltage
 	//VGL < -12v & VDL < -8V
-	SPI_sendpacket(REG_HEADER, 0x05);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x03);
-	_delay_us(10);
-
-	//wait for >= 30ms
+	SPI_byte(0x05, 0x03);
 	_delay_ms(30);
 
 	//Set charge pump Vcom_Driver to ON
-	SPI_sendpacket(REG_HEADER, 0x05);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x0F);
-
-	//wait for >= 30ms
+	SPI_byte(0x05, 0x03);
 	_delay_ms(30);
 
 	//output enable to disable
-	SPI_sendpacket(REG_HEADER, 0x02);
-	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x24);
-	_delay_us(10);
+	SPI_byte(0x02, 0x24);
 
-	//if all went well the COG should be initialized and ready for image data
-	//if not... get ready to debug ;)
+	//if all went well the COG should be initialized and ready for image 
+	//data. if not... get ready to debug ;)
 	return;
-	
 }
 
 //after COG is initialized began writing data from buffer to COG to be drawn
