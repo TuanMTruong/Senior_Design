@@ -46,16 +46,6 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-
-//global variables
-enum states {CREATE_IMG, WRITE_MEM, COG_ON,COG_INIT, WRITE_EPD, CHECK_EPD, COG_OFF};
-enum states state = CREATE_IMG;
-
-uint8_t test_buffer_blk[5000];
-uint8_t test_buffer_wht[5000];
-uint8_t test_buffer_nth[5000];
-
-
 //hardware macros
 #define CS_PIN		0	//PB0
 #define SCK_PIN		1	//PB1
@@ -80,6 +70,21 @@ uint8_t test_buffer_nth[5000];
 
 #define PWM_DISABLE()	TCCR1B &= ~(7<<CS10)
 #define PWM_ENABLE()	TCCR1B |= (2<<CS10)
+
+
+#define EPD_ROW		96
+#define EPD_COLUMN	76
+
+
+
+//global variables
+enum states {CREATE_IMG, WRITE_MEM, COG_ON,COG_INIT, WRITE_EPD, CHECK_EPD, COG_OFF};
+enum states state = CREATE_IMG;
+
+uint8_t test_buffer_blk[EPD_COLUMN][EPD_ROW];
+uint8_t test_buffer_wht[EPD_COLUMN][EPD_ROW];
+uint8_t test_buffer_nth[EPD_COLUMN][EPD_ROW];
+
 
 /******************************************************************/
 // set up data direction for pins
@@ -119,10 +124,10 @@ void pwm_setup(void){
 	TCCR1B = (1<<WGM12);    //making our own pwm
 	TCCR1B &= ~(7<<CS10);   //set up clock select
 	TCCR1B |= (2<<CS10);		
-                                        
+
 	OCR1A = 10;             //set compare value
 	TIMSK1 = (1<<OCIE1A);   //enable timer interrupt
-	
+
 	return;
 }
 
@@ -174,7 +179,7 @@ uint8_t COG_busy(){
 void COG_sendbyte(uint8_t reg_index, uint8_t data){
 	//1. pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
-    
+
 	//2. send header for data
 	spi_sendbyte(REG_HEADER);
 
@@ -201,15 +206,15 @@ void COG_sendbyte(uint8_t reg_index, uint8_t data){
 //delete if not using pointers to send data
 //use for filling memory sequentially
 /*
-void fill_pointer(uint8_t *data_ptr, uint64_t data, uint8_t num_bytes){
-	uint8_t i;
-	for(i=0;i<num_bytes;i++){
-		*data_ptr = ((data & (0xFF<<(i*8)))>>(i*8));
-		data_ptr++;
-	}
-	*data_ptr = NULL;
-}                
-*/
+   void fill_pointer(uint8_t *data_ptr, uint64_t data, uint8_t num_bytes){
+   uint8_t i;
+   for(i=0;i<num_bytes;i++){
+ *data_ptr = ((data & (0xFF<<(i*8)))>>(i*8));
+ data_ptr++;
+ }
+ *data_ptr = NULL;
+ }                
+ */
 
 /******************************************************************/
 //Sending an array of data to a register on COG
@@ -229,7 +234,7 @@ void fill_pointer(uint8_t *data_ptr, uint64_t data, uint8_t num_bytes){
 void COG_sendArray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 	//1. pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
-    
+
 	//2. send header for data
 	spi_sendbyte(REG_HEADER);
 
@@ -246,7 +251,7 @@ void COG_sendArray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 
 	//6. send array
 	spi_sendarray(data, num_bytes);
-	
+
 	//7. set CS_PIN high
 	PORTB |= (1<<CS_PIN);
 
@@ -256,46 +261,39 @@ void COG_sendArray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 
 /******************************************************************/
 //made for testing
-//creating a blank image buffer
+//creating a blank image buffer that is ready to be sent to the COG
+//takes a pointer to a 2D array, data to fill that array, and scan byte
 //2" display 200 x 96 pixel
 /******************************************************************/
-void fill_image_buff(uint8_t *buffer){
-	uint8_t data_counter = 0;
-	uint8_t pixel_data = 0xFF; //TODO are pixels 1&0 or byte value?
-	uint8_t scan_counter = 0;
-	uint8_t line_counter= 0;
+void fill_image_buff(uint8_t *buffer[EPD_ROW], uint8_t pixel_data, uint8_t scan_data){
+	uint8_t row_counter = 0;	//counter for the rows on the image
+	uint8_t column_counter= 0;	//counter for the columns on the image
 
-	//for 2" EPD resolution 200 x 96
-	//draw 97 lines with 200 pixels
-	for(line_counter = 0; line_counter<96; line_counter++){
-		//set the even bits of image
-		for(data_counter = 0; data_counter<25; data_counter++){
-			*buffer = pixel_data;
-			buffer++;
+	//loop through the rows
+	for(row_counter = 0; row_counter< EPD_ROW; row_counter++){
+		//fill in the even pixels of the image
+		for(column_counter = 0; column_counter<25; column_counter++){
+			buffer[row_counter][column_counter] = pixel_data;
 		}
-	
-		//set the scan bits
-		for(scan_counter = 0; scan_counter<24 ; scan_counter++){
-			*buffer= 0xFF;
-			buffer++;
+		//fill in scan byte
+		for(column_counter = 25; column_counter<50; column_counter++){
+			buffer[row_counter][column_counter] = scan_data;
 		}
-
-		//set the odd bits of image
-		for(data_counter = 25; data_counter<50; data_counter++){
-			*buffer = pixel_data;
-			buffer++;
+		//fill in odd pixels of the image
+		for(column_counter = 50; column_counter<75; column_counter++){
+			buffer[row_counter][column_counter] = pixel_data;
 		}
-		
-		//TODO why didn't we fill to 200? stopped at 99
-
 		//blank byte
-		*buffer = 0x00;
-		buffer++;
+		buffer[row_counter][column_counter] = 0x00;
 	}
 
 	return;
 }
-               
+
+
+
+
+/******************************************************************/
 //powers on COG
 //0. start with vcc/vdd, /reset, /cs, border, SI, SCLK = 0
 //1. start pwm toggling
@@ -303,7 +301,8 @@ void fill_image_buff(uint8_t *buffer){
 //3. /cs = 1
 //4. border = 1
 //5. toggle reset 
-void startup_cog(){
+/******************************************************************/
+void COG_startup(){
 	//1. Enable PWM
 	PWM_ENABLE();
 	_delay_ms(5);
@@ -322,7 +321,7 @@ void startup_cog(){
 	PORTD |= (1<<RESET_PIN);
 	_delay_ms(5);
 	PORTD &= ~(1<<RESET_PIN);
-        _delay_ms(5);
+	_delay_ms(5);
 	PORTD |= (1<<RESET_PIN);
 	_delay_ms(5);
 
@@ -331,7 +330,7 @@ void startup_cog(){
 }
 
 
-void init_cog(){
+void COG_init(){
 	//COG_sendbyte(uint8_t reg_index, uint8_t data)
 	//COG_sendbyte(uint8_t reg_index, uint64_t data, uint8_t num_bytes)
 	//pass data as an address. ie &data
@@ -365,7 +364,7 @@ void init_cog(){
 
 	//Driver latch off
 	COG_sendbyte(0x03, 0x00);
-	
+
 	//Start Charge pump positive Voltage
 	//VGH & VDH enable (VGh>12V & VDH >8V)
 	COG_sendbyte(0x05, 0x01);
@@ -416,31 +415,31 @@ int main(){
 	ddr_setup();
 	spi_setup();
 	pwm_setup();
-   	
+
 	//disable pwm until COG power on state
 	PWM_DISABLE();
 	//variables
-	
+
 	//loop, forever...
 	while(1){
 		switch(state){
-		case CREATE_IMG:
-                break;
-            	case WRITE_MEM:
-                break;
-            	case COG_ON:
-                break;
-		case COG_INIT:
-                break;
-            	case WRITE_EPD:
-                break;
-            	case CHECK_EPD:
-                break;
-            	case COG_OFF:
-                break;
-            	default:
-                break;
-                
+			case CREATE_IMG:
+				break;
+			case WRITE_MEM:
+				break;
+			case COG_ON:
+				break;
+			case COG_INIT:
+				break;
+			case WRITE_EPD:
+				break;
+			case CHECK_EPD:
+				break;
+			case COG_OFF:
+				break;
+			default:
+				break;
+
 		}
 	}	
 	return 0;
