@@ -1,3 +1,4 @@
+/******************************************************************/
 /* main.c
  * authors: Tuan & Garrett
  * date: 11/21/13
@@ -34,6 +35,7 @@
  * The plan is to create a state machine and flows through the steps 
  * of drawing an image.
  */
+/******************************************************************/
 
 //Clock speed
 #define F_CPU 16000000UL
@@ -68,94 +70,99 @@ uint8_t test_buffer_nth[5000];
 #define TX_PIN		3	//PD3
 #define RESET_PIN	4	//PD4
 
-//#define CS_PIN		0	//delete line, repeated
-//#define ID_PIN		2	//TODO ask Tuan what this is for?
 
 //protocol macros
 #define REG_HEADER	0x70	//send before sending reg. index
 #define DATA_HEADER	0x72	//send before sending reg. data
 
-#define 1_4IN_DATA	0x00000000000FFF00
-#define 2IN_DATA	0x0000000001FFE000
+#define IN_DATA	0x00 //0x00000000000FFF00
+#define IN2_DATA	0x00 //0x0000000001FFE000
 
 #define PWM_DISABLE()	TCCR1B &= ~(7<<CS10)
 #define PWM_ENABLE()	TCCR1B |= (2<<CS10)
 
-//set up the data direction registers (1=output, 0=input)
-void setup_ddr(){
-	//buttons are inputs
-	//1 = output, 0 = input
-	DDRA = 0x00;
-	//output spi
+/******************************************************************/
+// set up data direction for pins
+// current settings are for AT90USB1287 
+/******************************************************************/
+void ddr_setup(void){
+	DDRA = 0x00;                //buttons are inputs
 	DDRB |= (1<<CS_PIN) | (1<<SCK_PIN) | (1<<MOSI_PIN);
-	//input for spi
 	DDRB &= ~(1<<MISO_PIN);
-	//set OC1A output for PWM
-	DDRB |= (1<<PWM_PIN);
-	//LEds are outputs
-	DDRC = 0xff;
-	//usart tx is output
-	DDRD |= (1<<TX_PIN);
-	//usart rx is input
-	DDRD &= ~(1<<RX_PIN);
-
+	DDRB |= (1<<PWM_PIN);       //set OC1A output for PWM
+	DDRC = 0xff;                //LEds are outputs
+	DDRD |= (1<<TX_PIN);        //usart tx is output
+	DDRD &= ~(1<<RX_PIN);       //usart rx is input
 	return;
 }
 
 
+/******************************************************************/
 //SPI in master mode, max clk speed = 12MHz, min clk speed = 4MHz
 //mode 0
-void setup_spi(){
-	//master, MSB first, enable
-	//clk speed = 16MHz / 2 = 8MHz 
-	SPCR = (1<<MSTR) | (1<<SPIE);
-	//double spi clock speed
-	SPSR = (1<<SPI2X);
+/******************************************************************/
+void spi_setup(void){
+	SPCR = (1<<MSTR) | (1<<SPIE);   //master, MSB first, enable, 8MHz
+	SPSR = (1<<SPI2X);              //double spi clock speed
 
 	return;
 }
 
 
+/******************************************************************/
 //100-300KHz 50% duty cycle PWM
 //TIMER1 OC1A
 //TODO change to true PWM mode. making our own pwm right now. 
-void setup_pwm(){
-	//Clear out register
-	TCCR1A = 0x00;
-	//Enable OC1A pin
-	TCCR1A |= (3<<COM1A0);
-	//Set waveform mode
-	//mode 4 pwm CTC, top OCR1A, update at bottom
-	//TCCR1A |= (1<<WGM10);
-	TCCR1B |= (1<<WGM12);		//making our own pwm
-
-	//Set timer clock sel clk/8
-	//16mhz / 8 = 2mhz
-	//2mhz / (OCR1A = 10) = 200khz
-	TCCR1B &= ~(7<<CS10);    	
+/******************************************************************/
+void pwm_setup(void){
+	TCCR1A = (3<<COM1A0);   //Enable OC1A pin
+	TCCR1B = (1<<WGM12);    //making our own pwm
+	TCCR1B &= ~(7<<CS10);   //set up clock select
 	TCCR1B |= (2<<CS10);		
                                         
-	//set compare value
-	OCR1A = 10;
-
-	//enable timer interrupt
-	TIMSK1 = (1<<OCIE1A);    
+	OCR1A = 10;             //set compare value
+	TIMSK1 = (1<<OCIE1A);   //enable timer interrupt
 	
 	return;
 }
 
 
+/******************************************************************/
 //Sending one byte over SPI
-void SPI_sendbyte(uint8_t data){
-	//send data
-	SPDR = data;
-	//wait till done
-	while(!(SPSR & (1<<SPIF)));
-
+/******************************************************************/
+void spi_sendbyte(uint8_t data){
+	SPDR = data;                //send data
+	while(!(SPSR & (1<<SPIF))); //wait till done
 	return;
 }
 
-//Sending SPI byte of data
+/******************************************************************/
+// Sending an array over SPI
+// Takes a pointer to an array and the number of bytes to send
+/******************************************************************/
+void spi_sendarray(uint8_t *array, uint8_t length){
+	uint8_t i =0;
+	for(i =0; i<length; i++){
+		spi_sendbyte(*(array+i));
+	}
+}
+
+
+
+
+/******************************************************************/
+//Check to see if COG is busy
+//if 1 = BUSY else ready to receive new data
+/******************************************************************/
+uint8_t COG_busy(){
+	return (PORTB & (1<<BUSY_PIN));
+}
+
+
+/******************************************************************/
+//Sending byte of Data to COG
+//Takes the index of which register to edit and data
+//Procedure:
 //1. set CS low
 //2. send REG_HEADER
 //3. send reg_index
@@ -163,15 +170,16 @@ void SPI_sendbyte(uint8_t data){
 //5. send DATA_HEADER
 //6. send data
 //7. set CS high
-void SPI_byte(uint8_t reg_index, uint8_t data){
+/******************************************************************/
+void COG_sendbyte(uint8_t reg_index, uint8_t data){
 	//1. pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
     
 	//2. send header for data
-	SPI_sendbyte(REG_HEADER);
+	spi_sendbyte(REG_HEADER);
 
 	//3. send reg_index
-	SPI_sendbyte(reg_index);
+	spi_sendbyte(reg_index);
 
 	//4. toggle CS
 	PORTB |= (1<<CS_PIN);
@@ -179,14 +187,13 @@ void SPI_byte(uint8_t reg_index, uint8_t data){
 	PORTB &= ~(1<<CS_PIN);
 
 	//5. send DATA_HEADER
-	SPI_sendbyte(DATA_HEADER);
+	spi_sendbyte(DATA_HEADER);
 
 	//6. send data
-	SPI_sendbyte(data);
+	spi_sendbyte(data);
 
 	//7. set CS_PIN high
 	PORTB |= (1<<CS_PIN);
-	_delay_us(10);		//wait 10us between packets
 
 	return;
 }
@@ -204,23 +211,30 @@ void fill_pointer(uint8_t *data_ptr, uint64_t data, uint8_t num_bytes){
 }                
 */
 
-//Sending SPI packet of data
+/******************************************************************/
+//Sending an array of data to a register on COG
+//This function is used for when a COG register needs more than an 
+//byte.
+//Give register index and the array to fill register and the length
+//of array.
+//Procedure:
 //1. set CS low
 //2. send REG_HEADER
 //3. send reg_index
 //4. toggle CS high then low
 //5. send DATA_HEADER
-//6. send data
+//6. send array
 //7. set CS high
-void SPI_bytes(uint8_t reg_index, uint64_t data, uint8_t num_bytes){
+/******************************************************************/
+void COG_sendArray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 	//1. pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
     
 	//2. send header for data
-	SPI_sendbyte(REG_HEADER);
+	spi_sendbyte(REG_HEADER);
 
 	//3. send reg_index
-	SPI_sendbyte(reg_index);
+	spi_sendbyte(reg_index);
 
 	//4. toggle CS
 	PORTB |= (1<<CS_PIN);
@@ -228,26 +242,23 @@ void SPI_bytes(uint8_t reg_index, uint64_t data, uint8_t num_bytes){
 	PORTB &= ~(1<<CS_PIN);
 
 	//5. send DATA_HEADER
-	SPI_sendbyte(DATA_HEADER);
+	spi_sendbyte(DATA_HEADER);
 
-	//6. send data
-	//TODO review with Tuan.
-	//check for busy pin between data bytes?
-	for(i=0;i<num_bytes;i++)
-		SPI_sendbyte((data & (0xFF<<(i*8)))>>(i*8));
-	}
-
+	//6. send array
+	spi_sendarray(data, num_bytes);
+	
 	//7. set CS_PIN high
 	PORTB |= (1<<CS_PIN);
-	_delay_us(10);		//wait 10us between packets
 
 	return;
 } 
 
 
+/******************************************************************/
 //made for testing
 //creating a blank image buffer
 //2" display 200 x 96 pixel
+/******************************************************************/
 void fill_image_buff(uint8_t *buffer){
 	uint8_t data_counter = 0;
 	uint8_t pixel_data = 0xFF; //TODO are pixels 1&0 or byte value?
@@ -321,8 +332,8 @@ void startup_cog(){
 
 
 void init_cog(){
-	//SPI_byte(uint8_t reg_index, uint8_t data)
-	//SPI_bytes(uint8_t reg_index, uint64_t data, uint8_t num_bytes)
+	//COG_sendbyte(uint8_t reg_index, uint8_t data)
+	//COG_sendbyte(uint8_t reg_index, uint64_t data, uint8_t num_bytes)
 	//pass data as an address. ie &data
 	uint8_t data;
 
@@ -330,34 +341,34 @@ void init_cog(){
 	while(BUSY_PIN);
 
 	//Channel Select for EPD 2"
-	SPI_bytes(0x01, 2IN_DATA, 8);
+	//COG_sendarray(0x01, 2IN_DATA, 8);
 
 	//set DC/DC Frequency 
-	SPI_byte(0x06, 0xFF);
+	COG_sendbyte(0x06, 0xFF);
 
 	//High power mode osc setting
-	SPI_byte(0x07, 0x9D);
+	COG_sendbyte(0x07, 0x9D);
 
 	//Disable ADC
-	SPI_byte(0x08, 0x00);
+	COG_sendbyte(0x08, 0x00);
 
 	//Set Vcom Level
-	SPI_bytes(0x09, 0xD000, 2);
+	//COG_sendbyte(0x09, 0xD000, 2);
 
 	//Gate and source Voltage level
-	SPI_bytes(0x04, 2IN_DATA, 8);
+	//COG_sendbyte(0x04, 2IN_DATA, 8);
 	_delay_ms(5);
 
 	//Driver Latch on
 	//Cancel register noise
-	SPI_byte(0x03, 0x01);
+	COG_sendbyte(0x03, 0x01);
 
 	//Driver latch off
-	SPI_byte(0x03, 0x00);
+	COG_sendbyte(0x03, 0x00);
 	
 	//Start Charge pump positive Voltage
 	//VGH & VDH enable (VGh>12V & VDH >8V)
-	SPI_byte(0x05, 0x01);
+	COG_sendbyte(0x05, 0x01);
 	_delay_ms(30);
 
 	//disable pwm
@@ -365,15 +376,15 @@ void init_cog(){
 
 	//Start charge pump negative voltage
 	//VGL < -12v & VDL < -8V
-	SPI_byte(0x05, 0x03);
+	COG_sendbyte(0x05, 0x03);
 	_delay_ms(30);
 
 	//Set charge pump Vcom_Driver to ON
-	SPI_byte(0x05, 0x03);
+	COG_sendbyte(0x05, 0x03);
 	_delay_ms(30);
 
 	//output enable to disable
-	SPI_byte(0x02, 0x24);
+	COG_sendbyte(0x02, 0x24);
 
 	//if all went well the COG should be initialized and ready for image 
 	//data. if not... get ready to debug ;)
@@ -386,9 +397,9 @@ void write_cog(uint8_t *buffer){
 	uint8_t line_counter = 0;
 
 	//start charge pump
-	SPI_sendpacket(REG_HEADER, 0x04);
+	//SPI_sendpacket(REG_HEADER, 0x04);
 	_delay_us(10);
-	SPI_sendpacket(DATA_HEADER, 0x03);
+	//SPI_sendpacket(DATA_HEADER, 0x03);
 	_delay_us(10);
 
 	//send out each line, total of 97 lines
@@ -402,9 +413,9 @@ void write_cog(uint8_t *buffer){
 //Adventure is upon us...
 int main(){
 	//initialize
-	setup_ddr();
-	setup_spi();
-	setup_pwm();
+	ddr_setup();
+	spi_setup();
+	pwm_setup();
    	
 	//disable pwm until COG power on state
 	PWM_DISABLE();
