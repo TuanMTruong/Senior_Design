@@ -108,10 +108,10 @@
 <library name="TuansLib">
 <packages>
 <package name="VQFN_RHL_20PIN">
-<wire x1="0" y1="0" x2="0" y2="3.65" width="0.127" layer="21"/>
-<wire x1="0" y1="3.65" x2="4.5" y2="3.65" width="0.127" layer="21"/>
-<wire x1="4.5" y1="3.65" x2="4.5" y2="0" width="0.127" layer="21"/>
-<wire x1="4.5" y1="0" x2="0" y2="0" width="0.127" layer="21"/>
+<wire x1="-0.635" y1="-0.635" x2="-0.635" y2="4.285" width="0.127" layer="21"/>
+<wire x1="-0.635" y1="4.285" x2="5.135" y2="4.285" width="0.127" layer="21"/>
+<wire x1="5.135" y1="4.285" x2="5.135" y2="-0.635" width="0.127" layer="21"/>
+<wire x1="5.135" y1="-0.635" x2="-0.635" y2="-0.635" width="0.127" layer="21"/>
 <smd name="20" x="0" y="2.5" dx="1" dy="0.25" layer="1" rot="R180"/>
 <smd name="19" x="0.45" y="3.5" dx="1" dy="0.25" layer="1" rot="R270"/>
 <smd name="18" x="0.95" y="3.5" dx="1" dy="0.25" layer="1" rot="R270"/>
@@ -152,6 +152,21 @@
 <pad name="P$24" x="2.2" y="2.3" drill="0.2"/>
 <pad name="P$25" x="3.3" y="2.3" drill="0.2"/>
 <pad name="P$26" x="3.3" y="1.2" drill="0.2"/>
+<circle x="-0.635" y="-0.635" radius="0.381" width="0.635" layer="21"/>
+<polygon width="0.127" layer="29">
+<vertex x="-0.5" y="2.14"/>
+<vertex x="-0.5" y="1.36"/>
+<vertex x="0.725" y="1.36"/>
+<vertex x="0.725" y="0.725"/>
+<vertex x="3.775" y="0.725"/>
+<vertex x="3.775" y="1.36"/>
+<vertex x="5" y="1.36"/>
+<vertex x="5" y="2.14"/>
+<vertex x="3.775" y="2.14"/>
+<vertex x="3.775" y="2.775"/>
+<vertex x="0.725" y="2.775"/>
+<vertex x="0.725" y="2.14"/>
+</polygon>
 </package>
 </packages>
 <symbols>
