@@ -53,7 +53,7 @@
 #define MISO_PIN	3	//PB3
 #define BORDER_PIN	4	//PB4
 #define PWM_PIN		5	//PB5
-#define vcc		6	//PB6
+#define VCC_PIN 	6	//PB6
 #define BUSY_PIN	7	//PB7
 
 #define RX_PIN		2	//PD2
@@ -91,13 +91,14 @@ uint8_t test_buffer_nth[EPD_COLUMN][EPD_ROW];
 // current settings are for AT90USB1287 
 /******************************************************************/
 void ddr_setup(void){
-	DDRA = 0x00;                //buttons are inputs
+	DDRA = 0x00;                	//buttons are inputs
 	DDRB |= (1<<CS_PIN) | (1<<SCK_PIN) | (1<<MOSI_PIN);
 	DDRB &= ~(1<<MISO_PIN);
-	DDRB |= (1<<PWM_PIN);       //set OC1A output for PWM
-	DDRC = 0xff;                //LEds are outputs
-	DDRD |= (1<<TX_PIN);        //usart tx is output
-	DDRD &= ~(1<<RX_PIN);       //usart rx is input
+	DDRB &= ~(1<<BUSY_PIN);		//Busy pin is input
+	DDRB |= (1<<PWM_PIN);       	//set OC1A output for PWM
+	DDRC = 0xff;                	//LEds are outputs
+	DDRD |= (1<<TX_PIN);        	//usart tx is output
+	DDRD &= ~(1<<RX_PIN);       	//usart rx is input
 	return;
 }
 
@@ -160,7 +161,7 @@ void spi_sendarray(uint8_t *array, uint8_t length){
 //if 1 = BUSY else ready to receive new data
 /******************************************************************/
 uint8_t COG_busy(){
-	return (PORTB & (1<<BUSY_PIN));
+	return (PINB & (1<<BUSY_PIN));
 }
 
 
@@ -231,7 +232,7 @@ void COG_sendbyte(uint8_t reg_index, uint8_t data){
 //6. send array
 //7. set CS high
 /******************************************************************/
-void COG_sendArray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
+void COG_sendarray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 	//1. pull CS_PIN low
 	PORTB &= ~(1<<CS_PIN);
 
@@ -257,6 +258,7 @@ void COG_sendArray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 
 	return;
 } 
+
 
 
 /******************************************************************/
@@ -308,7 +310,10 @@ void COG_startup(){
 	_delay_ms(5);
 
 	//2. Supply voltage
-	PORTB |= (1<vcc);
+	//Suggesting COG be powered from a microcontroller PIN?
+	//PIN won't be able to supply enough
+	//TODO use pin in combination with power transistor 
+	PORTB |= (1<VCC_PIN);	//TODO come back to is and confirm VCC pin is supply from MCU
 	_delay_ms(10);
 
 	//3. Set /cs = 1
@@ -330,17 +335,32 @@ void COG_startup(){
 }
 
 
+/******************************************************************/
+// Initialize COG by setting up the correct register 
+/******************************************************************/
 void COG_init(){
 	//COG_sendbyte(uint8_t reg_index, uint8_t data)
 	//COG_sendbyte(uint8_t reg_index, uint64_t data, uint8_t num_bytes)
 	//pass data as an address. ie &data
-	uint8_t data;
+	uint8_t epd_channel_sel[8];
+	epd_channel_sel[0] = 0x00;
+	epd_channel_sel[1] = 0x00;
+	epd_channel_sel[2] = 0x00;
+	epd_channel_sel[3] = 0x00;
+	epd_channel_sel[4] = 0x01;
+	epd_channel_sel[5] = 0xFF;
+	epd_channel_sel[6] = 0xE0;
+	epd_channel_sel[7] = 0x00;
+
+	uint8_t epd_vcom_lvl[2];
+	epd_vcom_lvl[0] = 0xD0;
+	epd_vcom_lvl[1] = 0x00;
 
 	//Check if COG is busy
-	while(BUSY_PIN);
+	while(COG_busy());
 
 	//Channel Select for EPD 2"
-	//COG_sendarray(0x01, 2IN_DATA, 8);
+	COG_sendarray(0x01, epd_channel_sel, 8);
 
 	//set DC/DC Frequency 
 	COG_sendbyte(0x06, 0xFF);
@@ -352,10 +372,10 @@ void COG_init(){
 	COG_sendbyte(0x08, 0x00);
 
 	//Set Vcom Level
-	//COG_sendbyte(0x09, 0xD000, 2);
+	COG_sendarray(0x09, epd_vcom_lvl, 2);
 
 	//Gate and source Voltage level
-	//COG_sendbyte(0x04, 2IN_DATA, 8);
+	COG_sendbyte(0x04,0x03);
 	_delay_ms(5);
 
 	//Driver Latch on
@@ -379,7 +399,7 @@ void COG_init(){
 	_delay_ms(30);
 
 	//Set charge pump Vcom_Driver to ON
-	COG_sendbyte(0x05, 0x03);
+	COG_sendbyte(0x05, 0x0F);
 	_delay_ms(30);
 
 	//output enable to disable
@@ -391,20 +411,18 @@ void COG_init(){
 }
 
 //after COG is initialized began writing data from buffer to COG to be drawn
-void write_cog(uint8_t *buffer){
+void COG_write(uint8_t *buffer[EPD_ROW]){
 	//keeps track of which line is being written to
-	uint8_t line_counter = 0;
+	uint8_t row_counter = 0;
 
-	//start charge pump
-	//SPI_sendpacket(REG_HEADER, 0x04);
-	_delay_us(10);
-	//SPI_sendpacket(DATA_HEADER, 0x03);
-	_delay_us(10);
+	for( row_counter = 0; row_counter<EPD_ROW; row_counter++){
+		//start charge pump
+		COG_sendbyte(0x04, 0x03);
 
-	//send out each line, total of 97 lines
-	for(line_counter = 0; line_counter<97; line_counter++){
-
-
+		//send out each line, total of 96 lines
+		COG_sendarray(0x0A, buffer[row_counter], EPD_COLUMN);
+		//Turn on output enable
+		COG_sendbyte(0x02, 0x2F);
 	}
 }
 
@@ -424,14 +442,22 @@ int main(){
 	while(1){
 		switch(state){
 			case CREATE_IMG:
+				fill_image_buff(test_buffer_blk[0], 0xff, 0xff);
+				state = WRITE_MEM;
 				break;
 			case WRITE_MEM:
-				break;
+				//break;
 			case COG_ON:
+				COG_startup();
+				state = COG_INIT;
 				break;
 			case COG_INIT:
+				COG_init();
+				state = WRITE_EPD();
 				break;
 			case WRITE_EPD:
+				COG_write();
+				state = COG_OFF;
 				break;
 			case CHECK_EPD:
 				break;
