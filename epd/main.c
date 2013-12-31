@@ -64,10 +64,10 @@
 enum states {CREATE_IMG, WRITE_MEM, COG_ON,COG_INIT, WRITE_EPD, CHECK_EPD, COG_OFF};
 enum states state = CREATE_IMG;
 
-uint8_t test_buffer_blk[EPD_COLUMN][EPD_ROW];
-uint8_t test_buffer_wht[EPD_COLUMN][EPD_ROW];
-uint8_t test_buffer_nth[EPD_COLUMN][EPD_ROW];
-
+//uint8_t test_buffer_blk[EPD_COLUMN][EPD_ROW];
+//uint8_t test_buffer_wht[EPD_COLUMN][EPD_ROW];
+//uint8_t test_buffer_nth[EPD_COLUMN][EPD_ROW];
+uint8_t test_buffer[EPD_COLUMN];
 
 /******************************************************************/
 // set up data direction for pins
