@@ -38,13 +38,15 @@
 /******************************************************************/
 
 //Clock speed
-#define F_CPU 16000000UL
+#define F_CPU 16000000
 
 //includes
 #include<avr/io.h>
 #include<util/delay.h>
 #include<stdlib.h>
 #include<stdio.h>
+#include<avr/interrupt.h>
+#include"usart.h"
 
 //hardware macros
 #define CS_PIN		0	//PB0
@@ -56,21 +58,23 @@
 #define VCC_PIN 	6	//PB6
 #define BUSY_PIN	7	//PB7
 
+#define DISCHARGE_PIN	1	//PD1
 #define RX_PIN		2	//PD2
 #define TX_PIN		3	//PD3
 #define RESET_PIN	4	//PD4
 
+#define BAUD		38400	//usart speed
 
 //protocol macros
 #define REG_HEADER	0x70	//send before sending reg. index
 #define DATA_HEADER	0x72	//send before sending reg. data
 
-#define IN_DATA	0x00 //0x00000000000FFF00
-#define IN2_DATA	0x00 //0x0000000001FFE000
+#define IN_DATA		0x00 	//0x00000000000FFF00
+#define IN2_DATA	0x00 	//0x0000000001FFE000
 
 #define PWM_DISABLE()	TCCR1B &= ~(7<<CS10)
-#define PWM_ENABLE()	TCCR1B |= (2<<CS10)
-
+#define PWM_ENABLE()	TCCR1B |= (1<<CS10)
+#define PWM_SPEED	40	//200KHz
 
 #define EPD_ROW		96
 #define EPD_COLUMN	76
@@ -96,9 +100,12 @@ void ddr_setup(void){
 	DDRB &= ~(1<<MISO_PIN);
 	DDRB &= ~(1<<BUSY_PIN);		//Busy pin is input
 	DDRB |= (1<<PWM_PIN);       	//set OC1A output for PWM
+	DDRB |= (1<<BORDER_PIN);	//control border
+	DDRB |= (1<<VCC_PIN);
 	DDRC = 0xff;                	//LEds are outputs
 	DDRD |= (1<<TX_PIN);        	//usart tx is output
 	DDRD &= ~(1<<RX_PIN);       	//usart rx is input
+	DDRD |= (1<<RESET_PIN);
 	return;
 }
 
@@ -108,26 +115,27 @@ void ddr_setup(void){
 //mode 0
 /******************************************************************/
 void spi_setup(void){
-	SPCR = (1<<MSTR) | (1<<SPIE);   //master, MSB first, enable, 8MHz
+	SPCR = (1<<MSTR) | (1<<SPE);   //master, MSB first, enable, 8MHz
 	SPSR = (1<<SPI2X);              //double spi clock speed
 
 	return;
 }
 
 
+
 /******************************************************************/
 //100-300KHz 50% duty cycle PWM
 //TIMER1 OC1A
 //TODO change to true PWM mode. making our own pwm right now. 
+//TODO test pwm 
 /******************************************************************/
 void pwm_setup(void){
-	TCCR1A = (3<<COM1A0);   //Enable OC1A pin
-	TCCR1B = (1<<WGM12);    //making our own pwm
-	TCCR1B &= ~(7<<CS10);   //set up clock select
-	TCCR1B |= (2<<CS10);		
+	TCCR1A = (1<<COM1A0);	//Enable OC1A pin on ever compare match
+	TCCR1B = (1<<WGM12) | (1<<CS10);	//Enable CTC and no clock prescale
 
-	OCR1A = 10;             //set compare value
-	TIMSK1 = (1<<OCIE1A);   //enable timer interrupt
+
+	OCR1A = PWM_SPEED;	//set compare value for 200KHz
+	TIMSK = (1<<OCIE1A);   //enable timer interrupt
 
 	return;
 }
@@ -138,7 +146,7 @@ void pwm_setup(void){
 /******************************************************************/
 void spi_sendbyte(uint8_t data){
 	SPDR = data;                //send data
-	while(!(SPSR & (1<<SPIF))); //wait till done
+	while(!(SPSR & (1<<SPIF))){}; //wait till done
 	return;
 }
 
@@ -158,9 +166,9 @@ void spi_sendarray(uint8_t *array, uint8_t length){
 
 /******************************************************************/
 //Check to see if COG is busy
-//if 1 = BUSY else ready to receive new data
+//if 1 => BUSY,  else ready to receive new data
 /******************************************************************/
-uint8_t COG_busy(){
+uint8_t COG_busy(void){
 	return (PINB & (1<<BUSY_PIN));
 }
 
@@ -178,28 +186,18 @@ uint8_t COG_busy(){
 //7. set CS high
 /******************************************************************/
 void COG_sendbyte(uint8_t reg_index, uint8_t data){
-	//1. pull CS_PIN low
-	PORTB &= ~(1<<CS_PIN);
 
-	//2. send header for data
-	spi_sendbyte(REG_HEADER);
+	PORTB &= ~(1<<CS_PIN); 		//1. pull CS_PIN low
+	spi_sendbyte(REG_HEADER);   	//2. send header for data
+	spi_sendbyte(reg_index); 	//3. send reg_index
 
-	//3. send reg_index
-	spi_sendbyte(reg_index);
-
-	//4. toggle CS
-	PORTB |= (1<<CS_PIN);
+	PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	_delay_us(10);
 	PORTB &= ~(1<<CS_PIN);
 
-	//5. send DATA_HEADER
-	spi_sendbyte(DATA_HEADER);
-
-	//6. send data
-	spi_sendbyte(data);
-
-	//7. set CS_PIN high
-	PORTB |= (1<<CS_PIN);
+	spi_sendbyte(DATA_HEADER);  	//5. send DATA_HEADER
+	spi_sendbyte(data); 		//6. send data
+	PORTB |= (1<<CS_PIN);   	//7. set CS_PIN high
 
 	return;
 }
@@ -233,28 +231,18 @@ void COG_sendbyte(uint8_t reg_index, uint8_t data){
 //7. set CS high
 /******************************************************************/
 void COG_sendarray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
-	//1. pull CS_PIN low
-	PORTB &= ~(1<<CS_PIN);
 
-	//2. send header for data
-	spi_sendbyte(REG_HEADER);
+	PORTB &= ~(1<<CS_PIN);  	//1. pull CS_PIN low
+	spi_sendbyte(REG_HEADER);   	//2. send header for data
+	spi_sendbyte(reg_index);	//3. send reg_index
 
-	//3. send reg_index
-	spi_sendbyte(reg_index);
-
-	//4. toggle CS
-	PORTB |= (1<<CS_PIN);
+	PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	_delay_us(10);
 	PORTB &= ~(1<<CS_PIN);
 
-	//5. send DATA_HEADER
-	spi_sendbyte(DATA_HEADER);
-
-	//6. send array
-	spi_sendarray(data, num_bytes);
-
-	//7. set CS_PIN high
-	PORTB |= (1<<CS_PIN);
+	spi_sendbyte(DATA_HEADER);  	//5. send DATA_HEADER
+	spi_sendarray(data, num_bytes); //6. send array
+	PORTB |= (1<<CS_PIN);   	//7. set CS_PIN high
 
 	return;
 } 
@@ -267,7 +255,7 @@ void COG_sendarray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 //takes a pointer to a 2D array, data to fill that array, and scan byte
 //2" display 200 x 96 pixel
 /******************************************************************/
-void fill_image_buff(uint8_t *buffer[EPD_ROW], uint8_t pixel_data, uint8_t scan_data){
+void fill_image_buff(uint8_t (*buffer)[EPD_ROW], uint8_t pixel_data, uint8_t scan_data){
 	uint8_t row_counter = 0;	//counter for the rows on the image
 	uint8_t column_counter= 0;	//counter for the columns on the image
 
@@ -304,7 +292,8 @@ void fill_image_buff(uint8_t *buffer[EPD_ROW], uint8_t pixel_data, uint8_t scan_
 //4. border = 1
 //5. toggle reset 
 /******************************************************************/
-void COG_startup(){
+void COG_startup(void){
+	usart_sendarray("start up COG\n", 13);
 	//1. Enable PWM
 	PWM_ENABLE();
 	_delay_ms(5);
@@ -338,7 +327,8 @@ void COG_startup(){
 /******************************************************************/
 // Initialize COG by setting up the correct register 
 /******************************************************************/
-void COG_init(){
+void COG_init(void){
+	usart_sendarray("COG init\n", 9);
 	//COG_sendbyte(uint8_t reg_index, uint8_t data)
 	//COG_sendbyte(uint8_t reg_index, uint64_t data, uint8_t num_bytes)
 	//pass data as an address. ie &data
@@ -356,93 +346,119 @@ void COG_init(){
 	epd_vcom_lvl[0] = 0xD0;
 	epd_vcom_lvl[1] = 0x00;
 
-	//Check if COG is busy
-	while(COG_busy());
+	usart_sendarray("busy\n", 5);
+	while(COG_busy());  //Check if COG is busy
+	usart_sendarray("not busy\n", 9);
 
-	//Channel Select for EPD 2"
-	COG_sendarray(0x01, epd_channel_sel, 8);
-
-	//set DC/DC Frequency 
-	COG_sendbyte(0x06, 0xFF);
-
-	//High power mode osc setting
-	COG_sendbyte(0x07, 0x9D);
-
-	//Disable ADC
-	COG_sendbyte(0x08, 0x00);
-
-	//Set Vcom Level
-	COG_sendarray(0x09, epd_vcom_lvl, 2);
-
-	//Gate and source Voltage level
-	COG_sendbyte(0x04,0x03);
+	COG_sendarray(0x01, epd_channel_sel, 8);	//Channel Select for EPD 2"
+	usart_sendarray("channel sel\n", 12);
+	COG_sendbyte(0x06, 0xFF);   			//set DC/DC Frequency 
+	COG_sendbyte(0x07, 0x9D);   			//High power mode osc setting
+	COG_sendbyte(0x08, 0x00);   			//Disable ADC
+	COG_sendarray(0x09, epd_vcom_lvl, 2);   	//Set Vcom Level
+	COG_sendbyte(0x04,0x03);    			//Gate and source Voltage level
 	_delay_ms(5);
-
-	//Driver Latch on
-	//Cancel register noise
-	COG_sendbyte(0x03, 0x01);
-
-	//Driver latch off
-	COG_sendbyte(0x03, 0x00);
-
-	//Start Charge pump positive Voltage
+	COG_sendbyte(0x03, 0x01);   			//Driver Latch on, Cancel register noise
+	COG_sendbyte(0x03, 0x00);   			//Driver latch off
+	COG_sendbyte(0x05, 0x01);  			//Start Charge pump positive Voltage
 	//VGH & VDH enable (VGh>12V & VDH >8V)
-	COG_sendbyte(0x05, 0x01);
 	_delay_ms(30);
-
-	//disable pwm
-	PWM_DISABLE();
-
-	//Start charge pump negative voltage
+	PWM_DISABLE();  				//disable pwm
+	COG_sendbyte(0x05, 0x03);   			//Start charge pump negative voltage
 	//VGL < -12v & VDL < -8V
-	COG_sendbyte(0x05, 0x03);
 	_delay_ms(30);
-
-	//Set charge pump Vcom_Driver to ON
-	COG_sendbyte(0x05, 0x0F);
+	COG_sendbyte(0x05, 0x0F);   			//Set charge pump Vcom_Driver to ON
 	_delay_ms(30);
+	COG_sendbyte(0x02, 0x24);  			//output enable to disable
 
-	//output enable to disable
-	COG_sendbyte(0x02, 0x24);
-
+	usart_sendarray("init done\n", 10);
 	//if all went well the COG should be initialized and ready for image 
 	//data. if not... get ready to debug ;)
 	return;
 }
 
+/******************************************************************/
 //after COG is initialized began writing data from buffer to COG to be drawn
-void COG_write(uint8_t *buffer[EPD_ROW]){
-	//keeps track of which line is being written to
-	uint8_t row_counter = 0;
+/******************************************************************/
+void COG_write(uint8_t (*buffer)[EPD_ROW]){
+	usart_sendarray("write to COG\n", 13);
+
+	uint8_t row_counter = 0;    //keeps track of which line is being written to
 
 	for( row_counter = 0; row_counter<EPD_ROW; row_counter++){
-		//start charge pump
-		COG_sendbyte(0x04, 0x03);
-
+		COG_sendbyte(0x04, 0x03);   	//start charge pump
 		//send out each line, total of 96 lines
 		COG_sendarray(0x0A, buffer[row_counter], EPD_COLUMN);
-		//Turn on output enable
-		COG_sendbyte(0x02, 0x2F);
+		COG_sendbyte(0x02, 0x2F);   	//Turn on output enable
 	}
 }
 
 
+
+/******************************************************************/
+// The COG needs to be turned off properly 
+// Nothing display needs to be written to screen
+// latches reset
+// chargeump discharged and off
+/******************************************************************/
+void COG_off(void){
+	fill_image_buff(test_buffer_nth, 0x55, 0xFF);	//fill array with nothing
+	COG_write(test_buffer_nth);		//write nothing array to display
+	_delay_ms(25);				//wait 
+	PORTB &= ~(1<<BORDER_PIN);		//Turn on border (active low)
+	_delay_ms(250);				//wait
+	PORTB |= (1<< BORDER_PIN);		//turn off border
+	COG_sendbyte(0x03, 0x01);		//reset latch
+	COG_sendbyte(0x02, 0x05); 		//output enable off
+	COG_sendbyte(0x05, 0x0E);		//chargepump vcom off
+	COG_sendbyte(0x05, 0x02);		//chargepump negative votlage off
+	COG_sendbyte(0x04, 0x0C);		//Discharge
+	_delay_ms(125);
+	COG_sendbyte(0x05, 0x00);		//all other chargepump off
+	COG_sendbyte(0x07, 0x0D);		//turn off osc
+	COG_sendbyte(0x04, 0x50); 		//discharge internals
+	_delay_ms(40);
+	COG_sendbyte(0x04, 0xA0);		//discharge internals
+	_delay_ms(40);
+	COG_sendbyte(0x04, 0x00);		//discharge internals
+
+	PORTB &= ~(1<<VCC_PIN);			//disable power
+
+	return;
+
+}
+
+
+
+ISR(TIMER1_COMPA_vect){
+	TCNT1 = 0;
+}
+
+/******************************************************************/
 //Adventure is upon us...
-int main(){
+/******************************************************************/
+int main(void){
 	//initialize
 	ddr_setup();
 	spi_setup();
 	pwm_setup();
+	usart_setup(BAUD);
 
 	//disable pwm until COG power on state
-	PWM_DISABLE();
+	//PWM_DISABLE();
 	//variables
-
+	
+	sei();
+	_delay_ms(200);
+	state = CREATE_IMG;
+	//while(1){
+	usart_sendbyte('a');
+	//}
 	//loop, forever...
 	while(1){
 		switch(state){
 			case CREATE_IMG:
-				fill_image_buff(test_buffer_blk[0], 0xff, 0xff);
+				fill_image_buff(test_buffer_blk, 0xff, 0xff);
 				state = WRITE_MEM;
 				break;
 			case WRITE_MEM:
@@ -451,23 +467,26 @@ int main(){
 				COG_startup();
 				state = COG_INIT;
 				break;
+
 			case COG_INIT:
 				COG_init();
-				state = WRITE_EPD();
+				state = WRITE_EPD;
 				break;
 			case WRITE_EPD:
-				COG_write();
+				COG_write(test_buffer_blk);
 				state = COG_OFF;
 				break;
 			case CHECK_EPD:
 				break;
 			case COG_OFF:
+				while(1){}
+				//TODO turn off COG properly so display isn't damange
 				break;
 			default:
 				break;
 
 		}
-	}	
+	}
 	return 0;
 }
 
