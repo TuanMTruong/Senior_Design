@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="mil" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="mil"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -4082,10 +4082,6 @@ Source: http://cds.linear.com/docs/Datasheet/623012fb.pdf</description>
 <wire x1="-1.4" y1="1.4" x2="1.4" y2="1.4" width="0.2032" layer="51"/>
 <wire x1="1.4" y1="1.4" x2="1.4" y2="-1.4" width="0.2032" layer="21"/>
 <wire x1="1.4" y1="-1.4" x2="-1.4" y2="-1.4" width="0.2032" layer="51"/>
-<wire x1="-2.25" y1="1.5" x2="2" y2="1.5" width="0" layer="18"/>
-<wire x1="1.75" y1="-1.5" x2="-2" y2="-1.5" width="0" layer="18"/>
-<wire x1="-2.25" y1="1.1" x2="2" y2="1.1" width="0" layer="18"/>
-<wire x1="1.75" y1="-1.1" x2="-2" y2="-1.1" width="0" layer="18"/>
 <circle x="-0.75" y="-0.775" radius="0.275" width="0" layer="51"/>
 <smd name="EXP" x="0" y="0" dx="2.38" dy="1.65" layer="1" stop="no" cream="no"/>
 <smd name="1" x="-0.75" y="-1.4125" dx="0.28" dy="0.675" layer="1" roundness="25" stop="no" cream="no"/>
