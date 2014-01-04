@@ -16,14 +16,14 @@
  * - SPI_MISO	PB3		input to MCU
  * - BORDER_PIN	PB4		output from MCU
  * - PWM_OC1A	PB5		output from MCU
- * - vcc	PB6		output from MCU
+ * - PANEL_ON	PB6		output from MCU
  * - BUSY_PIN	PB7		input to MCU
  *
- * - LEDs	PC0-PC7
  * - USART_RX	PD2
  * - USART_TX	PD3
+ * 
+ * - DISCHARGE	PD1
  * - RESET_PIN	PD4
- * - ID pin	gnd
  */
 
 /* PLAN OF ATTACK:
@@ -67,7 +67,7 @@ enum states state = CREATE_IMG;
 //uint8_t test_buffer_blk[EPD_COLUMN][EPD_ROW];
 //uint8_t test_buffer_wht[EPD_COLUMN][EPD_ROW];
 //uint8_t test_buffer_nth[EPD_COLUMN][EPD_ROW];
-uint8_t test_buffer[EPD_COLUMN];
+//uint8_t test_buffer[EPD_ROW][EPD_COLUMN];
 
 /******************************************************************/
 // set up data direction for pins
@@ -80,11 +80,12 @@ void ddr_setup(void){
 	DDRB &= ~(1<<BUSY_PIN);		//Busy pin is input
 	DDRB |= (1<<PWM_PIN);       	//set OC1A output for PWM
 	DDRB |= (1<<BORDER_PIN);	//control border
-	DDRB |= (1<<VCC_PIN);
+	DDRB |= (1<<PANELON_PIN);
 	DDRC = 0xff;                	//LEds are outputs
 	DDRD |= (1<<TX_PIN);        	//usart tx is output
 	DDRD &= ~(1<<RX_PIN);       	//usart rx is input
-	DDRD |= (1<<RESET_PIN);
+	DDRE |= (1<<RESET_PIN);
+	DDRE |= (1<<DISCHARGE_PIN);
 	return;
 }
 
@@ -133,7 +134,7 @@ void pwm_setup(void){
 //takes a pointer to a 2D array, data to fill that array, and scan byte
 //2" display 200 x 96 pixel
 /******************************************************************/
-void fill_image_buff(uint8_t (*buffer)[EPD_ROW], uint8_t pixel_data, uint8_t scan_data){
+void fill_image_buff(uint8_t buffer[EPD_ROW][EPD_COLUMN], uint8_t pixel_data, uint8_t scan_data){
 	uint8_t row_counter = 0;	//counter for the rows on the image
 	uint8_t column_counter= 0;	//counter for the columns on the image
 
@@ -161,8 +162,12 @@ void fill_image_buff(uint8_t (*buffer)[EPD_ROW], uint8_t pixel_data, uint8_t sca
 
 
 
+/******************************************************************/
+// interrupt for pwm
+// toggles the pwm pin and reset timer
+/******************************************************************/
 ISR(TIMER1_COMPA_vect){
-	TCNT1 = 0;
+	TCNT1 = 0;	//probably not need but oh well
 }
 
 /******************************************************************/
@@ -175,6 +180,7 @@ int main(void){
 	pwm_setup();
 	usart_setup(BAUD);
 
+	PORTB |= (1<<BUSY_PIN);
 	_delay_ms(10);		//wait for everything to start up 
 	usart_sendarray("SYSTEM STARTING\n", 16); 
 	//disable pwm until COG power on state
@@ -183,12 +189,18 @@ int main(void){
 	sei();			//enable global interrupt			
 	state = CREATE_IMG;
 
+	//while(1);
+	//fill_image_buff(test_buffer, 0xff, 0xaa);
+	//usart_sendarray(test_buffer[0], EPD_COLUMN);
+	//usart_sendarray(test_buffer[1], EPD_COLUMN);
+
 	//loop, forever...
+	
 	while(1){
 		switch(state){
 			case CREATE_IMG:
 				usart_sendarray("state = CREATE_IMG\n", 19);
-				fill_image_buff(test_buffer_blk, 0xff, 0xff);
+	//			fill_image_buff(test_buffer_blk, 0xff, 0xff);
 				state = WRITE_MEM;
 				break;
 			case WRITE_MEM:
@@ -203,12 +215,30 @@ int main(void){
 				state = WRITE_EPD;
 				break;
 			case WRITE_EPD:
-				COG_write(test_buffer_blk);
+				//COG_write(test_buffer_blk);
+				COG_write_fixed_image(0xff);
+				_delay_ms(200);
+				_delay_ms(200);
+				_delay_ms(80);
+				COG_write_fixed_image(0xff);
+				_delay_ms(200);
+				_delay_ms(200);
+				_delay_ms(80);
+				COG_write_fixed_image(0xaa);
+				_delay_ms(200);
+				_delay_ms(200);
+				_delay_ms(80);
+				COG_write_fixed_image(0xaa);
+				_delay_ms(200);
+				_delay_ms(200);
+				_delay_ms(80);
 				state = COG_OFF;
 				break;
 			case CHECK_EPD:
 				break;
 			case COG_OFF:
+				usart_sendarray("off\n",4);
+				COG_off();
 				while(1){}
 				//TODO turn off COG properly so display isn't damange
 				break;

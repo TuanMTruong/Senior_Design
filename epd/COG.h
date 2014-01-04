@@ -13,8 +13,8 @@
 #define PANELON_PIN 	6	//PB6
 #define BUSY_PIN	7	//PB7
 
-#define DISCHARGE_PIN	1	//PD1
-#define RESET_PIN	4	//PD4
+#define DISCHARGE_PIN	1	//PE1
+#define RESET_PIN	4	//PE4
 
 #define BAUD		38400	//usart speed
 
@@ -29,7 +29,7 @@
 #define PWM_ENABLE()	TCCR1B |= (1<<CS10)
 #define PWM_SPEED	40	//200KHz
 
-#define EPD_ROW		96
+#define EPD_ROW		96	//96
 #define EPD_COLUMN	76
 
 
@@ -40,5 +40,7 @@ void COG_sendbyte(uint8_t reg_index, uint8_t data);
 void COG_sendarray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes);
 void COG_startup(void);
 void COG_init(void);
-void COG_write(uint8_t (*buffer)[EPD_ROW]);
+void COG_write_array(uint8_t (*buffer)[EPD_ROW]);
+void COG_write_fixed_image(uint8_t pixel_data);
+void COG_write_fixed_line(uint8_t line, uint8_t pixel_data);
 void COG_off(void);

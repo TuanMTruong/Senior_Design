@@ -9,17 +9,12 @@ Archive member included because of file (symbol)
 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
                               obj/main.o (__do_clear_bss)
 
-Allocating common symbols
-Common symbol       size              file
-
-test_buffer_wht     0x1c80            obj/main.o
-test_buffer_blk     0x1c80            obj/main.o
-test_buffer_nth     0x1c80            obj/main.o
-
 Discarded input sections
 
  .bss           0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128.o
  .text          0x00000000        0x0 obj/main.o
+ .text.fill_image_buff
+                0x00000000       0x4e obj/main.o
  .text          0x00000000        0x0 obj/usart.o
  .bss           0x00000000        0x0 obj/usart.o
  .text.usart_readbyte
@@ -28,9 +23,8 @@ Discarded input sections
  .bss           0x00000000        0x0 obj/spi.o
  .text          0x00000000        0x0 obj/COG.o
  .bss           0x00000000        0x0 obj/COG.o
- .text.COG_busy
-                0x00000000        0x6 obj/COG.o
- .text.COG_off  0x00000000       0xb2 obj/COG.o
+ .text.COG_write_array
+                0x00000000       0x4c obj/COG.o
  .text          0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_udivmodsi4.o)
  .bss           0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_udivmodsi4.o)
  .text          0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
@@ -157,7 +151,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x536
+.text           0x00000000      0x754
  *(.vectors)
  .vectors       0x00000000       0x8c /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128.o
                 0x00000000                __vectors
@@ -250,60 +244,65 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
                 0x000000ca                . = ALIGN (0x2)
  *(.text.*)
  .text.ddr_setup
-                0x000000ca       0x1e obj/main.o
+                0x000000ca       0x20 obj/main.o
                 0x000000ca                ddr_setup
  .text.pwm_setup
-                0x000000e8       0x16 obj/main.o
-                0x000000e8                pwm_setup
- .text.fill_image_buff
-                0x000000fe       0x4e obj/main.o
-                0x000000fe                fill_image_buff
+                0x000000ea       0x16 obj/main.o
+                0x000000ea                pwm_setup
  .text.__vector_12
-                0x0000014c       0x18 obj/main.o
-                0x0000014c                __vector_12
+                0x00000100       0x18 obj/main.o
+                0x00000100                __vector_12
  .text.startup.main
-                0x00000164       0x8a obj/main.o
-                0x00000164                main
+                0x00000118      0x16e obj/main.o
+                0x00000118                main
  .text.usart_setup
-                0x000001ee       0x42 obj/usart.o
-                0x000001ee                usart_setup
+                0x00000286       0x42 obj/usart.o
+                0x00000286                usart_setup
  .text.usart_sendbyte
-                0x00000230        0xe obj/usart.o
-                0x00000230                usart_sendbyte
+                0x000002c8        0xe obj/usart.o
+                0x000002c8                usart_sendbyte
  .text.usart_sendarray
-                0x0000023e       0x3a obj/usart.o
-                0x0000023e                usart_sendarray
+                0x000002d6       0x3a obj/usart.o
+                0x000002d6                usart_sendarray
  .text.spi_setup
-                0x00000278        0xa obj/spi.o
-                0x00000278                spi_setup
+                0x00000310        0xa obj/spi.o
+                0x00000310                spi_setup
  .text.spi_sendbyte
-                0x00000282        0x8 obj/spi.o
-                0x00000282                spi_sendbyte
+                0x0000031a        0x8 obj/spi.o
+                0x0000031a                spi_sendbyte
  .text.spi_sendarray
-                0x0000028a       0x3a obj/spi.o
-                0x0000028a                spi_sendarray
+                0x00000322       0x3a obj/spi.o
+                0x00000322                spi_sendarray
+ .text.COG_busy
+                0x0000035c        0xe obj/COG.o
+                0x0000035c                COG_busy
  .text.COG_sendbyte
-                0x000002c4       0x3c obj/COG.o
-                0x000002c4                COG_sendbyte
+                0x0000036a       0x44 obj/COG.o
+                0x0000036a                COG_sendbyte
  .text.COG_sendarray
-                0x00000300       0x48 obj/COG.o
-                0x00000300                COG_sendarray
+                0x000003ae       0x50 obj/COG.o
+                0x000003ae                COG_sendarray
  .text.COG_startup
-                0x00000348       0x58 obj/COG.o
-                0x00000348                COG_startup
+                0x000003fe       0x66 obj/COG.o
+                0x000003fe                COG_startup
  .text.COG_init
-                0x000003a0      0x10a obj/COG.o
-                0x000003a0                COG_init
- .text.COG_write
-                0x000004aa       0x44 obj/COG.o
-                0x000004aa                COG_write
- .text.libgcc   0x000004ee       0x44 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_udivmodsi4.o)
-                0x000004ee                __udivmodsi4
-                0x00000532                . = ALIGN (0x2)
+                0x00000464      0x106 obj/COG.o
+                0x00000464                COG_init
+ .text.COG_write_fixed_line
+                0x0000056a       0xb8 obj/COG.o
+                0x0000056a                COG_write_fixed_line
+ .text.COG_write_fixed_image
+                0x00000622       0x22 obj/COG.o
+                0x00000622                COG_write_fixed_image
+ .text.COG_off  0x00000644       0xc8 obj/COG.o
+                0x00000644                COG_off
+ .text.libgcc   0x0000070c       0x44 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_udivmodsi4.o)
+                0x0000070c                __udivmodsi4
+                0x00000750                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000532        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
-                0x00000532                exit
-                0x00000532                _exit
+ .fini9         0x00000750        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+                0x00000750                exit
+                0x00000750                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -322,52 +321,47 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000532        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .fini0         0x00000750        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000536                _etext = .
+                0x00000754                _etext = .
 
-.data           0x00800100       0x76 load address 0x00000536
+.data           0x00800100       0x82 load address 0x00000754
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128.o
- .data          0x00800100       0x25 obj/main.o
- .data          0x00800125        0x0 obj/usart.o
- .data          0x00800125        0x0 obj/spi.o
- .data          0x00800125       0x50 obj/COG.o
- .data          0x00800175        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_udivmodsi4.o)
- .data          0x00800175        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
- .data          0x00800175        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
- .data          0x00800175        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
+ .data          0x00800100       0x2a obj/main.o
+ .data          0x0080012a        0x0 obj/usart.o
+ .data          0x0080012a        0x0 obj/spi.o
+ .data          0x0080012a       0x58 obj/COG.o
+ .data          0x00800182        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_udivmodsi4.o)
+ .data          0x00800182        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_exit.o)
+ .data          0x00800182        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_copy_data.o)
+ .data          0x00800182        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
  *(.data*)
  *(.rodata)
  *(.rodata*)
  *(.gnu.linkonce.d*)
-                0x00800176                . = ALIGN (0x2)
- *fill*         0x00800175        0x1 00
-                0x00800176                _edata = .
-                0x00800176                PROVIDE (__data_end, .)
+                0x00800182                . = ALIGN (0x2)
+                0x00800182                _edata = .
+                0x00800182                PROVIDE (__data_end, .)
 
-.bss            0x00800176     0x5581
-                0x00800176                PROVIDE (__bss_start, .)
+.bss            0x00800182        0x1
+                0x00800182                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00800176        0x1 obj/main.o
-                0x00800176                state
+ .bss           0x00800182        0x1 obj/main.o
+                0x00800182                state
  *(.bss*)
  *(COMMON)
- COMMON         0x00800177     0x5580 obj/main.o
-                0x00800177                test_buffer_wht
-                0x00801df7                test_buffer_blk
-                0x00803a77                test_buffer_nth
-                0x008056f7                PROVIDE (__bss_end, .)
-                0x00000536                __data_load_start = LOADADDR (.data)
-                0x000005ac                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00800183                PROVIDE (__bss_end, .)
+                0x00000754                __data_load_start = LOADADDR (.data)
+                0x000007d6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008056f7        0x0
-                0x008056f7                PROVIDE (__noinit_start, .)
+.noinit         0x00800183        0x0
+                0x00800183                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x008056f7                PROVIDE (__noinit_end, .)
-                0x008056f7                _end = .
-                0x008056f7                PROVIDE (__heap_start, .)
+                0x00800183                PROVIDE (__noinit_end, .)
+                0x00800183                _end = .
+                0x00800183                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -477,12 +471,15 @@ COG_busy                                          obj/COG.o
 COG_init                                          obj/COG.o
                                                   obj/main.o
 COG_off                                           obj/COG.o
+                                                  obj/main.o
 COG_sendarray                                     obj/COG.o
 COG_sendbyte                                      obj/COG.o
 COG_startup                                       obj/COG.o
                                                   obj/main.o
-COG_write                                         obj/COG.o
+COG_write_array                                   obj/COG.o
+COG_write_fixed_image                             obj/COG.o
                                                   obj/main.o
+COG_write_fixed_line                              obj/COG.o
 __bad_interrupt                                   /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128.o
 __bss_end                                         /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
 __bss_start                                       /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr51/libgcc.a(_clear_bss.o)
@@ -556,9 +553,6 @@ spi_sendbyte                                      obj/spi.o
 spi_setup                                         obj/spi.o
                                                   obj/main.o
 state                                             obj/main.o
-test_buffer_blk                                   obj/main.o
-test_buffer_nth                                   obj/main.o
-test_buffer_wht                                   obj/main.o
 usart_readbyte                                    obj/usart.o
 usart_sendarray                                   obj/usart.o
                                                   obj/COG.o

@@ -8,7 +8,7 @@
 //includes
 #include<avr/io.h>
 #include"spi.h"
-
+#include"usart.h"
 
 
 /******************************************************************/
@@ -29,6 +29,7 @@ void spi_setup(void){
 void spi_sendbyte(uint8_t data){
 	SPDR = data;                //send data
 	while(!(SPSR & (1<<SPIF))){}; //wait till done
+//	usart_sendbyte(data);
 	return;
 }
 

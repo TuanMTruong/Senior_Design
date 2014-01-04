@@ -74,15 +74,15 @@
   79 003a 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 spi.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:13     .text.spi_setup:00000000 spi_setup
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:28     .text.spi_sendbyte:00000000 spi_sendbyte
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccSP681T.s:43     .text.spi_sendarray:00000000 spi_sendarray
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:13     .text.spi_setup:00000000 spi_setup
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:28     .text.spi_sendbyte:00000000 spi_sendbyte
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccw4hb5G.s:43     .text.spi_sendarray:00000000 spi_sendarray
 
 UNDEFINED SYMBOLS
 __do_copy_data

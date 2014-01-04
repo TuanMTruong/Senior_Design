@@ -18,6 +18,7 @@
 //if 1 => BUSY,  else ready to receive new data
 /******************************************************************/
 uint8_t COG_busy(void){
+	_delay_us(1);
 	return (PINB & (1<<BUSY_PIN));
 }
 
@@ -35,11 +36,14 @@ uint8_t COG_busy(void){
 //7. set CS high
 /******************************************************************/
 void COG_sendbyte(uint8_t reg_index, uint8_t data){
-
+	while(COG_busy());  //Check if COG is busy
+	PORTB |= 1<<CS_PIN;
+	_delay_us(10);
 	PORTB &= ~(1<<CS_PIN); 		//1. pull CS_PIN low
 	spi_sendbyte(REG_HEADER);   	//2. send header for data
 	spi_sendbyte(reg_index); 	//3. send reg_index
 
+	while(COG_busy());  //Check if COG is busy
 	PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	_delay_us(10);
 	PORTB &= ~(1<<CS_PIN);
@@ -70,11 +74,14 @@ void COG_sendbyte(uint8_t reg_index, uint8_t data){
 /******************************************************************/
 void COG_sendarray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 
+	while(COG_busy());  //Check if COG is busy
+	PORTB |= 1<<CS_PIN;
 	_delay_us(10);
 	PORTB &= ~(1<<CS_PIN);  	//1. pull CS_PIN low
 	spi_sendbyte(REG_HEADER);   	//2. send header for data
 	spi_sendbyte(reg_index);	//3. send reg_index
 
+	while(COG_busy());  //Check if COG is busy
 	PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	_delay_us(10);
 	PORTB &= ~(1<<CS_PIN);
@@ -99,11 +106,13 @@ void COG_sendarray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 void COG_startup(void){
 	usart_sendarray("start up COG\n", 13);
 
-	PORTD &= ~(1<<RESET_PIN);	//reset COG
+	PORTE &= ~(1<<RESET_PIN);	//reset COG
 	PORTB &= ~(1<<PANELON_PIN);	//no power to COG
-	PORTD &= ~(1<<DISCHARGE_PIN);	//no discharge
+	PORTE &= ~(1<<DISCHARGE_PIN);	//no discharge
 	PORTB &= ~(1<<BORDER_PIN);	//Border on
 	PORTB &= ~(1<<CS_PIN);		//CS pin low
+	PORTB &= ~(1<<1);
+	PORTB &= ~(1<<2);
 
 	//1. Enable PWM
 	PWM_ENABLE();
@@ -120,11 +129,11 @@ void COG_startup(void){
 	PORTB |= (1<<BORDER_PIN);	
 
 	//5. toggle reset
-	PORTD |= (1<<RESET_PIN);
+	PORTE |= (1<<RESET_PIN);
 	_delay_ms(5);
-	PORTD &= ~(1<<RESET_PIN);
+	PORTE &= ~(1<<RESET_PIN);
 	_delay_ms(5);
-	PORTD |= (1<<RESET_PIN);
+	PORTE |= (1<<RESET_PIN);
 	_delay_ms(5);
 
 	//POWER is one and the next step is to initialize COG
@@ -161,7 +170,7 @@ void COG_init(void){
 	usart_sendarray("not busy\n", 9);
 
 	COG_sendarray(0x01, epd_channel_sel, 8);	//Channel Select for EPD 2"
-	usart_sendarray("channel sel\n", 12);
+	//usart_sendarray("channel sel\n", 12);
 	COG_sendbyte(0x06, 0xFF);   			//set DC/DC Frequency 
 	COG_sendbyte(0x07, 0x9D);   			//High power mode osc setting
 	COG_sendbyte(0x08, 0x00);   			//Disable ADC
@@ -174,6 +183,8 @@ void COG_init(void){
 	//VGH & VDH enable (VGh>12V & VDH >8V)
 	_delay_ms(30);
 	PWM_DISABLE();  				//disable pwm
+	PORTB &= ~(1<<PWM_PIN);
+
 	COG_sendbyte(0x05, 0x03);   			//Start charge pump negative voltage
 	//VGL < -12v & VDL < -8V
 	_delay_ms(30);
@@ -191,8 +202,9 @@ void COG_init(void){
 
 /******************************************************************/
 //after COG is initialized began writing data from buffer to COG to be drawn
+//takes a pointer to a 2D array and write data and scan byte
 /******************************************************************/
-void COG_write(uint8_t (*buffer)[EPD_ROW]){
+void COG_write_array(uint8_t (*buffer)[EPD_ROW]){
 	usart_sendarray("writing to COG\n", 15);
 
 	uint8_t row_counter = 0;    //keeps track of which line is being written to
@@ -208,6 +220,67 @@ void COG_write(uint8_t (*buffer)[EPD_ROW]){
 
 
 /******************************************************************/
+// writes a fixed full color image to screen
+/******************************************************************/
+void COG_write_fixed_image(uint8_t pixel_data){
+	usart_sendarray("writing fixed image\n", 20);
+
+	uint8_t row_counter = 0;
+
+	for (row_counter = 0; row_counter < EPD_ROW; row_counter++){
+		COG_write_fixed_line(row_counter, pixel_data);	
+	}
+
+}
+
+/******************************************************************/
+// writes a single line with a single color
+/******************************************************************/
+void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
+
+	uint8_t pixel_counter = 0;
+
+	COG_sendbyte(0x04, 0x03);
+
+	while(COG_busy());  //Check if COG is busy
+	PORTB |= (1<<CS_PIN);   	//4. toggle CS
+	_delay_us(10);
+	PORTB &= ~(1<<CS_PIN); 		//1. pull CS_PIN low
+	spi_sendbyte(REG_HEADER);   	//2. send header for data
+	spi_sendbyte(0x0A); 	//3. send reg_index
+
+	while(COG_busy());  //Check if COG is busy
+	PORTB |= (1<<CS_PIN);   	//4. toggle CS
+	_delay_us(10);
+	PORTB &= ~(1<<CS_PIN);
+	spi_sendbyte(DATA_HEADER);
+
+	for (pixel_counter = 0; pixel_counter<25; pixel_counter++){
+		while(COG_busy());  //Check if COG is busy
+		spi_sendbyte(pixel_data);
+	}
+	for (pixel_counter = 0; pixel_counter<25; pixel_counter++){
+		while(COG_busy());  //Check if COG is busy
+
+		if((line/4) == pixel_counter){
+			spi_sendbyte(0xC0 >> (2* (line & 0x03)));
+		}
+		spi_sendbyte(0x00);
+	}
+	for(pixel_counter = 0; pixel_counter<25; pixel_counter++){
+		while(COG_busy());  //Check if COG is busy
+		spi_sendbyte(pixel_data);
+	}
+	spi_sendbyte(0x00);
+	PORTB |= (1<<CS_PIN);   	//4. toggle CS
+	while(COG_busy());  //Check if COG is busy
+	COG_sendbyte(0x02, 0x2F);
+
+
+
+}
+
+/******************************************************************/
 // The COG needs to be turned off properly 
 // Nothing display needs to be written to screen
 // latches reset
@@ -217,6 +290,9 @@ void COG_off(void){
 	//TODO add a fill and write nothing screen
 	//fill_image_buff(test_buffer_nth, 0x55, 0xFF);	//fill array with nothing
 	//COG_write(test_buffer_nth);		//write nothing array to display
+	COG_write_fixed_image(0x55);
+	COG_write_fixed_line(0xff, 0x55);
+
 	_delay_ms(25);				//wait 
 	PORTB &= ~(1<<BORDER_PIN);		//Turn on border (active low)
 	_delay_ms(250);				//wait
@@ -235,7 +311,17 @@ void COG_off(void){
 	_delay_ms(40);
 	COG_sendbyte(0x04, 0x00);		//discharge internals
 
+	PORTE &= ~(1<<RESET_PIN);
 	PORTB &= ~(1<<PANELON_PIN);			//disable power
+	PORTB &= ~(1<<BORDER_PIN);
+
+	PORTB &= ~(1<<1);
+	PORTB &= ~(1<<2);
+	PORTB &= ~(1<<CS_PIN);
+
+	PORTE |= (1<<DISCHARGE_PIN);
+	_delay_ms(150);
+	PORTE &= ~(1<<DISCHARGE_PIN);
 
 	return;
 
