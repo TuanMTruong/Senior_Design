@@ -247,7 +247,7 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 	_delay_us(10);
 	PORTB &= ~(1<<CS_PIN); 		//1. pull CS_PIN low
 	spi_sendbyte(REG_HEADER);   	//2. send header for data
-	spi_sendbyte(0x0A); 	//3. send reg_index
+	spi_sendbyte(0x0A); 	//3. send reg_index, 0x0A = data register
 
 	while(COG_busy());  //Check if COG is busy
 	PORTB |= (1<<CS_PIN);   	//4. toggle CS
@@ -259,7 +259,7 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 		while(COG_busy());  //Check if COG is busy
 		spi_sendbyte(pixel_data);
 	}
-	for (pixel_counter = 0; pixel_counter<25; pixel_counter++){
+	for (pixel_counter = 0; pixel_counter<24; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
 
 		if((line/4) == pixel_counter){
@@ -272,7 +272,7 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 		spi_sendbyte(pixel_data);
 	}
 	spi_sendbyte(0x00);
-	PORTB |= (1<<CS_PIN);   	//4. toggle CS
+	//PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	while(COG_busy());  //Check if COG is busy
 	COG_sendbyte(0x02, 0x2F);
 

@@ -90,9 +90,6 @@ void ddr_setup(void){
 }
 
 
-
-
-
 /******************************************************************/
 //100-300KHz 50% duty cycle PWM
 //TIMER1 OC1A
@@ -101,8 +98,7 @@ void ddr_setup(void){
 /******************************************************************/
 void pwm_setup(void){
 	TCCR1A = (1<<COM1A0);	//Enable OC1A pin on ever compare match
-	TCCR1B = (1<<WGM12) | (1<<CS10);	//Enable CTC and no clock prescale
-
+	TCCR1B = (1<<WGM12) | (1<<CS10);   //Enable CTC and no clock prescale
 
 	OCR1A = PWM_SPEED;	//set compare value for 200KHz
 	TIMSK = (1<<OCIE1A);   //enable timer interrupt

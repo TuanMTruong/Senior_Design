@@ -5,387 +5,387 @@
    5               	__CCP__ = 0x34
    6               	__tmp_reg__ = 0
    7               	__zero_reg__ = 1
-   8               		.global __do_copy_data
-   9               		.global __do_clear_bss
-  10               		.section	.text.COG_busy,"ax",@progbits
-  11               	.global	COG_busy
-  13               	COG_busy:
-  14               	/* prologue: function */
-  15               	/* frame size = 0 */
-  16               	/* stack size = 0 */
-  17               	.L__stack_usage = 0
-  18 0000 85E0      		 ldi r24,lo8(5)
-  19 0002 8A95      	    1:dec r24
-  20 0004 01F4      	    brne 1b
-  21 0006 0000      		nop
-  22 0008 86B3      		in r24,54-32
-  23 000a 8078      		andi r24,lo8(-128)
-  24               	/* epilogue start */
-  25 000c 0895      		ret
-  27               		.section	.text.COG_sendbyte,"ax",@progbits
-  28               	.global	COG_sendbyte
-  30               	COG_sendbyte:
-  31 0000 CF93      		push r28
-  32 0002 DF93      		push r29
-  33               	/* prologue: function */
-  34               	/* frame size = 0 */
-  35               	/* stack size = 2 */
-  36               	.L__stack_usage = 2
-  37 0004 C82F      		mov r28,r24
-  38 0006 D62F      		mov r29,r22
-  39               	.L3:
-  40 0008 0E94 0000 		call COG_busy
-  41 000c 8823      		tst r24
-  42 000e 01F4      		brne .L3
-  43 0010 C09A      		sbi 56-32,0
-  44 0012 85E3      		 ldi r24,lo8(53)
-  45 0014 8A95      	    1:dec r24
-  46 0016 01F4      	    brne 1b
-  47 0018 0000      		nop
-  48 001a C098      		cbi 56-32,0
-  49 001c 80E7      		ldi r24,lo8(112)
-  50 001e 0E94 0000 		call spi_sendbyte
-  51 0022 8C2F      		mov r24,r28
-  52 0024 0E94 0000 		call spi_sendbyte
-  53               	.L4:
-  54 0028 0E94 0000 		call COG_busy
-  55 002c 8823      		tst r24
-  56 002e 01F4      		brne .L4
-  57 0030 C09A      		sbi 56-32,0
-  58 0032 85E3      		 ldi r24,lo8(53)
-  59 0034 8A95      	    1:dec r24
-  60 0036 01F4      	    brne 1b
-  61 0038 0000      		nop
-  62 003a C098      		cbi 56-32,0
-  63 003c 82E7      		ldi r24,lo8(114)
-  64 003e 0E94 0000 		call spi_sendbyte
-  65 0042 8D2F      		mov r24,r29
-  66 0044 0E94 0000 		call spi_sendbyte
-  67 0048 C09A      		sbi 56-32,0
-  68               	/* epilogue start */
-  69 004a DF91      		pop r29
-  70 004c CF91      		pop r28
-  71 004e 0895      		ret
-  73               		.section	.text.COG_sendarray,"ax",@progbits
-  74               	.global	COG_sendarray
-  76               	COG_sendarray:
-  77 0000 0F93      		push r16
-  78 0002 1F93      		push r17
-  79 0004 CF93      		push r28
-  80 0006 DF93      		push r29
-  81               	/* prologue: function */
-  82               	/* frame size = 0 */
-  83               	/* stack size = 4 */
-  84               	.L__stack_usage = 4
-  85 0008 182F      		mov r17,r24
-  86 000a EB01      		movw r28,r22
-  87 000c 042F      		mov r16,r20
-  88               	.L8:
-  89 000e 0E94 0000 		call COG_busy
-  90 0012 8823      		tst r24
-  91 0014 01F4      		brne .L8
-  92 0016 C09A      		sbi 56-32,0
-  93 0018 85E3      		 ldi r24,lo8(53)
-  94 001a 8A95      	    1:dec r24
-  95 001c 01F4      	    brne 1b
-  96 001e 0000      		nop
-  97 0020 C098      		cbi 56-32,0
-  98 0022 80E7      		ldi r24,lo8(112)
-  99 0024 0E94 0000 		call spi_sendbyte
- 100 0028 812F      		mov r24,r17
- 101 002a 0E94 0000 		call spi_sendbyte
- 102               	.L9:
- 103 002e 0E94 0000 		call COG_busy
- 104 0032 8823      		tst r24
- 105 0034 01F4      		brne .L9
- 106 0036 C09A      		sbi 56-32,0
- 107 0038 85E3      		 ldi r24,lo8(53)
- 108 003a 8A95      	    1:dec r24
- 109 003c 01F4      	    brne 1b
- 110 003e 0000      		nop
- 111 0040 C098      		cbi 56-32,0
- 112 0042 82E7      		ldi r24,lo8(114)
- 113 0044 0E94 0000 		call spi_sendbyte
- 114 0048 CE01      		movw r24,r28
- 115 004a 602F      		mov r22,r16
- 116 004c 0E94 0000 		call spi_sendarray
- 117 0050 C09A      		sbi 56-32,0
- 118               	/* epilogue start */
- 119 0052 DF91      		pop r29
- 120 0054 CF91      		pop r28
- 121 0056 1F91      		pop r17
- 122 0058 0F91      		pop r16
- 123 005a 0895      		ret
- 125               		.data
- 126               	.LC0:
- 127 0000 7374 6172 		.string	"start up COG\n"
- 127      7420 7570 
- 127      2043 4F47 
- 127      0A00 
- 128               		.section	.text.COG_startup,"ax",@progbits
- 129               	.global	COG_startup
- 131               	COG_startup:
- 132               	/* prologue: function */
- 133               	/* frame size = 0 */
- 134               	/* stack size = 0 */
- 135               	.L__stack_usage = 0
- 136 0000 80E0      		ldi r24,lo8(.LC0)
- 137 0002 90E0      		ldi r25,hi8(.LC0)
- 138 0004 6DE0      		ldi r22,lo8(13)
- 139 0006 0E94 0000 		call usart_sendarray
- 140 000a 1C98      		cbi 35-32,4
- 141 000c C698      		cbi 56-32,6
- 142 000e 1998      		cbi 35-32,1
- 143 0010 C498      		cbi 56-32,4
- 144 0012 C098      		cbi 56-32,0
- 145 0014 C198      		cbi 56-32,1
- 146 0016 C298      		cbi 56-32,2
- 147 0018 8EB5      		in r24,78-32
- 148 001a 8160      		ori r24,lo8(1)
- 149 001c 8EBD      		out 78-32,r24
- 150 001e 8FE1      		 ldi r24,lo8(19999)
- 151 0020 9EE4      	    ldi r25,hi8(19999)
- 152 0022 0197      	    1:sbiw r24,1
- 153 0024 01F4      	    brne 1b
- 154 0026 00C0      		rjmp .
- 155 0028 0000      		nop
- 156 002a C09A      		sbi 56-32,0
- 157 002c 8FE3      		 ldi r24,lo8(-25537)
- 158 002e 9CE9      	    ldi r25,hi8(-25537)
- 159 0030 0197      	    1:sbiw r24,1
- 160 0032 01F4      	    brne 1b
- 161 0034 00C0      		rjmp .
- 162 0036 0000      		nop
- 163 0038 C09A      		sbi 56-32,0
- 164 003a C49A      		sbi 56-32,4
- 165 003c 1C9A      		sbi 35-32,4
- 166 003e 8FE1      		 ldi r24,lo8(19999)
- 167 0040 9EE4      	    ldi r25,hi8(19999)
- 168 0042 0197      	    1:sbiw r24,1
- 169 0044 01F4      	    brne 1b
- 170 0046 00C0      		rjmp .
- 171 0048 0000      		nop
- 172 004a 1C98      		cbi 35-32,4
- 173 004c 8FE1      		 ldi r24,lo8(19999)
- 174 004e 9EE4      	    ldi r25,hi8(19999)
- 175 0050 0197      	    1:sbiw r24,1
- 176 0052 01F4      	    brne 1b
- 177 0054 00C0      		rjmp .
- 178 0056 0000      		nop
- 179 0058 1C9A      		sbi 35-32,4
- 180 005a 8FE1      		 ldi r24,lo8(19999)
- 181 005c 9EE4      	    ldi r25,hi8(19999)
- 182 005e 0197      	    1:sbiw r24,1
- 183 0060 01F4      	    brne 1b
- 184 0062 00C0      		rjmp .
- 185 0064 0000      		nop
- 186               	/* epilogue start */
- 187 0066 0895      		ret
- 189               		.data
- 190               	.LC1:
- 191 000e 434F 4720 		.string	"COG init\n"
- 191      696E 6974 
+   8               		.section	.text.COG_busy,"ax",@progbits
+   9               	.global	COG_busy
+  11               	COG_busy:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14               	/* stack size = 0 */
+  15               	.L__stack_usage = 0
+  16 0000 85E0      		 ldi r24,lo8(5)
+  17 0002 8A95      	    1:dec r24
+  18 0004 01F4      	    brne 1b
+  19 0006 0000      		nop
+  20 0008 86B3      		in r24,54-32
+  21 000a 8078      		andi r24,lo8(-128)
+  22               	/* epilogue start */
+  23 000c 0895      		ret
+  25               		.section	.text.COG_sendbyte,"ax",@progbits
+  26               	.global	COG_sendbyte
+  28               	COG_sendbyte:
+  29 0000 CF93      		push r28
+  30 0002 DF93      		push r29
+  31               	/* prologue: function */
+  32               	/* frame size = 0 */
+  33               	/* stack size = 2 */
+  34               	.L__stack_usage = 2
+  35 0004 C82F      		mov r28,r24
+  36 0006 D62F      		mov r29,r22
+  37               	.L3:
+  38 0008 0E94 0000 		call COG_busy
+  39 000c 8823      		tst r24
+  40 000e 01F4      		brne .L3
+  41 0010 C09A      		sbi 56-32,0
+  42 0012 85E3      		 ldi r24,lo8(53)
+  43 0014 8A95      	    1:dec r24
+  44 0016 01F4      	    brne 1b
+  45 0018 0000      		nop
+  46 001a C098      		cbi 56-32,0
+  47 001c 80E7      		ldi r24,lo8(112)
+  48 001e 0E94 0000 		call spi_sendbyte
+  49 0022 8C2F      		mov r24,r28
+  50 0024 0E94 0000 		call spi_sendbyte
+  51               	.L4:
+  52 0028 0E94 0000 		call COG_busy
+  53 002c 8823      		tst r24
+  54 002e 01F4      		brne .L4
+  55 0030 C09A      		sbi 56-32,0
+  56 0032 85E3      		 ldi r24,lo8(53)
+  57 0034 8A95      	    1:dec r24
+  58 0036 01F4      	    brne 1b
+  59 0038 0000      		nop
+  60 003a C098      		cbi 56-32,0
+  61 003c 82E7      		ldi r24,lo8(114)
+  62 003e 0E94 0000 		call spi_sendbyte
+  63 0042 8D2F      		mov r24,r29
+  64 0044 0E94 0000 		call spi_sendbyte
+  65 0048 C09A      		sbi 56-32,0
+  66               	/* epilogue start */
+  67 004a DF91      		pop r29
+  68 004c CF91      		pop r28
+  69 004e 0895      		ret
+  71               		.section	.text.COG_sendarray,"ax",@progbits
+  72               	.global	COG_sendarray
+  74               	COG_sendarray:
+  75 0000 0F93      		push r16
+  76 0002 1F93      		push r17
+  77 0004 CF93      		push r28
+  78 0006 DF93      		push r29
+  79               	/* prologue: function */
+  80               	/* frame size = 0 */
+  81               	/* stack size = 4 */
+  82               	.L__stack_usage = 4
+  83 0008 182F      		mov r17,r24
+  84 000a EB01      		movw r28,r22
+  85 000c 042F      		mov r16,r20
+  86               	.L8:
+  87 000e 0E94 0000 		call COG_busy
+  88 0012 8823      		tst r24
+  89 0014 01F4      		brne .L8
+  90 0016 C09A      		sbi 56-32,0
+  91 0018 85E3      		 ldi r24,lo8(53)
+  92 001a 8A95      	    1:dec r24
+  93 001c 01F4      	    brne 1b
+  94 001e 0000      		nop
+  95 0020 C098      		cbi 56-32,0
+  96 0022 80E7      		ldi r24,lo8(112)
+  97 0024 0E94 0000 		call spi_sendbyte
+  98 0028 812F      		mov r24,r17
+  99 002a 0E94 0000 		call spi_sendbyte
+ 100               	.L9:
+ 101 002e 0E94 0000 		call COG_busy
+ 102 0032 8823      		tst r24
+ 103 0034 01F4      		brne .L9
+ 104 0036 C09A      		sbi 56-32,0
+ 105 0038 85E3      		 ldi r24,lo8(53)
+ 106 003a 8A95      	    1:dec r24
+ 107 003c 01F4      	    brne 1b
+ 108 003e 0000      		nop
+ 109 0040 C098      		cbi 56-32,0
+ 110 0042 82E7      		ldi r24,lo8(114)
+ 111 0044 0E94 0000 		call spi_sendbyte
+ 112 0048 CE01      		movw r24,r28
+ 113 004a 602F      		mov r22,r16
+ 114 004c 0E94 0000 		call spi_sendarray
+ 115 0050 C09A      		sbi 56-32,0
+ 116               	/* epilogue start */
+ 117 0052 DF91      		pop r29
+ 118 0054 CF91      		pop r28
+ 119 0056 1F91      		pop r17
+ 120 0058 0F91      		pop r16
+ 121 005a 0895      		ret
+ 123               		.data
+ 124               	.LC0:
+ 125 0000 7374 6172 		.string	"start up COG\n"
+ 125      7420 7570 
+ 125      2043 4F47 
+ 125      0A00 
+ 126               		.section	.text.COG_startup,"ax",@progbits
+ 127               	.global	COG_startup
+ 129               	COG_startup:
+ 130               	/* prologue: function */
+ 131               	/* frame size = 0 */
+ 132               	/* stack size = 0 */
+ 133               	.L__stack_usage = 0
+ 134 0000 80E0      		ldi r24,lo8(.LC0)
+ 135 0002 90E0      		ldi r25,hi8(.LC0)
+ 136 0004 6DE0      		ldi r22,lo8(13)
+ 137 0006 0E94 0000 		call usart_sendarray
+ 138 000a 1C98      		cbi 35-32,4
+ 139 000c C698      		cbi 56-32,6
+ 140 000e 1998      		cbi 35-32,1
+ 141 0010 C498      		cbi 56-32,4
+ 142 0012 C098      		cbi 56-32,0
+ 143 0014 C198      		cbi 56-32,1
+ 144 0016 C298      		cbi 56-32,2
+ 145 0018 8EB5      		in r24,78-32
+ 146 001a 8160      		ori r24,lo8(1)
+ 147 001c 8EBD      		out 78-32,r24
+ 148 001e 8FE1      		 ldi r24,lo8(19999)
+ 149 0020 9EE4      	    ldi r25,hi8(19999)
+ 150 0022 0197      	    1:sbiw r24,1
+ 151 0024 01F4      	    brne 1b
+ 152 0026 00C0      		rjmp .
+ 153 0028 0000      		nop
+ 154 002a C09A      		sbi 56-32,0
+ 155 002c 8FE3      		 ldi r24,lo8(-25537)
+ 156 002e 9CE9      	    ldi r25,hi8(-25537)
+ 157 0030 0197      	    1:sbiw r24,1
+ 158 0032 01F4      	    brne 1b
+ 159 0034 00C0      		rjmp .
+ 160 0036 0000      		nop
+ 161 0038 C09A      		sbi 56-32,0
+ 162 003a C49A      		sbi 56-32,4
+ 163 003c 1C9A      		sbi 35-32,4
+ 164 003e 8FE1      		 ldi r24,lo8(19999)
+ 165 0040 9EE4      	    ldi r25,hi8(19999)
+ 166 0042 0197      	    1:sbiw r24,1
+ 167 0044 01F4      	    brne 1b
+ 168 0046 00C0      		rjmp .
+ 169 0048 0000      		nop
+ 170 004a 1C98      		cbi 35-32,4
+ 171 004c 8FE1      		 ldi r24,lo8(19999)
+ 172 004e 9EE4      	    ldi r25,hi8(19999)
+ 173 0050 0197      	    1:sbiw r24,1
+ 174 0052 01F4      	    brne 1b
+ 175 0054 00C0      		rjmp .
+ 176 0056 0000      		nop
+ 177 0058 1C9A      		sbi 35-32,4
+ 178 005a 8FE1      		 ldi r24,lo8(19999)
+ 179 005c 9EE4      	    ldi r25,hi8(19999)
+ 180 005e 0197      	    1:sbiw r24,1
+ 181 0060 01F4      	    brne 1b
+ 182 0062 00C0      		rjmp .
+ 183 0064 0000      		nop
+ 184               	/* epilogue start */
+ 185 0066 0895      		ret
+ 187               		.data
+ 188               	.LC1:
+ 189 000e 434F 4720 		.string	"COG init\n"
+ 189      696E 6974 
+ 189      0A00 
+ 190               	.LC2:
+ 191 0018 6275 7379 		.string	"busy\n"
  191      0A00 
- 192               	.LC2:
- 193 0018 6275 7379 		.string	"busy\n"
+ 192               	.LC3:
+ 193 001e 6E6F 7420 		.string	"not busy\n"
+ 193      6275 7379 
  193      0A00 
- 194               	.LC3:
- 195 001e 6E6F 7420 		.string	"not busy\n"
- 195      6275 7379 
- 195      0A00 
- 196               	.LC4:
- 197 0028 696E 6974 		.string	"init done\n"
- 197      2064 6F6E 
- 197      650A 00
- 198               		.section	.text.COG_init,"ax",@progbits
- 199               	.global	COG_init
- 201               	COG_init:
- 202 0000 CF93      		push r28
- 203 0002 DF93      		push r29
- 204 0004 CDB7      		in r28,__SP_L__
- 205 0006 DEB7      		in r29,__SP_H__
- 206 0008 2A97      		sbiw r28,10
- 207 000a 0FB6      		in __tmp_reg__,__SREG__
- 208 000c F894      		cli
- 209 000e DEBF      		out __SP_H__,r29
- 210 0010 0FBE      		out __SREG__,__tmp_reg__
- 211 0012 CDBF      		out __SP_L__,r28
- 212               	/* prologue: function */
- 213               	/* frame size = 10 */
- 214               	/* stack size = 12 */
- 215               	.L__stack_usage = 12
- 216 0014 80E0      		ldi r24,lo8(.LC1)
- 217 0016 90E0      		ldi r25,hi8(.LC1)
- 218 0018 69E0      		ldi r22,lo8(9)
- 219 001a 0E94 0000 		call usart_sendarray
- 220 001e 1B82      		std Y+3,__zero_reg__
- 221 0020 1C82      		std Y+4,__zero_reg__
- 222 0022 1D82      		std Y+5,__zero_reg__
- 223 0024 1E82      		std Y+6,__zero_reg__
- 224 0026 81E0      		ldi r24,lo8(1)
- 225 0028 8F83      		std Y+7,r24
- 226 002a 8FEF      		ldi r24,lo8(-1)
- 227 002c 8887      		std Y+8,r24
- 228 002e 80EE      		ldi r24,lo8(-32)
- 229 0030 8987      		std Y+9,r24
- 230 0032 1A86      		std Y+10,__zero_reg__
- 231 0034 80ED      		ldi r24,lo8(-48)
- 232 0036 8983      		std Y+1,r24
- 233 0038 1A82      		std Y+2,__zero_reg__
- 234 003a 80E0      		ldi r24,lo8(.LC2)
- 235 003c 90E0      		ldi r25,hi8(.LC2)
- 236 003e 65E0      		ldi r22,lo8(5)
- 237 0040 0E94 0000 		call usart_sendarray
- 238               	.L14:
- 239 0044 0E94 0000 		call COG_busy
- 240 0048 8823      		tst r24
- 241 004a 01F4      		brne .L14
- 242 004c 80E0      		ldi r24,lo8(.LC3)
- 243 004e 90E0      		ldi r25,hi8(.LC3)
- 244 0050 69E0      		ldi r22,lo8(9)
- 245 0052 0E94 0000 		call usart_sendarray
- 246 0056 81E0      		ldi r24,lo8(1)
- 247 0058 BE01      		movw r22,r28
- 248 005a 6D5F      		subi r22,lo8(-(3))
- 249 005c 7F4F      		sbci r23,hi8(-(3))
- 250 005e 48E0      		ldi r20,lo8(8)
- 251 0060 0E94 0000 		call COG_sendarray
- 252 0064 86E0      		ldi r24,lo8(6)
- 253 0066 6FEF      		ldi r22,lo8(-1)
- 254 0068 0E94 0000 		call COG_sendbyte
- 255 006c 87E0      		ldi r24,lo8(7)
- 256 006e 6DE9      		ldi r22,lo8(-99)
- 257 0070 0E94 0000 		call COG_sendbyte
- 258 0074 88E0      		ldi r24,lo8(8)
- 259 0076 60E0      		ldi r22,lo8(0)
- 260 0078 0E94 0000 		call COG_sendbyte
- 261 007c 89E0      		ldi r24,lo8(9)
- 262 007e BE01      		movw r22,r28
- 263 0080 6F5F      		subi r22,lo8(-(1))
- 264 0082 7F4F      		sbci r23,hi8(-(1))
- 265 0084 42E0      		ldi r20,lo8(2)
- 266 0086 0E94 0000 		call COG_sendarray
- 267 008a 84E0      		ldi r24,lo8(4)
- 268 008c 63E0      		ldi r22,lo8(3)
- 269 008e 0E94 0000 		call COG_sendbyte
- 270 0092 8FE1      		 ldi r24,lo8(19999)
- 271 0094 9EE4      	    ldi r25,hi8(19999)
- 272 0096 0197      	    1:sbiw r24,1
- 273 0098 01F4      	    brne 1b
- 274 009a 00C0      		rjmp .
- 275 009c 0000      		nop
- 276 009e 83E0      		ldi r24,lo8(3)
- 277 00a0 61E0      		ldi r22,lo8(1)
- 278 00a2 0E94 0000 		call COG_sendbyte
- 279 00a6 83E0      		ldi r24,lo8(3)
- 280 00a8 60E0      		ldi r22,lo8(0)
- 281 00aa 0E94 0000 		call COG_sendbyte
- 282 00ae 85E0      		ldi r24,lo8(5)
- 283 00b0 61E0      		ldi r22,lo8(1)
- 284 00b2 0E94 0000 		call COG_sendbyte
- 285 00b6 8FEF      		 ldi r24,lo8(95999)
- 286 00b8 96E7      	    ldi r25,hi8(95999)
- 287 00ba A1E0      	    ldi r26,hlo8(95999)
- 288 00bc 8150      	    1:subi r24,1
- 289 00be 9040      	    sbci r25,0
- 290 00c0 A040      	    sbci r26,0
- 291 00c2 01F4      	    brne 1b
- 292 00c4 00C0      		rjmp .
- 293 00c6 0000      		nop
- 294 00c8 8EB5      		in r24,78-32
- 295 00ca 887F      		andi r24,lo8(-8)
- 296 00cc 8EBD      		out 78-32,r24
- 297 00ce C598      		cbi 56-32,5
- 298 00d0 85E0      		ldi r24,lo8(5)
- 299 00d2 63E0      		ldi r22,lo8(3)
- 300 00d4 0E94 0000 		call COG_sendbyte
- 301 00d8 8FEF      		 ldi r24,lo8(95999)
- 302 00da 96E7      	    ldi r25,hi8(95999)
- 303 00dc A1E0      	    ldi r26,hlo8(95999)
- 304 00de 8150      	    1:subi r24,1
- 305 00e0 9040      	    sbci r25,0
- 306 00e2 A040      	    sbci r26,0
- 307 00e4 01F4      	    brne 1b
- 308 00e6 00C0      		rjmp .
- 309 00e8 0000      		nop
- 310 00ea 85E0      		ldi r24,lo8(5)
- 311 00ec 6FE0      		ldi r22,lo8(15)
- 312 00ee 0E94 0000 		call COG_sendbyte
- 313 00f2 8FEF      		 ldi r24,lo8(95999)
- 314 00f4 96E7      	    ldi r25,hi8(95999)
- 315 00f6 A1E0      	    ldi r26,hlo8(95999)
- 316 00f8 8150      	    1:subi r24,1
- 317 00fa 9040      	    sbci r25,0
- 318 00fc A040      	    sbci r26,0
- 319 00fe 01F4      	    brne 1b
- 320 0100 00C0      		rjmp .
- 321 0102 0000      		nop
- 322 0104 82E0      		ldi r24,lo8(2)
- 323 0106 64E2      		ldi r22,lo8(36)
- 324 0108 0E94 0000 		call COG_sendbyte
- 325 010c 80E0      		ldi r24,lo8(.LC4)
- 326 010e 90E0      		ldi r25,hi8(.LC4)
- 327 0110 6AE0      		ldi r22,lo8(10)
- 328 0112 0E94 0000 		call usart_sendarray
- 329               	/* epilogue start */
- 330 0116 2A96      		adiw r28,10
- 331 0118 0FB6      		in __tmp_reg__,__SREG__
- 332 011a F894      		cli
- 333 011c DEBF      		out __SP_H__,r29
- 334 011e 0FBE      		out __SREG__,__tmp_reg__
- 335 0120 CDBF      		out __SP_L__,r28
- 336 0122 DF91      		pop r29
- 337 0124 CF91      		pop r28
- 338 0126 0895      		ret
- 340               		.data
- 341               	.LC5:
- 342 0033 7772 6974 		.string	"writing to COG\n"
- 342      696E 6720 
- 342      746F 2043 
- 342      4F47 0A00 
- 343               		.section	.text.COG_write_array,"ax",@progbits
- 344               	.global	COG_write_array
- 346               	COG_write_array:
- 347 0000 0F93      		push r16
- 348 0002 1F93      		push r17
- 349 0004 CF93      		push r28
- 350 0006 DF93      		push r29
- 351               	/* prologue: function */
- 352               	/* frame size = 0 */
- 353               	/* stack size = 4 */
- 354               	.L__stack_usage = 4
- 355 0008 8C01      		movw r16,r24
- 356 000a 80E0      		ldi r24,lo8(.LC5)
- 357 000c 90E0      		ldi r25,hi8(.LC5)
- 358 000e 6FE0      		ldi r22,lo8(15)
- 359 0010 0E94 0000 		call usart_sendarray
- 360 0014 C0E0      		ldi r28,lo8(0)
- 361 0016 D0E0      		ldi r29,hi8(0)
- 362               	.L17:
- 363 0018 84E0      		ldi r24,lo8(4)
- 364 001a 63E0      		ldi r22,lo8(3)
- 365 001c 0E94 0000 		call COG_sendbyte
- 366 0020 B801      		movw r22,r16
- 367 0022 6C0F      		add r22,r28
- 368 0024 7D1F      		adc r23,r29
- 369 0026 8AE0      		ldi r24,lo8(10)
- 370 0028 4CE4      		ldi r20,lo8(76)
- 371 002a 0E94 0000 		call COG_sendarray
- 372 002e 82E0      		ldi r24,lo8(2)
- 373 0030 6FE2      		ldi r22,lo8(47)
- 374 0032 0E94 0000 		call COG_sendbyte
- 375 0036 C05A      		subi r28,lo8(-(96))
- 376 0038 DF4F      		sbci r29,hi8(-(96))
- 377 003a 84E2      		ldi r24,hi8(9216)
- 378 003c C030      		cpi r28,lo8(9216)
- 379 003e D807      		cpc r29,r24
- 380 0040 01F4      		brne .L17
+ 194               	.LC4:
+ 195 0028 696E 6974 		.string	"init done\n"
+ 195      2064 6F6E 
+ 195      650A 00
+ 196               		.section	.text.COG_init,"ax",@progbits
+ 197               	.global	COG_init
+ 199               	COG_init:
+ 200 0000 DF93      		push r29
+ 201 0002 CF93      		push r28
+ 202 0004 CDB7      		in r28,__SP_L__
+ 203 0006 DEB7      		in r29,__SP_H__
+ 204 0008 2A97      		sbiw r28,10
+ 205 000a 0FB6      		in __tmp_reg__,__SREG__
+ 206 000c F894      		cli
+ 207 000e DEBF      		out __SP_H__,r29
+ 208 0010 0FBE      		out __SREG__,__tmp_reg__
+ 209 0012 CDBF      		out __SP_L__,r28
+ 210               	/* prologue: function */
+ 211               	/* frame size = 10 */
+ 212               	/* stack size = 12 */
+ 213               	.L__stack_usage = 12
+ 214 0014 80E0      		ldi r24,lo8(.LC1)
+ 215 0016 90E0      		ldi r25,hi8(.LC1)
+ 216 0018 69E0      		ldi r22,lo8(9)
+ 217 001a 0E94 0000 		call usart_sendarray
+ 218 001e 1B82      		std Y+3,__zero_reg__
+ 219 0020 1C82      		std Y+4,__zero_reg__
+ 220 0022 1D82      		std Y+5,__zero_reg__
+ 221 0024 1E82      		std Y+6,__zero_reg__
+ 222 0026 81E0      		ldi r24,lo8(1)
+ 223 0028 8F83      		std Y+7,r24
+ 224 002a 8FEF      		ldi r24,lo8(-1)
+ 225 002c 8887      		std Y+8,r24
+ 226 002e 80EE      		ldi r24,lo8(-32)
+ 227 0030 8987      		std Y+9,r24
+ 228 0032 1A86      		std Y+10,__zero_reg__
+ 229 0034 80ED      		ldi r24,lo8(-48)
+ 230 0036 8983      		std Y+1,r24
+ 231 0038 1A82      		std Y+2,__zero_reg__
+ 232 003a 80E0      		ldi r24,lo8(.LC2)
+ 233 003c 90E0      		ldi r25,hi8(.LC2)
+ 234 003e 65E0      		ldi r22,lo8(5)
+ 235 0040 0E94 0000 		call usart_sendarray
+ 236               	.L14:
+ 237 0044 0E94 0000 		call COG_busy
+ 238 0048 8823      		tst r24
+ 239 004a 01F4      		brne .L14
+ 240 004c 80E0      		ldi r24,lo8(.LC3)
+ 241 004e 90E0      		ldi r25,hi8(.LC3)
+ 242 0050 69E0      		ldi r22,lo8(9)
+ 243 0052 0E94 0000 		call usart_sendarray
+ 244 0056 81E0      		ldi r24,lo8(1)
+ 245 0058 BE01      		movw r22,r28
+ 246 005a 6D5F      		subi r22,lo8(-(3))
+ 247 005c 7F4F      		sbci r23,hi8(-(3))
+ 248 005e 48E0      		ldi r20,lo8(8)
+ 249 0060 0E94 0000 		call COG_sendarray
+ 250 0064 86E0      		ldi r24,lo8(6)
+ 251 0066 6FEF      		ldi r22,lo8(-1)
+ 252 0068 0E94 0000 		call COG_sendbyte
+ 253 006c 87E0      		ldi r24,lo8(7)
+ 254 006e 6DE9      		ldi r22,lo8(-99)
+ 255 0070 0E94 0000 		call COG_sendbyte
+ 256 0074 88E0      		ldi r24,lo8(8)
+ 257 0076 60E0      		ldi r22,lo8(0)
+ 258 0078 0E94 0000 		call COG_sendbyte
+ 259 007c 89E0      		ldi r24,lo8(9)
+ 260 007e BE01      		movw r22,r28
+ 261 0080 6F5F      		subi r22,lo8(-(1))
+ 262 0082 7F4F      		sbci r23,hi8(-(1))
+ 263 0084 42E0      		ldi r20,lo8(2)
+ 264 0086 0E94 0000 		call COG_sendarray
+ 265 008a 84E0      		ldi r24,lo8(4)
+ 266 008c 63E0      		ldi r22,lo8(3)
+ 267 008e 0E94 0000 		call COG_sendbyte
+ 268 0092 8FE1      		 ldi r24,lo8(19999)
+ 269 0094 9EE4      	    ldi r25,hi8(19999)
+ 270 0096 0197      	    1:sbiw r24,1
+ 271 0098 01F4      	    brne 1b
+ 272 009a 00C0      		rjmp .
+ 273 009c 0000      		nop
+ 274 009e 83E0      		ldi r24,lo8(3)
+ 275 00a0 61E0      		ldi r22,lo8(1)
+ 276 00a2 0E94 0000 		call COG_sendbyte
+ 277 00a6 83E0      		ldi r24,lo8(3)
+ 278 00a8 60E0      		ldi r22,lo8(0)
+ 279 00aa 0E94 0000 		call COG_sendbyte
+ 280 00ae 85E0      		ldi r24,lo8(5)
+ 281 00b0 61E0      		ldi r22,lo8(1)
+ 282 00b2 0E94 0000 		call COG_sendbyte
+ 283 00b6 8FEF      		 ldi r24,lo8(95999)
+ 284 00b8 96E7      	    ldi r25,hi8(95999)
+ 285 00ba A1E0      	    ldi r26,hlo8(95999)
+ 286 00bc 8150      	    1:subi r24,1
+ 287 00be 9040      	    sbci r25,0
+ 288 00c0 A040      	    sbci r26,0
+ 289 00c2 01F4      	    brne 1b
+ 290 00c4 00C0      		rjmp .
+ 291 00c6 0000      		nop
+ 292 00c8 8EB5      		in r24,78-32
+ 293 00ca 887F      		andi r24,lo8(-8)
+ 294 00cc 8EBD      		out 78-32,r24
+ 295 00ce C598      		cbi 56-32,5
+ 296 00d0 85E0      		ldi r24,lo8(5)
+ 297 00d2 63E0      		ldi r22,lo8(3)
+ 298 00d4 0E94 0000 		call COG_sendbyte
+ 299 00d8 8FEF      		 ldi r24,lo8(95999)
+ 300 00da 96E7      	    ldi r25,hi8(95999)
+ 301 00dc A1E0      	    ldi r26,hlo8(95999)
+ 302 00de 8150      	    1:subi r24,1
+ 303 00e0 9040      	    sbci r25,0
+ 304 00e2 A040      	    sbci r26,0
+ 305 00e4 01F4      	    brne 1b
+ 306 00e6 00C0      		rjmp .
+ 307 00e8 0000      		nop
+ 308 00ea 85E0      		ldi r24,lo8(5)
+ 309 00ec 6FE0      		ldi r22,lo8(15)
+ 310 00ee 0E94 0000 		call COG_sendbyte
+ 311 00f2 8FEF      		 ldi r24,lo8(95999)
+ 312 00f4 96E7      	    ldi r25,hi8(95999)
+ 313 00f6 A1E0      	    ldi r26,hlo8(95999)
+ 314 00f8 8150      	    1:subi r24,1
+ 315 00fa 9040      	    sbci r25,0
+ 316 00fc A040      	    sbci r26,0
+ 317 00fe 01F4      	    brne 1b
+ 318 0100 00C0      		rjmp .
+ 319 0102 0000      		nop
+ 320 0104 82E0      		ldi r24,lo8(2)
+ 321 0106 64E2      		ldi r22,lo8(36)
+ 322 0108 0E94 0000 		call COG_sendbyte
+ 323 010c 80E0      		ldi r24,lo8(.LC4)
+ 324 010e 90E0      		ldi r25,hi8(.LC4)
+ 325 0110 6AE0      		ldi r22,lo8(10)
+ 326 0112 0E94 0000 		call usart_sendarray
+ 327               	/* epilogue start */
+ 328 0116 2A96      		adiw r28,10
+ 329 0118 0FB6      		in __tmp_reg__,__SREG__
+ 330 011a F894      		cli
+ 331 011c DEBF      		out __SP_H__,r29
+ 332 011e 0FBE      		out __SREG__,__tmp_reg__
+ 333 0120 CDBF      		out __SP_L__,r28
+ 334 0122 CF91      		pop r28
+ 335 0124 DF91      		pop r29
+ 336 0126 0895      		ret
+ 338               		.data
+ 339               	.LC5:
+ 340 0033 7772 6974 		.string	"writing to COG\n"
+ 340      696E 6720 
+ 340      746F 2043 
+ 340      4F47 0A00 
+ 341               		.section	.text.COG_write_array,"ax",@progbits
+ 342               	.global	COG_write_array
+ 344               	COG_write_array:
+ 345 0000 0F93      		push r16
+ 346 0002 1F93      		push r17
+ 347 0004 CF93      		push r28
+ 348 0006 DF93      		push r29
+ 349               	/* prologue: function */
+ 350               	/* frame size = 0 */
+ 351               	/* stack size = 4 */
+ 352               	.L__stack_usage = 4
+ 353 0008 082F      		mov r16,r24
+ 354 000a C92F      		mov r28,r25
+ 355 000c 80E0      		ldi r24,lo8(.LC5)
+ 356 000e 90E0      		ldi r25,hi8(.LC5)
+ 357 0010 6FE0      		ldi r22,lo8(15)
+ 358 0012 0E94 0000 		call usart_sendarray
+ 359 0016 8C2F      		mov r24,r28
+ 360 0018 C02F      		mov r28,r16
+ 361 001a D82F      		mov r29,r24
+ 362 001c 8E01      		movw r16,r28
+ 363 001e 0050      		subi r16,lo8(-(9216))
+ 364 0020 1C4D      		sbci r17,hi8(-(9216))
+ 365               	.L17:
+ 366 0022 84E0      		ldi r24,lo8(4)
+ 367 0024 63E0      		ldi r22,lo8(3)
+ 368 0026 0E94 0000 		call COG_sendbyte
+ 369 002a 8AE0      		ldi r24,lo8(10)
+ 370 002c BE01      		movw r22,r28
+ 371 002e 4CE4      		ldi r20,lo8(76)
+ 372 0030 0E94 0000 		call COG_sendarray
+ 373 0034 82E0      		ldi r24,lo8(2)
+ 374 0036 6FE2      		ldi r22,lo8(47)
+ 375 0038 0E94 0000 		call COG_sendbyte
+ 376 003c C05A      		subi r28,lo8(-(96))
+ 377 003e DF4F      		sbci r29,hi8(-(96))
+ 378 0040 C017      		cp r28,r16
+ 379 0042 D107      		cpc r29,r17
+ 380 0044 01F4      		brne .L17
  381               	/* epilogue start */
- 382 0042 DF91      		pop r29
- 383 0044 CF91      		pop r28
- 384 0046 1F91      		pop r17
- 385 0048 0F91      		pop r16
- 386 004a 0895      		ret
+ 382 0046 DF91      		pop r29
+ 383 0048 CF91      		pop r28
+ 384 004a 1F91      		pop r17
+ 385 004c 0F91      		pop r16
+ 386 004e 0895      		ret
  388               		.section	.text.COG_write_fixed_line,"ax",@progbits
  389               	.global	COG_write_fixed_line
  391               	COG_write_fixed_line:
@@ -479,182 +479,181 @@
  479 00b4 01F4      		brne .L41
  480 00b6 80E0      		ldi r24,lo8(0)
  481 00b8 0E94 0000 		call spi_sendbyte
- 482 00bc C09A      		sbi 56-32,0
- 483               	.L29:
- 484 00be 0E94 0000 		call COG_busy
- 485 00c2 8823      		tst r24
- 486 00c4 01F4      		brne .L29
- 487 00c6 82E0      		ldi r24,lo8(2)
- 488 00c8 6FE2      		ldi r22,lo8(47)
- 489 00ca 0E94 0000 		call COG_sendbyte
- 490               	/* epilogue start */
- 491 00ce DF91      		pop r29
- 492 00d0 CF91      		pop r28
- 493 00d2 1F91      		pop r17
- 494 00d4 0F91      		pop r16
- 495 00d6 0895      		ret
- 497               		.data
- 498               	.LC6:
- 499 0043 7772 6974 		.string	"writing fixed image\n"
- 499      696E 6720 
- 499      6669 7865 
- 499      6420 696D 
- 499      6167 650A 
- 500               		.section	.text.COG_write_fixed_image,"ax",@progbits
- 501               	.global	COG_write_fixed_image
- 503               	COG_write_fixed_image:
- 504 0000 CF93      		push r28
- 505 0002 DF93      		push r29
- 506               	/* prologue: function */
- 507               	/* frame size = 0 */
- 508               	/* stack size = 2 */
- 509               	.L__stack_usage = 2
- 510 0004 C82F      		mov r28,r24
- 511 0006 80E0      		ldi r24,lo8(.LC6)
- 512 0008 90E0      		ldi r25,hi8(.LC6)
- 513 000a 64E1      		ldi r22,lo8(20)
- 514 000c 0E94 0000 		call usart_sendarray
- 515 0010 D0E0      		ldi r29,lo8(0)
- 516               	.L43:
- 517 0012 8D2F      		mov r24,r29
- 518 0014 6C2F      		mov r22,r28
- 519 0016 0E94 0000 		call COG_write_fixed_line
- 520 001a DF5F      		subi r29,lo8(-(1))
- 521 001c D036      		cpi r29,lo8(96)
- 522 001e 01F4      		brne .L43
- 523               	/* epilogue start */
- 524 0020 DF91      		pop r29
- 525 0022 CF91      		pop r28
- 526 0024 0895      		ret
- 528               		.section	.text.COG_off,"ax",@progbits
- 529               	.global	COG_off
- 531               	COG_off:
- 532               	/* prologue: function */
- 533               	/* frame size = 0 */
- 534               	/* stack size = 0 */
- 535               	.L__stack_usage = 0
- 536 0000 85E5      		ldi r24,lo8(85)
- 537 0002 0E94 0000 		call COG_write_fixed_image
- 538 0006 8FEF      		ldi r24,lo8(-1)
- 539 0008 65E5      		ldi r22,lo8(85)
- 540 000a 0E94 0000 		call COG_write_fixed_line
- 541 000e 8FE7      		 ldi r24,lo8(79999)
- 542 0010 98E3      	    ldi r25,hi8(79999)
- 543 0012 A1E0      	    ldi r26,hlo8(79999)
- 544 0014 8150      	    1:subi r24,1
- 545 0016 9040      	    sbci r25,0
- 546 0018 A040      	    sbci r26,0
- 547 001a 01F4      	    brne 1b
- 548 001c 00C0      		rjmp .
- 549 001e 0000      		nop
- 550 0020 C498      		cbi 56-32,4
- 551 0022 8FEF      		 ldi r24,lo8(799999)
- 552 0024 94E3      	    ldi r25,hi8(799999)
- 553 0026 ACE0      	    ldi r26,hlo8(799999)
- 554 0028 8150      	    1:subi r24,1
- 555 002a 9040      	    sbci r25,0
- 556 002c A040      	    sbci r26,0
- 557 002e 01F4      	    brne 1b
- 558 0030 00C0      		rjmp .
- 559 0032 0000      		nop
- 560 0034 C49A      		sbi 56-32,4
- 561 0036 83E0      		ldi r24,lo8(3)
- 562 0038 61E0      		ldi r22,lo8(1)
- 563 003a 0E94 0000 		call COG_sendbyte
- 564 003e 82E0      		ldi r24,lo8(2)
- 565 0040 65E0      		ldi r22,lo8(5)
- 566 0042 0E94 0000 		call COG_sendbyte
- 567 0046 85E0      		ldi r24,lo8(5)
- 568 0048 6EE0      		ldi r22,lo8(14)
- 569 004a 0E94 0000 		call COG_sendbyte
- 570 004e 85E0      		ldi r24,lo8(5)
- 571 0050 62E0      		ldi r22,lo8(2)
- 572 0052 0E94 0000 		call COG_sendbyte
- 573 0056 84E0      		ldi r24,lo8(4)
- 574 0058 6CE0      		ldi r22,lo8(12)
- 575 005a 0E94 0000 		call COG_sendbyte
- 576 005e 8FE7      		 ldi r24,lo8(399999)
- 577 0060 9AE1      	    ldi r25,hi8(399999)
- 578 0062 A6E0      	    ldi r26,hlo8(399999)
- 579 0064 8150      	    1:subi r24,1
- 580 0066 9040      	    sbci r25,0
- 581 0068 A040      	    sbci r26,0
- 582 006a 01F4      	    brne 1b
- 583 006c 00C0      		rjmp .
- 584 006e 0000      		nop
- 585 0070 85E0      		ldi r24,lo8(5)
- 586 0072 60E0      		ldi r22,lo8(0)
- 587 0074 0E94 0000 		call COG_sendbyte
- 588 0078 87E0      		ldi r24,lo8(7)
- 589 007a 6DE0      		ldi r22,lo8(13)
- 590 007c 0E94 0000 		call COG_sendbyte
- 591 0080 84E0      		ldi r24,lo8(4)
- 592 0082 60E5      		ldi r22,lo8(80)
- 593 0084 0E94 0000 		call COG_sendbyte
- 594 0088 8FEF      		 ldi r24,lo8(127999)
- 595 008a 93EF      	    ldi r25,hi8(127999)
- 596 008c A1E0      	    ldi r26,hlo8(127999)
- 597 008e 8150      	    1:subi r24,1
- 598 0090 9040      	    sbci r25,0
- 599 0092 A040      	    sbci r26,0
- 600 0094 01F4      	    brne 1b
- 601 0096 00C0      		rjmp .
- 602 0098 0000      		nop
- 603 009a 84E0      		ldi r24,lo8(4)
- 604 009c 60EA      		ldi r22,lo8(-96)
- 605 009e 0E94 0000 		call COG_sendbyte
- 606 00a2 8FEF      		 ldi r24,lo8(127999)
- 607 00a4 93EF      	    ldi r25,hi8(127999)
- 608 00a6 A1E0      	    ldi r26,hlo8(127999)
- 609 00a8 8150      	    1:subi r24,1
- 610 00aa 9040      	    sbci r25,0
- 611 00ac A040      	    sbci r26,0
- 612 00ae 01F4      	    brne 1b
- 613 00b0 00C0      		rjmp .
- 614 00b2 0000      		nop
- 615 00b4 84E0      		ldi r24,lo8(4)
- 616 00b6 60E0      		ldi r22,lo8(0)
- 617 00b8 0E94 0000 		call COG_sendbyte
- 618 00bc 1C98      		cbi 35-32,4
- 619 00be C698      		cbi 56-32,6
- 620 00c0 C498      		cbi 56-32,4
- 621 00c2 C198      		cbi 56-32,1
- 622 00c4 C298      		cbi 56-32,2
- 623 00c6 C098      		cbi 56-32,0
- 624 00c8 199A      		sbi 35-32,1
- 625 00ca 8FEF      		 ldi r24,lo8(479999)
- 626 00cc 92E5      	    ldi r25,hi8(479999)
- 627 00ce A7E0      	    ldi r26,hlo8(479999)
- 628 00d0 8150      	    1:subi r24,1
- 629 00d2 9040      	    sbci r25,0
- 630 00d4 A040      	    sbci r26,0
- 631 00d6 01F4      	    brne 1b
- 632 00d8 00C0      		rjmp .
- 633 00da 0000      		nop
- 634 00dc 1998      		cbi 35-32,1
- 635               	/* epilogue start */
- 636 00de 0895      		ret
+ 482               	.L29:
+ 483 00bc 0E94 0000 		call COG_busy
+ 484 00c0 8823      		tst r24
+ 485 00c2 01F4      		brne .L29
+ 486 00c4 82E0      		ldi r24,lo8(2)
+ 487 00c6 6FE2      		ldi r22,lo8(47)
+ 488 00c8 0E94 0000 		call COG_sendbyte
+ 489               	/* epilogue start */
+ 490 00cc DF91      		pop r29
+ 491 00ce CF91      		pop r28
+ 492 00d0 1F91      		pop r17
+ 493 00d2 0F91      		pop r16
+ 494 00d4 0895      		ret
+ 496               		.data
+ 497               	.LC6:
+ 498 0043 7772 6974 		.string	"writing fixed image\n"
+ 498      696E 6720 
+ 498      6669 7865 
+ 498      6420 696D 
+ 498      6167 650A 
+ 499               		.section	.text.COG_write_fixed_image,"ax",@progbits
+ 500               	.global	COG_write_fixed_image
+ 502               	COG_write_fixed_image:
+ 503 0000 CF93      		push r28
+ 504 0002 DF93      		push r29
+ 505               	/* prologue: function */
+ 506               	/* frame size = 0 */
+ 507               	/* stack size = 2 */
+ 508               	.L__stack_usage = 2
+ 509 0004 C82F      		mov r28,r24
+ 510 0006 80E0      		ldi r24,lo8(.LC6)
+ 511 0008 90E0      		ldi r25,hi8(.LC6)
+ 512 000a 64E1      		ldi r22,lo8(20)
+ 513 000c 0E94 0000 		call usart_sendarray
+ 514 0010 D0E0      		ldi r29,lo8(0)
+ 515               	.L43:
+ 516 0012 8D2F      		mov r24,r29
+ 517 0014 6C2F      		mov r22,r28
+ 518 0016 0E94 0000 		call COG_write_fixed_line
+ 519 001a DF5F      		subi r29,lo8(-(1))
+ 520 001c D036      		cpi r29,lo8(96)
+ 521 001e 01F4      		brne .L43
+ 522               	/* epilogue start */
+ 523 0020 DF91      		pop r29
+ 524 0022 CF91      		pop r28
+ 525 0024 0895      		ret
+ 527               		.section	.text.COG_off,"ax",@progbits
+ 528               	.global	COG_off
+ 530               	COG_off:
+ 531               	/* prologue: function */
+ 532               	/* frame size = 0 */
+ 533               	/* stack size = 0 */
+ 534               	.L__stack_usage = 0
+ 535 0000 85E5      		ldi r24,lo8(85)
+ 536 0002 0E94 0000 		call COG_write_fixed_image
+ 537 0006 8FEF      		ldi r24,lo8(-1)
+ 538 0008 65E5      		ldi r22,lo8(85)
+ 539 000a 0E94 0000 		call COG_write_fixed_line
+ 540 000e 8FE7      		 ldi r24,lo8(79999)
+ 541 0010 98E3      	    ldi r25,hi8(79999)
+ 542 0012 A1E0      	    ldi r26,hlo8(79999)
+ 543 0014 8150      	    1:subi r24,1
+ 544 0016 9040      	    sbci r25,0
+ 545 0018 A040      	    sbci r26,0
+ 546 001a 01F4      	    brne 1b
+ 547 001c 00C0      		rjmp .
+ 548 001e 0000      		nop
+ 549 0020 C498      		cbi 56-32,4
+ 550 0022 8FEF      		 ldi r24,lo8(799999)
+ 551 0024 94E3      	    ldi r25,hi8(799999)
+ 552 0026 ACE0      	    ldi r26,hlo8(799999)
+ 553 0028 8150      	    1:subi r24,1
+ 554 002a 9040      	    sbci r25,0
+ 555 002c A040      	    sbci r26,0
+ 556 002e 01F4      	    brne 1b
+ 557 0030 00C0      		rjmp .
+ 558 0032 0000      		nop
+ 559 0034 C49A      		sbi 56-32,4
+ 560 0036 83E0      		ldi r24,lo8(3)
+ 561 0038 61E0      		ldi r22,lo8(1)
+ 562 003a 0E94 0000 		call COG_sendbyte
+ 563 003e 82E0      		ldi r24,lo8(2)
+ 564 0040 65E0      		ldi r22,lo8(5)
+ 565 0042 0E94 0000 		call COG_sendbyte
+ 566 0046 85E0      		ldi r24,lo8(5)
+ 567 0048 6EE0      		ldi r22,lo8(14)
+ 568 004a 0E94 0000 		call COG_sendbyte
+ 569 004e 85E0      		ldi r24,lo8(5)
+ 570 0050 62E0      		ldi r22,lo8(2)
+ 571 0052 0E94 0000 		call COG_sendbyte
+ 572 0056 84E0      		ldi r24,lo8(4)
+ 573 0058 6CE0      		ldi r22,lo8(12)
+ 574 005a 0E94 0000 		call COG_sendbyte
+ 575 005e 8FE7      		 ldi r24,lo8(399999)
+ 576 0060 9AE1      	    ldi r25,hi8(399999)
+ 577 0062 A6E0      	    ldi r26,hlo8(399999)
+ 578 0064 8150      	    1:subi r24,1
+ 579 0066 9040      	    sbci r25,0
+ 580 0068 A040      	    sbci r26,0
+ 581 006a 01F4      	    brne 1b
+ 582 006c 00C0      		rjmp .
+ 583 006e 0000      		nop
+ 584 0070 85E0      		ldi r24,lo8(5)
+ 585 0072 60E0      		ldi r22,lo8(0)
+ 586 0074 0E94 0000 		call COG_sendbyte
+ 587 0078 87E0      		ldi r24,lo8(7)
+ 588 007a 6DE0      		ldi r22,lo8(13)
+ 589 007c 0E94 0000 		call COG_sendbyte
+ 590 0080 84E0      		ldi r24,lo8(4)
+ 591 0082 60E5      		ldi r22,lo8(80)
+ 592 0084 0E94 0000 		call COG_sendbyte
+ 593 0088 8FEF      		 ldi r24,lo8(127999)
+ 594 008a 93EF      	    ldi r25,hi8(127999)
+ 595 008c A1E0      	    ldi r26,hlo8(127999)
+ 596 008e 8150      	    1:subi r24,1
+ 597 0090 9040      	    sbci r25,0
+ 598 0092 A040      	    sbci r26,0
+ 599 0094 01F4      	    brne 1b
+ 600 0096 00C0      		rjmp .
+ 601 0098 0000      		nop
+ 602 009a 84E0      		ldi r24,lo8(4)
+ 603 009c 60EA      		ldi r22,lo8(-96)
+ 604 009e 0E94 0000 		call COG_sendbyte
+ 605 00a2 8FEF      		 ldi r24,lo8(127999)
+ 606 00a4 93EF      	    ldi r25,hi8(127999)
+ 607 00a6 A1E0      	    ldi r26,hlo8(127999)
+ 608 00a8 8150      	    1:subi r24,1
+ 609 00aa 9040      	    sbci r25,0
+ 610 00ac A040      	    sbci r26,0
+ 611 00ae 01F4      	    brne 1b
+ 612 00b0 00C0      		rjmp .
+ 613 00b2 0000      		nop
+ 614 00b4 84E0      		ldi r24,lo8(4)
+ 615 00b6 60E0      		ldi r22,lo8(0)
+ 616 00b8 0E94 0000 		call COG_sendbyte
+ 617 00bc 1C98      		cbi 35-32,4
+ 618 00be C698      		cbi 56-32,6
+ 619 00c0 C498      		cbi 56-32,4
+ 620 00c2 C198      		cbi 56-32,1
+ 621 00c4 C298      		cbi 56-32,2
+ 622 00c6 C098      		cbi 56-32,0
+ 623 00c8 199A      		sbi 35-32,1
+ 624 00ca 8FEF      		 ldi r24,lo8(479999)
+ 625 00cc 92E5      	    ldi r25,hi8(479999)
+ 626 00ce A7E0      	    ldi r26,hlo8(479999)
+ 627 00d0 8150      	    1:subi r24,1
+ 628 00d2 9040      	    sbci r25,0
+ 629 00d4 A040      	    sbci r26,0
+ 630 00d6 01F4      	    brne 1b
+ 631 00d8 00C0      		rjmp .
+ 632 00da 0000      		nop
+ 633 00dc 1998      		cbi 35-32,1
+ 634               	/* epilogue start */
+ 635 00de 0895      		ret
+ 637               	.global __do_copy_data
 DEFINED SYMBOLS
                             *ABS*:00000000 COG.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:13     .text.COG_busy:00000000 COG_busy
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:30     .text.COG_sendbyte:00000000 COG_sendbyte
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:76     .text.COG_sendarray:00000000 COG_sendarray
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:131    .text.COG_startup:00000000 COG_startup
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:201    .text.COG_init:00000000 COG_init
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:346    .text.COG_write_array:00000000 COG_write_array
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:391    .text.COG_write_fixed_line:00000000 COG_write_fixed_line
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:503    .text.COG_write_fixed_image:00000000 COG_write_fixed_image
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc8V0EFi.s:531    .text.COG_off:00000000 COG_off
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:11     .text.COG_busy:00000000 COG_busy
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:28     .text.COG_sendbyte:00000000 COG_sendbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:74     .text.COG_sendarray:00000000 COG_sendarray
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:129    .text.COG_startup:00000000 COG_startup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:199    .text.COG_init:00000000 COG_init
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:344    .text.COG_write_array:00000000 COG_write_array
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:391    .text.COG_write_fixed_line:00000000 COG_write_fixed_line
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:502    .text.COG_write_fixed_image:00000000 COG_write_fixed_image
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccArZyG4.s:530    .text.COG_off:00000000 COG_off
 
 UNDEFINED SYMBOLS
-__do_copy_data
-__do_clear_bss
 spi_sendbyte
 spi_sendarray
 usart_sendarray
+__do_copy_data
