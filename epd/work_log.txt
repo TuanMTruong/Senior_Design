@@ -1,5 +1,7 @@
 3. check spi_sendarray using usart. check to see that each byte sends
 	correctly/in correct order.
+	-reviewed code. looks very similar to usart so I'm assuming it works.
+	could verify this later with usart_sendbyte() if necessary.  
 4. Measure VGH (should be > 12v) and VDH (should be > 8v)
 5. Measure VGL (should be <-12v) and VDL (should be <-8v)
 6. check data bytes and scan bytes in COG_write_fixed_line() using usart.
