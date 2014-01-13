@@ -10,20 +10,20 @@
  *
  * hardware:
  * - Buttons	PA0-PA7		input to MCU                    
- * - SPI_CS	PB0		output from MCU
+ * - CS_PIN	PB0		output from MCU
  * - SPI_SCK	PB1		output from MCU
  * - SPI_MOSI	PB2		output from MCU
  * - SPI_MISO	PB3		input to MCU
  * - BORDER_PIN	PB4		output from MCU
- * - PWM_OC1A	PB5		output from MCU
- * - PANEL_ON	PB6		output from MCU
+ * - PWM_PIN	PB5		output from MCU
+ * - PANELON_PINPB6		output from MCU
  * - BUSY_PIN	PB7		input to MCU
  *
  * - USART_RX	PD2
  * - USART_TX	PD3
  * 
- * - DISCHARGE	PD1
- * - RESET_PIN	PD4
+ * - DISCHARGE	PE1
+ * - RESET_PIN	PE4
  */
 
 /* PLAN OF ATTACK:
@@ -192,6 +192,7 @@ int main(void){
 
 	//loop, forever...
 	
+
 	while(1){
 		switch(state){
 			case CREATE_IMG:
@@ -235,7 +236,7 @@ int main(void){
 			case COG_OFF:
 				usart_sendarray("off\n",4);
 				COG_off();
-				while(1){}
+				//while(1){}
 				//TODO turn off COG properly so display isn't damange
 				break;
 			default:

@@ -111,8 +111,8 @@ void COG_startup(void){
 	PORTE &= ~(1<<DISCHARGE_PIN);	//no discharge
 	PORTB &= ~(1<<BORDER_PIN);	//Border on
 	PORTB &= ~(1<<CS_PIN);		//CS pin low
-	PORTB &= ~(1<<1);
-	PORTB &= ~(1<<2);
+	PORTB &= ~(1<<SPI_SCK);		//spi clock low
+	PORTB &= ~(1<<SPI_MOSI);	//spi mosi low
 
 	//1. Enable PWM
 	PWM_ENABLE();
@@ -265,7 +265,7 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 		if((line/4) == pixel_counter){
 			spi_sendbyte(0xC0 >> (2* (line & 0x03)));
 		}
-		spi_sendbyte(0x00);
+		else{spi_sendbyte(0x00);}
 	}
 	for(pixel_counter = 0; pixel_counter<25; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
@@ -275,8 +275,6 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 	//PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	while(COG_busy());  //Check if COG is busy
 	COG_sendbyte(0x02, 0x2F);
-
-
 
 }
 
@@ -315,8 +313,8 @@ void COG_off(void){
 	PORTB &= ~(1<<PANELON_PIN);			//disable power
 	PORTB &= ~(1<<BORDER_PIN);
 
-	PORTB &= ~(1<<1);
-	PORTB &= ~(1<<2);
+	PORTB &= ~(1<<SPI_SCK);
+	PORTB &= ~(1<<SPI_MOSI);
 	PORTB &= ~(1<<CS_PIN);
 
 	PORTE |= (1<<DISCHARGE_PIN);

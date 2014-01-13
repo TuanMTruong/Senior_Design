@@ -1,6 +1,6 @@
-1. check PWM_SPEED @ 40 is actually 200mhz. In COG.h.
-2. EPD_COLUMN 76? why not 200? In COG.h. :w
-3. Line 262 of COG.c. Check that appropriate scan byte is on for each line.
-	Looks like wrong line might be getting turned on. 
-4. Why toggle CS pin on line 275 of COG.c?
+3. check spi_sendarray using usart. check to see that each byte sends
+	correctly/in correct order.
+4. Measure VGH (should be > 12v) and VDH (should be > 8v)
+5. Measure VGL (should be <-12v) and VDL (should be <-8v)
+6. check data bytes and scan bytes in COG_write_fixed_line() using usart.
 

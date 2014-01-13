@@ -8,6 +8,8 @@
 
 //hardware macros
 #define CS_PIN		0	//PB0
+#define SPI_SCK		1	//PB1
+#define SPI_MOSI	2	//PB2
 #define BORDER_PIN	4	//PB4
 #define PWM_PIN		5	//PB5
 #define PANELON_PIN 	6	//PB6

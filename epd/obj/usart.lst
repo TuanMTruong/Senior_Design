@@ -5,126 +5,117 @@
    5               	__CCP__ = 0x34
    6               	__tmp_reg__ = 0
    7               	__zero_reg__ = 1
-   8               		.global __do_copy_data
-   9               		.global __do_clear_bss
-  10               		.section	.text.usart_setup,"ax",@progbits
-  11               	.global	usart_setup
-  13               	usart_setup:
-  14 0000 0F93      		push r16
-  15 0002 1F93      		push r17
-  16               	/* prologue: function */
-  17               	/* frame size = 0 */
-  18               	/* stack size = 2 */
-  19               	.L__stack_usage = 2
-  20 0004 9B01      		movw r18,r22
-  21 0006 AC01      		movw r20,r24
-  22 0008 82E0      		ldi r24,lo8(2)
-  23 000a 8093 9B00 		sts 155,r24
-  24 000e 88E1      		ldi r24,lo8(24)
-  25 0010 8093 9A00 		sts 154,r24
-  26 0014 86E0      		ldi r24,lo8(6)
-  27 0016 8093 9D00 		sts 157,r24
-  28 001a 60E0      		ldi r22,lo8(4000000)
-  29 001c 79E0      		ldi r23,hi8(4000000)
-  30 001e 8DE3      		ldi r24,hlo8(4000000)
-  31 0020 90E0      		ldi r25,hhi8(4000000)
-  32 0022 0E94 0000 		call __udivmodsi4
-  33 0026 8901      		movw r16,r18
-  34 0028 9A01      		movw r18,r20
-  35 002a 0150      		subi r16,lo8(-(-1))
-  36 002c 1040      		sbci r17,hi8(-(-1))
-  37 002e 2040      		sbci r18,hlo8(-(-1))
-  38 0030 3040      		sbci r19,hhi8(-(-1))
-  39 0032 3695      		lsr r19
-  40 0034 2795      		ror r18
-  41 0036 1795      		ror r17
-  42 0038 0795      		ror r16
-  43 003a 0093 9900 		sts 153,r16
-  44               	/* epilogue start */
-  45 003e 1F91      		pop r17
-  46 0040 0F91      		pop r16
-  47 0042 0895      		ret
-  49               		.section	.text.usart_sendbyte,"ax",@progbits
-  50               	.global	usart_sendbyte
-  52               	usart_sendbyte:
-  53               	/* prologue: function */
-  54               	/* frame size = 0 */
-  55               	/* stack size = 0 */
-  56               	.L__stack_usage = 0
-  57               	.L3:
-  58 0000 9091 9B00 		lds r25,155
-  59 0004 95FF      		sbrs r25,5
-  60 0006 00C0      		rjmp .L3
-  61 0008 8093 9C00 		sts 156,r24
-  62               	/* epilogue start */
-  63 000c 0895      		ret
-  65               		.section	.text.usart_sendarray,"ax",@progbits
-  66               	.global	usart_sendarray
-  68               	usart_sendarray:
-  69 0000 EF92      		push r14
-  70 0002 FF92      		push r15
-  71 0004 1F93      		push r17
-  72 0006 CF93      		push r28
-  73 0008 DF93      		push r29
-  74 000a 0F92      		push __tmp_reg__
-  75 000c CDB7      		in r28,__SP_L__
-  76 000e DEB7      		in r29,__SP_H__
-  77               	/* prologue: function */
-  78               	/* frame size = 1 */
-  79               	/* stack size = 6 */
-  80               	.L__stack_usage = 6
-  81 0010 182F      		mov r17,r24
-  82 0012 E82E      		mov r14,r24
-  83 0014 F92E      		mov r15,r25
-  84 0016 00C0      		rjmp .L6
-  85               	.L7:
-  86 0018 F701      		movw r30,r14
-  87 001a 8191      		ld r24,Z+
-  88 001c 7F01      		movw r14,r30
-  89 001e 6983      		std Y+1,r22
-  90 0020 0E94 0000 		call usart_sendbyte
-  91 0024 6981      		ldd r22,Y+1
-  92               	.L6:
-  93 0026 8E2D      		mov r24,r14
-  94 0028 811B      		sub r24,r17
-  95 002a 8617      		cp r24,r22
-  96 002c 00F0      		brlo .L7
-  97               	/* epilogue start */
-  98 002e 0F90      		pop __tmp_reg__
-  99 0030 DF91      		pop r29
- 100 0032 CF91      		pop r28
- 101 0034 1F91      		pop r17
- 102 0036 FF90      		pop r15
- 103 0038 EF90      		pop r14
- 104 003a 0895      		ret
- 106               		.section	.text.usart_readbyte,"ax",@progbits
- 107               	.global	usart_readbyte
- 109               	usart_readbyte:
- 110               	/* prologue: function */
- 111               	/* frame size = 0 */
- 112               	/* stack size = 0 */
- 113               	.L__stack_usage = 0
- 114               	.L9:
- 115 0000 8091 9B00 		lds r24,155
- 116 0004 87FF      		sbrs r24,7
- 117 0006 00C0      		rjmp .L9
- 118 0008 8091 9C00 		lds r24,156
- 119               	/* epilogue start */
- 120 000c 0895      		ret
+   8               		.section	.text.usart_setup,"ax",@progbits
+   9               	.global	usart_setup
+  11               	usart_setup:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14               	/* stack size = 0 */
+  15               	.L__stack_usage = 0
+  16 0000 9B01      		movw r18,r22
+  17 0002 AC01      		movw r20,r24
+  18 0004 82E0      		ldi r24,lo8(2)
+  19 0006 8093 9B00 		sts 155,r24
+  20 000a 88E1      		ldi r24,lo8(24)
+  21 000c 8093 9A00 		sts 154,r24
+  22 0010 86E0      		ldi r24,lo8(6)
+  23 0012 8093 9D00 		sts 157,r24
+  24 0016 60E0      		ldi r22,lo8(4000000)
+  25 0018 79E0      		ldi r23,hi8(4000000)
+  26 001a 8DE3      		ldi r24,hlo8(4000000)
+  27 001c 90E0      		ldi r25,hhi8(4000000)
+  28 001e 0E94 0000 		call __udivmodsi4
+  29 0022 2150      		subi r18,lo8(-(-1))
+  30 0024 3040      		sbci r19,hi8(-(-1))
+  31 0026 4040      		sbci r20,hlo8(-(-1))
+  32 0028 5040      		sbci r21,hhi8(-(-1))
+  33 002a 5695      		lsr r21
+  34 002c 4795      		ror r20
+  35 002e 3795      		ror r19
+  36 0030 2795      		ror r18
+  37 0032 2093 9900 		sts 153,r18
+  38               	/* epilogue start */
+  39 0036 0895      		ret
+  41               		.section	.text.usart_sendbyte,"ax",@progbits
+  42               	.global	usart_sendbyte
+  44               	usart_sendbyte:
+  45               	/* prologue: function */
+  46               	/* frame size = 0 */
+  47               	/* stack size = 0 */
+  48               	.L__stack_usage = 0
+  49               	.L3:
+  50 0000 9091 9B00 		lds r25,155
+  51 0004 95FF      		sbrs r25,5
+  52 0006 00C0      		rjmp .L3
+  53 0008 8093 9C00 		sts 156,r24
+  54               	/* epilogue start */
+  55 000c 0895      		ret
+  57               		.section	.text.usart_sendarray,"ax",@progbits
+  58               	.global	usart_sendarray
+  60               	usart_sendarray:
+  61 0000 EF92      		push r14
+  62 0002 FF92      		push r15
+  63 0004 1F93      		push r17
+  64 0006 DF93      		push r29
+  65 0008 CF93      		push r28
+  66 000a 0F92      		push __tmp_reg__
+  67 000c CDB7      		in r28,__SP_L__
+  68 000e DEB7      		in r29,__SP_H__
+  69               	/* prologue: function */
+  70               	/* frame size = 1 */
+  71               	/* stack size = 6 */
+  72               	.L__stack_usage = 6
+  73 0010 182F      		mov r17,r24
+  74 0012 412F      		mov r20,r17
+  75 0014 592F      		mov r21,r25
+  76 0016 7A01      		movw r14,r20
+  77 0018 00C0      		rjmp .L6
+  78               	.L7:
+  79 001a F701      		movw r30,r14
+  80 001c 8191      		ld r24,Z+
+  81 001e 7F01      		movw r14,r30
+  82 0020 6983      		std Y+1,r22
+  83 0022 0E94 0000 		call usart_sendbyte
+  84 0026 6981      		ldd r22,Y+1
+  85               	.L6:
+  86 0028 8E2D      		mov r24,r14
+  87 002a 811B      		sub r24,r17
+  88 002c 8617      		cp r24,r22
+  89 002e 00F0      		brlo .L7
+  90               	/* epilogue start */
+  91 0030 0F90      		pop __tmp_reg__
+  92 0032 CF91      		pop r28
+  93 0034 DF91      		pop r29
+  94 0036 1F91      		pop r17
+  95 0038 FF90      		pop r15
+  96 003a EF90      		pop r14
+  97 003c 0895      		ret
+  99               		.section	.text.usart_readbyte,"ax",@progbits
+ 100               	.global	usart_readbyte
+ 102               	usart_readbyte:
+ 103               	/* prologue: function */
+ 104               	/* frame size = 0 */
+ 105               	/* stack size = 0 */
+ 106               	.L__stack_usage = 0
+ 107               	.L9:
+ 108 0000 8091 9B00 		lds r24,155
+ 109 0004 87FF      		sbrs r24,7
+ 110 0006 00C0      		rjmp .L9
+ 111 0008 8091 9C00 		lds r24,156
+ 112               	/* epilogue start */
+ 113 000c 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:13     .text.usart_setup:00000000 usart_setup
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:52     .text.usart_sendbyte:00000000 usart_sendbyte
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:68     .text.usart_sendarray:00000000 usart_sendarray
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccMqWU23.s:109    .text.usart_readbyte:00000000 usart_readbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:11     .text.usart_setup:00000000 usart_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:44     .text.usart_sendbyte:00000000 usart_sendbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:60     .text.usart_sendarray:00000000 usart_sendarray
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:102    .text.usart_readbyte:00000000 usart_readbyte
 
 UNDEFINED SYMBOLS
-__do_copy_data
-__do_clear_bss
 __udivmodsi4

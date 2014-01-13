@@ -73,14 +73,14 @@
   78 003c 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 spi.c
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:2      *ABS*:0000003f __SREG__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:3      *ABS*:0000003e __SP_H__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:4      *ABS*:0000003d __SP_L__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:5      *ABS*:00000034 __CCP__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:11     .text.spi_setup:00000000 spi_setup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:26     .text.spi_sendbyte:00000000 spi_sendbyte
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccchT7Eg.s:41     .text.spi_sendarray:00000000 spi_sendarray
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:11     .text.spi_setup:00000000 spi_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:26     .text.spi_sendbyte:00000000 spi_sendbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc2ofMH5.s:41     .text.spi_sendarray:00000000 spi_sendarray
 
 NO UNDEFINED SYMBOLS
