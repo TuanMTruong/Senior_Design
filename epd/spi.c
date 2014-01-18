@@ -29,7 +29,7 @@ void spi_setup(void){
 void spi_sendbyte(uint8_t data){
 	SPDR = data;                //send data
 	while(!(SPSR & (1<<SPIF))){}; //wait till done
-//	usart_sendbyte(data);
+	usart_sendbyte(data);
 	return;
 }
 
@@ -42,5 +42,25 @@ void spi_sendarray(uint8_t *array, uint8_t length){
 	for(i =0; i<length; i++){
 		spi_sendbyte(*(array+i));
 	}
+}
+
+/*******************************************************************/
+// Turn on SPI
+/*******************************************************************/
+void spi_on(void){
+	SPCR |= (1<<CPOL);
+	spi_sendbyte(0x00);
+	spi_sendbyte(0x00);
+	_delay_us(10);
+}
+
+/*******************************************************************/
+// Turn off SPI
+/*******************************************************************/
+void spi_off(void){
+	SPCR &= ~(1<<CPOL);
+	spi_sendbyte(0x00);
+	spi_sendbyte(0x00);
+	_delay_us(10);
 }
 

@@ -106,16 +106,16 @@
  113 000c 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:2      *ABS*:0000003f __SREG__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:3      *ABS*:0000003e __SP_H__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:4      *ABS*:0000003d __SP_L__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:5      *ABS*:00000034 __CCP__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:11     .text.usart_setup:00000000 usart_setup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:44     .text.usart_sendbyte:00000000 usart_sendbyte
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:60     .text.usart_sendarray:00000000 usart_sendarray
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccHO0BjI.s:102    .text.usart_readbyte:00000000 usart_readbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:11     .text.usart_setup:00000000 usart_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:44     .text.usart_sendbyte:00000000 usart_sendbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:60     .text.usart_sendarray:00000000 usart_sendarray
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc3zqXOF.s:102    .text.usart_readbyte:00000000 usart_readbyte
 
 UNDEFINED SYMBOLS
 __udivmodsi4

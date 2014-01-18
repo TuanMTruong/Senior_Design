@@ -236,7 +236,7 @@ int main(void){
 			case COG_OFF:
 				usart_sendarray("off\n",4);
 				COG_off();
-				//while(1){}
+				while(1){}
 				//TODO turn off COG properly so display isn't damange
 				break;
 			default:

@@ -172,14 +172,14 @@
  172 0046 14E0      		ldi r17,lo8(4)
  173 0048 D3E0      		ldi r29,lo8(3)
  174 004a C1E0      		ldi r28,lo8(1)
- 175               	.L24:
+ 175               	.L25:
  176 004c 8091 0000 		lds r24,state
  177               	.L15:
  178 0050 8330      		cpi r24,lo8(3)
  179 0052 00F4      		brsh .L21
  180 0054 8130      		cpi r24,lo8(1)
  181 0056 00F4      		brsh .L17
- 182 0058 00C0      		rjmp .L25
+ 182 0058 00C0      		rjmp .L26
  183               	.L21:
  184 005a 8430      		cpi r24,lo8(4)
  185 005c 01F0      		breq .L19
@@ -187,22 +187,22 @@
  187 0060 00F0      		brlo .L18
  188 0062 8630      		cpi r24,lo8(6)
  189 0064 01F4      		brne .L15
- 190 0066 00C0      		rjmp .L26
- 191               	.L25:
+ 190 0066 00C0      		rjmp .L27
+ 191               	.L26:
  192 0068 80E0      		ldi r24,lo8(.LC1)
  193 006a 90E0      		ldi r25,hi8(.LC1)
  194 006c 63E1      		ldi r22,lo8(19)
  195 006e 0E94 0000 		call usart_sendarray
  196 0072 C093 0000 		sts state,r28
- 197 0076 00C0      		rjmp .L24
+ 197 0076 00C0      		rjmp .L25
  198               	.L17:
  199 0078 0E94 0000 		call COG_startup
  200 007c D093 0000 		sts state,r29
- 201 0080 00C0      		rjmp .L24
+ 201 0080 00C0      		rjmp .L25
  202               	.L18:
  203 0082 0E94 0000 		call COG_init
  204 0086 1093 0000 		sts state,r17
- 205 008a 00C0      		rjmp .L24
+ 205 008a 00C0      		rjmp .L25
  206               	.L19:
  207 008c 8FEF      		ldi r24,lo8(-1)
  208 008e 0E94 0000 		call COG_write_fixed_image
@@ -321,35 +321,36 @@
  321 0178 00C0      		rjmp .
  322 017a 0000      		nop
  323 017c 0093 0000 		sts state,r16
- 324 0180 00C0      		rjmp .L24
- 325               	.L26:
+ 324 0180 00C0      		rjmp .L25
+ 325               	.L27:
  326 0182 80E0      		ldi r24,lo8(.LC2)
  327 0184 90E0      		ldi r25,hi8(.LC2)
  328 0186 64E0      		ldi r22,lo8(4)
  329 0188 0E94 0000 		call usart_sendarray
  330 018c 0E94 0000 		call COG_off
- 331 0190 00C0      		rjmp .L24
- 333               	.global	state
+ 331               	.L23:
+ 332 0190 00C0      		rjmp .L23
  334               	.global	state
- 335               		.section .bss
- 338               	state:
- 339 0000 00        		.skip 1,0
- 340               	.global __do_copy_data
- 341               	.global __do_clear_bss
+ 335               	.global	state
+ 336               		.section .bss
+ 339               	state:
+ 340 0000 00        		.skip 1,0
+ 341               	.global __do_copy_data
+ 342               	.global __do_clear_bss
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:2      *ABS*:0000003f __SREG__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:3      *ABS*:0000003e __SP_H__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:4      *ABS*:0000003d __SP_L__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:5      *ABS*:00000034 __CCP__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:11     .text.ddr_setup:00000000 ddr_setup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:37     .text.pwm_setup:00000000 pwm_setup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:58     .text.fill_image_buff:00000000 fill_image_buff
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:105    .text.__vector_12:00000000 __vector_12
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:134    .text.main:00000000 main
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cca01jG3.s:338    .bss:00000000 state
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:11     .text.ddr_setup:00000000 ddr_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:37     .text.pwm_setup:00000000 pwm_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:58     .text.fill_image_buff:00000000 fill_image_buff
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:105    .text.__vector_12:00000000 __vector_12
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:134    .text.main:00000000 main
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:339    .bss:00000000 state
 
 UNDEFINED SYMBOLS
 spi_setup

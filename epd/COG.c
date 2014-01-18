@@ -198,7 +198,6 @@ void COG_init(void){
 	spi_sendbyte(0x00);
 	spi_sendbyte(0x00);
 
-
 	usart_sendarray("init done\n", 10);
 	//if all went well the COG should be initialized and ready for image 
 	//data. if not... get ready to debug ;)
@@ -265,33 +264,23 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 	for (pixel_counter = 0; pixel_counter<25; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
 		spi_sendbyte(pixel_data);
-		//DEBUG LINE BELOW
-		//usart_sendbyte(pixel_data);
 	}
 	for (pixel_counter = 0; pixel_counter<24; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
 
 		if((line/4) == pixel_counter){
 			spi_sendbyte(0xC0 >> (2* (line & 0x03)));
-			//DEBUG LINE BELOW
-			//usart_sendbyte(0xC0 >> (2* (line & 0x03)));
 		}
 		else{
 			spi_sendbyte(0x00);
-			//DEBUG LINE BELOW
-			//usart_sendbyte(0x00);
 		}
 		
 	}
 	for(pixel_counter = 0; pixel_counter<25; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
 		spi_sendbyte(pixel_data);
-		//DEBUG LINE BELOW
-		usart_sendbyte(pixel_data);
 	}
 	spi_sendbyte(0x00);
-	//DEBUG LINE BELOW
-	//usart_sendbyte(0x00);
 	
 	//PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	while(COG_busy());  //Check if COG is busy
