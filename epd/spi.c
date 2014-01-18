@@ -16,8 +16,8 @@
 //mode 0
 /******************************************************************/
 void spi_setup(void){
-	SPCR = (1<<MSTR) | (1<<SPE);   //master, MSB first, enable, 8MHz
-	SPSR = (1<<SPI2X);              //double spi clock speed
+	SPCR = (1<<MSTR) | (1<<SPE) | (1<<CPOL);   	//master, MSB first, enable, 8MHz
+	SPSR = (1<<SPI2X);              		//double spi clock speed
 
 	return;
 }

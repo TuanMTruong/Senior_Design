@@ -114,6 +114,9 @@ void COG_startup(void){
 	PORTB &= ~(1<<SPI_SCK);		//spi clock low
 	PORTB &= ~(1<<SPI_MOSI);	//spi mosi low
 
+	spi_sendbyte(0x00);
+	spi_sendbyte(0x00);
+
 	//1. Enable PWM
 	PWM_ENABLE();
 	_delay_ms(5);
@@ -192,6 +195,10 @@ void COG_init(void){
 	_delay_ms(30);
 	COG_sendbyte(0x02, 0x24);  			//output enable to disable
 
+	spi_sendbyte(0x00);
+	spi_sendbyte(0x00);
+
+
 	usart_sendarray("init done\n", 10);
 	//if all went well the COG should be initialized and ready for image 
 	//data. if not... get ready to debug ;)
@@ -259,7 +266,7 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 		while(COG_busy());  //Check if COG is busy
 		spi_sendbyte(pixel_data);
 		//DEBUG LINE BELOW
-		usart_sendbyte(pixel_data);
+		//usart_sendbyte(pixel_data);
 	}
 	for (pixel_counter = 0; pixel_counter<24; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
@@ -267,12 +274,12 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 		if((line/4) == pixel_counter){
 			spi_sendbyte(0xC0 >> (2* (line & 0x03)));
 			//DEBUG LINE BELOW
-			usart_sendbyte(0xC0 >> (2* (line & 0x03)));
+			//usart_sendbyte(0xC0 >> (2* (line & 0x03)));
 		}
 		else{
 			spi_sendbyte(0x00);
 			//DEBUG LINE BELOW
-			usart_sendbyte(0x00);
+			//usart_sendbyte(0x00);
 		}
 		
 	}
@@ -284,11 +291,14 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 	}
 	spi_sendbyte(0x00);
 	//DEBUG LINE BELOW
-	usart_sendbyte(0x00);
+	//usart_sendbyte(0x00);
 	
 	//PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	while(COG_busy());  //Check if COG is busy
 	COG_sendbyte(0x02, 0x2F);
+
+	spi_sendbyte(0x00);
+	spi_sendbyte(0x00);
 
 }
 
@@ -309,6 +319,10 @@ void COG_off(void){
 	PORTB &= ~(1<<BORDER_PIN);		//Turn on border (active low)
 	_delay_ms(250);				//wait
 	PORTB |= (1<< BORDER_PIN);		//turn off border
+
+	spi_sendbyte(0x00);
+	spi_sendbyte(0x00);
+
 	COG_sendbyte(0x03, 0x01);		//reset latch
 	COG_sendbyte(0x02, 0x05); 		//output enable off
 	COG_sendbyte(0x05, 0x0E);		//chargepump vcom off
@@ -326,6 +340,9 @@ void COG_off(void){
 	PORTE &= ~(1<<RESET_PIN);
 	PORTB &= ~(1<<PANELON_PIN);			//disable power
 	PORTB &= ~(1<<BORDER_PIN);
+
+	spi_sendbyte(0x00);
+	spi_sendbyte(0x00);
 
 	PORTB &= ~(1<<SPI_SCK);
 	PORTB &= ~(1<<SPI_MOSI);

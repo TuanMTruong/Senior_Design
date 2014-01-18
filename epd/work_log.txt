@@ -6,3 +6,6 @@
 5. Measure VGL (should be <-12v) and VDL (should be <-8v)
 6. check data bytes and scan bytes in COG_write_fixed_line() using usart.
 
+
+
+// - spi needs to be in mode 2 (CPOL =1, CPHA = 0)
