@@ -192,7 +192,6 @@ int main(void){
 
 	//loop, forever...
 	
-
 	while(1){
 		switch(state){
 			case CREATE_IMG:

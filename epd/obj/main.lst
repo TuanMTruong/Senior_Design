@@ -339,18 +339,18 @@
  342               	.global __do_clear_bss
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:2      *ABS*:0000003f __SREG__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:3      *ABS*:0000003e __SP_H__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:4      *ABS*:0000003d __SP_L__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:5      *ABS*:00000034 __CCP__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:11     .text.ddr_setup:00000000 ddr_setup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:37     .text.pwm_setup:00000000 pwm_setup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:58     .text.fill_image_buff:00000000 fill_image_buff
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:105    .text.__vector_12:00000000 __vector_12
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:134    .text.main:00000000 main
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccGUdq5e.s:339    .bss:00000000 state
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:11     .text.ddr_setup:00000000 ddr_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:37     .text.pwm_setup:00000000 pwm_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:58     .text.fill_image_buff:00000000 fill_image_buff
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:105    .text.__vector_12:00000000 __vector_12
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:134    .text.main:00000000 main
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cc32uvRG.s:339    .bss:00000000 state
 
 UNDEFINED SYMBOLS
 spi_setup

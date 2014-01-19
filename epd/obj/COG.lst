@@ -92,15 +92,15 @@
   97 0024 0E94 0000 		call spi_sendbyte
   98 0028 812F      		mov r24,r17
   99 002a 0E94 0000 		call spi_sendbyte
- 100               	.L9:
- 101 002e 0E94 0000 		call COG_busy
- 102 0032 8823      		tst r24
- 103 0034 01F4      		brne .L9
- 104 0036 C09A      		sbi 56-32,0
- 105 0038 85E3      		 ldi r24,lo8(53)
- 106 003a 8A95      	    1:dec r24
- 107 003c 01F4      	    brne 1b
- 108 003e 0000      		nop
+ 100 002e C09A      		sbi 56-32,0
+ 101 0030 85E3      		 ldi r24,lo8(53)
+ 102 0032 8A95      	    1:dec r24
+ 103 0034 01F4      	    brne 1b
+ 104 0036 0000      		nop
+ 105               	.L9:
+ 106 0038 0E94 0000 		call COG_busy
+ 107 003c 8823      		tst r24
+ 108 003e 01F4      		brne .L9
  109 0040 C098      		cbi 56-32,0
  110 0042 82E7      		ldi r24,lo8(114)
  111 0044 0E94 0000 		call spi_sendbyte
@@ -436,243 +436,248 @@
  436 0046 C098      		cbi 56-32,0
  437 0048 82E7      		ldi r24,lo8(114)
  438 004a 0E94 0000 		call spi_sendbyte
- 439 004e 19E1      		ldi r17,lo8(25)
- 440               	.L40:
- 441 0050 0E94 0000 		call COG_busy
- 442 0054 8823      		tst r24
- 443 0056 01F4      		brne .L40
- 444 0058 8C2F      		mov r24,r28
- 445 005a 0E94 0000 		call spi_sendbyte
- 446 005e 1150      		subi r17,lo8(-(-1))
- 447 0060 01F4      		brne .L40
- 448 0062 0D2F      		mov r16,r29
- 449 0064 0695      		lsr r16
- 450 0066 0695      		lsr r16
- 451 0068 2D2F      		mov r18,r29
- 452 006a 30E0      		ldi r19,lo8(0)
- 453 006c 2370      		andi r18,lo8(3)
- 454 006e 3070      		andi r19,hi8(3)
- 455 0070 220F      		lsl r18
- 456 0072 331F      		rol r19
- 457 0074 40EC      		ldi r20,lo8(192)
- 458 0076 50E0      		ldi r21,hi8(192)
- 459 0078 00C0      		rjmp 2f
- 460 007a 5595      	1:	asr r21
- 461 007c 4795      		ror r20
- 462 007e 2A95      	2:	dec r18
- 463 0080 02F4      		brpl 1b
- 464 0082 142F      		mov r17,r20
- 465 0084 D0E0      		ldi r29,lo8(0)
- 466               	.L41:
- 467 0086 0E94 0000 		call COG_busy
- 468 008a 8823      		tst r24
- 469 008c 01F4      		brne .L41
- 470 008e 0D17      		cp r16,r29
- 471 0090 01F4      		brne .L25
- 472 0092 812F      		mov r24,r17
- 473 0094 00C0      		rjmp .L43
- 474               	.L25:
- 475 0096 80E0      		ldi r24,lo8(0)
- 476               	.L43:
- 477 0098 0E94 0000 		call spi_sendbyte
- 478 009c DF5F      		subi r29,lo8(-(1))
- 479 009e D831      		cpi r29,lo8(24)
- 480 00a0 01F4      		brne .L41
- 481 00a2 D9E1      		ldi r29,lo8(25)
- 482               	.L42:
- 483 00a4 0E94 0000 		call COG_busy
- 484 00a8 8823      		tst r24
- 485 00aa 01F4      		brne .L42
- 486 00ac 8C2F      		mov r24,r28
- 487 00ae 0E94 0000 		call spi_sendbyte
- 488 00b2 D150      		subi r29,lo8(-(-1))
- 489 00b4 01F4      		brne .L42
- 490 00b6 80E0      		ldi r24,lo8(0)
- 491 00b8 0E94 0000 		call spi_sendbyte
- 492               	.L30:
- 493 00bc 0E94 0000 		call COG_busy
- 494 00c0 8823      		tst r24
- 495 00c2 01F4      		brne .L30
- 496 00c4 82E0      		ldi r24,lo8(2)
- 497 00c6 6FE2      		ldi r22,lo8(47)
- 498 00c8 0E94 0000 		call COG_sendbyte
- 499 00cc 80E0      		ldi r24,lo8(0)
- 500 00ce 0E94 0000 		call spi_sendbyte
- 501 00d2 80E0      		ldi r24,lo8(0)
- 502 00d4 0E94 0000 		call spi_sendbyte
- 503               	/* epilogue start */
- 504 00d8 DF91      		pop r29
- 505 00da CF91      		pop r28
- 506 00dc 1F91      		pop r17
- 507 00de 0F91      		pop r16
- 508 00e0 0895      		ret
- 510               		.data
- 511               	.LC6:
- 512 0043 7772 6974 		.string	"writing fixed image\n"
- 512      696E 6720 
- 512      6669 7865 
- 512      6420 696D 
- 512      6167 650A 
- 513               		.section	.text.COG_write_fixed_image,"ax",@progbits
- 514               	.global	COG_write_fixed_image
- 516               	COG_write_fixed_image:
- 517 0000 CF93      		push r28
- 518 0002 DF93      		push r29
- 519               	/* prologue: function */
- 520               	/* frame size = 0 */
- 521               	/* stack size = 2 */
- 522               	.L__stack_usage = 2
- 523 0004 C82F      		mov r28,r24
- 524 0006 80E0      		ldi r24,lo8(.LC6)
- 525 0008 90E0      		ldi r25,hi8(.LC6)
- 526 000a 64E1      		ldi r22,lo8(20)
- 527 000c 0E94 0000 		call usart_sendarray
- 528 0010 D0E0      		ldi r29,lo8(0)
- 529               	.L45:
- 530 0012 8D2F      		mov r24,r29
- 531 0014 6C2F      		mov r22,r28
- 532 0016 0E94 0000 		call COG_write_fixed_line
- 533 001a DF5F      		subi r29,lo8(-(1))
- 534 001c D036      		cpi r29,lo8(96)
- 535 001e 01F4      		brne .L45
- 536               	/* epilogue start */
- 537 0020 DF91      		pop r29
- 538 0022 CF91      		pop r28
- 539 0024 0895      		ret
- 541               		.section	.text.COG_off,"ax",@progbits
- 542               	.global	COG_off
- 544               	COG_off:
- 545               	/* prologue: function */
- 546               	/* frame size = 0 */
- 547               	/* stack size = 0 */
- 548               	.L__stack_usage = 0
- 549 0000 85E5      		ldi r24,lo8(85)
- 550 0002 0E94 0000 		call COG_write_fixed_image
- 551 0006 8FEF      		ldi r24,lo8(-1)
- 552 0008 65E5      		ldi r22,lo8(85)
- 553 000a 0E94 0000 		call COG_write_fixed_line
- 554 000e 8FE7      		 ldi r24,lo8(79999)
- 555 0010 98E3      	    ldi r25,hi8(79999)
- 556 0012 A1E0      	    ldi r26,hlo8(79999)
- 557 0014 8150      	    1:subi r24,1
- 558 0016 9040      	    sbci r25,0
- 559 0018 A040      	    sbci r26,0
- 560 001a 01F4      	    brne 1b
- 561 001c 00C0      		rjmp .
- 562 001e 0000      		nop
- 563 0020 C498      		cbi 56-32,4
- 564 0022 8FEF      		 ldi r24,lo8(799999)
- 565 0024 94E3      	    ldi r25,hi8(799999)
- 566 0026 ACE0      	    ldi r26,hlo8(799999)
- 567 0028 8150      	    1:subi r24,1
- 568 002a 9040      	    sbci r25,0
- 569 002c A040      	    sbci r26,0
- 570 002e 01F4      	    brne 1b
- 571 0030 00C0      		rjmp .
- 572 0032 0000      		nop
- 573 0034 C49A      		sbi 56-32,4
- 574 0036 80E0      		ldi r24,lo8(0)
- 575 0038 0E94 0000 		call spi_sendbyte
- 576 003c 80E0      		ldi r24,lo8(0)
- 577 003e 0E94 0000 		call spi_sendbyte
- 578 0042 83E0      		ldi r24,lo8(3)
- 579 0044 61E0      		ldi r22,lo8(1)
- 580 0046 0E94 0000 		call COG_sendbyte
- 581 004a 82E0      		ldi r24,lo8(2)
- 582 004c 65E0      		ldi r22,lo8(5)
- 583 004e 0E94 0000 		call COG_sendbyte
- 584 0052 85E0      		ldi r24,lo8(5)
- 585 0054 6EE0      		ldi r22,lo8(14)
- 586 0056 0E94 0000 		call COG_sendbyte
- 587 005a 85E0      		ldi r24,lo8(5)
- 588 005c 62E0      		ldi r22,lo8(2)
- 589 005e 0E94 0000 		call COG_sendbyte
- 590 0062 84E0      		ldi r24,lo8(4)
- 591 0064 6CE0      		ldi r22,lo8(12)
- 592 0066 0E94 0000 		call COG_sendbyte
- 593 006a 8FE7      		 ldi r24,lo8(399999)
- 594 006c 9AE1      	    ldi r25,hi8(399999)
- 595 006e A6E0      	    ldi r26,hlo8(399999)
- 596 0070 8150      	    1:subi r24,1
- 597 0072 9040      	    sbci r25,0
- 598 0074 A040      	    sbci r26,0
- 599 0076 01F4      	    brne 1b
- 600 0078 00C0      		rjmp .
- 601 007a 0000      		nop
- 602 007c 85E0      		ldi r24,lo8(5)
- 603 007e 60E0      		ldi r22,lo8(0)
- 604 0080 0E94 0000 		call COG_sendbyte
- 605 0084 87E0      		ldi r24,lo8(7)
- 606 0086 6DE0      		ldi r22,lo8(13)
- 607 0088 0E94 0000 		call COG_sendbyte
- 608 008c 84E0      		ldi r24,lo8(4)
- 609 008e 60E5      		ldi r22,lo8(80)
- 610 0090 0E94 0000 		call COG_sendbyte
- 611 0094 8FEF      		 ldi r24,lo8(127999)
- 612 0096 93EF      	    ldi r25,hi8(127999)
- 613 0098 A1E0      	    ldi r26,hlo8(127999)
- 614 009a 8150      	    1:subi r24,1
- 615 009c 9040      	    sbci r25,0
- 616 009e A040      	    sbci r26,0
- 617 00a0 01F4      	    brne 1b
- 618 00a2 00C0      		rjmp .
- 619 00a4 0000      		nop
- 620 00a6 84E0      		ldi r24,lo8(4)
- 621 00a8 60EA      		ldi r22,lo8(-96)
- 622 00aa 0E94 0000 		call COG_sendbyte
- 623 00ae 8FEF      		 ldi r24,lo8(127999)
- 624 00b0 93EF      	    ldi r25,hi8(127999)
- 625 00b2 A1E0      	    ldi r26,hlo8(127999)
- 626 00b4 8150      	    1:subi r24,1
- 627 00b6 9040      	    sbci r25,0
- 628 00b8 A040      	    sbci r26,0
- 629 00ba 01F4      	    brne 1b
- 630 00bc 00C0      		rjmp .
- 631 00be 0000      		nop
- 632 00c0 84E0      		ldi r24,lo8(4)
- 633 00c2 60E0      		ldi r22,lo8(0)
- 634 00c4 0E94 0000 		call COG_sendbyte
- 635 00c8 1C98      		cbi 35-32,4
- 636 00ca C698      		cbi 56-32,6
- 637 00cc C498      		cbi 56-32,4
- 638 00ce 80E0      		ldi r24,lo8(0)
- 639 00d0 0E94 0000 		call spi_sendbyte
- 640 00d4 80E0      		ldi r24,lo8(0)
- 641 00d6 0E94 0000 		call spi_sendbyte
- 642 00da C198      		cbi 56-32,1
- 643 00dc C298      		cbi 56-32,2
- 644 00de C098      		cbi 56-32,0
- 645 00e0 199A      		sbi 35-32,1
- 646 00e2 8FEF      		 ldi r24,lo8(479999)
- 647 00e4 92E5      	    ldi r25,hi8(479999)
- 648 00e6 A7E0      	    ldi r26,hlo8(479999)
- 649 00e8 8150      	    1:subi r24,1
- 650 00ea 9040      	    sbci r25,0
- 651 00ec A040      	    sbci r26,0
- 652 00ee 01F4      	    brne 1b
- 653 00f0 00C0      		rjmp .
- 654 00f2 0000      		nop
- 655 00f4 1998      		cbi 35-32,1
- 656               	/* epilogue start */
- 657 00f6 0895      		ret
- 659               	.global __do_copy_data
+ 439               	.L22:
+ 440 004e 0E94 0000 		call COG_busy
+ 441 0052 8823      		tst r24
+ 442 0054 01F4      		brne .L22
+ 443 0056 19E1      		ldi r17,lo8(25)
+ 444               	.L42:
+ 445 0058 0E94 0000 		call COG_busy
+ 446 005c 8823      		tst r24
+ 447 005e 01F4      		brne .L42
+ 448 0060 8C2F      		mov r24,r28
+ 449 0062 0E94 0000 		call spi_sendbyte
+ 450 0066 1150      		subi r17,lo8(-(-1))
+ 451 0068 01F4      		brne .L42
+ 452 006a 0D2F      		mov r16,r29
+ 453 006c 0695      		lsr r16
+ 454 006e 0695      		lsr r16
+ 455 0070 2D2F      		mov r18,r29
+ 456 0072 30E0      		ldi r19,lo8(0)
+ 457 0074 2370      		andi r18,lo8(3)
+ 458 0076 3070      		andi r19,hi8(3)
+ 459 0078 220F      		lsl r18
+ 460 007a 331F      		rol r19
+ 461 007c 40EC      		ldi r20,lo8(192)
+ 462 007e 50E0      		ldi r21,hi8(192)
+ 463 0080 00C0      		rjmp 2f
+ 464 0082 5595      	1:	asr r21
+ 465 0084 4795      		ror r20
+ 466 0086 2A95      	2:	dec r18
+ 467 0088 02F4      		brpl 1b
+ 468 008a 142F      		mov r17,r20
+ 469 008c D0E0      		ldi r29,lo8(0)
+ 470               	.L43:
+ 471 008e 0E94 0000 		call COG_busy
+ 472 0092 8823      		tst r24
+ 473 0094 01F4      		brne .L43
+ 474 0096 0D17      		cp r16,r29
+ 475 0098 01F4      		brne .L26
+ 476 009a 812F      		mov r24,r17
+ 477 009c 00C0      		rjmp .L45
+ 478               	.L26:
+ 479 009e 80E0      		ldi r24,lo8(0)
+ 480               	.L45:
+ 481 00a0 0E94 0000 		call spi_sendbyte
+ 482 00a4 DF5F      		subi r29,lo8(-(1))
+ 483 00a6 D831      		cpi r29,lo8(24)
+ 484 00a8 01F4      		brne .L43
+ 485 00aa D9E1      		ldi r29,lo8(25)
+ 486               	.L44:
+ 487 00ac 0E94 0000 		call COG_busy
+ 488 00b0 8823      		tst r24
+ 489 00b2 01F4      		brne .L44
+ 490 00b4 8C2F      		mov r24,r28
+ 491 00b6 0E94 0000 		call spi_sendbyte
+ 492 00ba D150      		subi r29,lo8(-(-1))
+ 493 00bc 01F4      		brne .L44
+ 494 00be 80E0      		ldi r24,lo8(0)
+ 495 00c0 0E94 0000 		call spi_sendbyte
+ 496 00c4 C09A      		sbi 56-32,0
+ 497               	.L31:
+ 498 00c6 0E94 0000 		call COG_busy
+ 499 00ca 8823      		tst r24
+ 500 00cc 01F4      		brne .L31
+ 501 00ce 82E0      		ldi r24,lo8(2)
+ 502 00d0 6FE2      		ldi r22,lo8(47)
+ 503 00d2 0E94 0000 		call COG_sendbyte
+ 504 00d6 80E0      		ldi r24,lo8(0)
+ 505 00d8 0E94 0000 		call spi_sendbyte
+ 506 00dc 80E0      		ldi r24,lo8(0)
+ 507 00de 0E94 0000 		call spi_sendbyte
+ 508               	/* epilogue start */
+ 509 00e2 DF91      		pop r29
+ 510 00e4 CF91      		pop r28
+ 511 00e6 1F91      		pop r17
+ 512 00e8 0F91      		pop r16
+ 513 00ea 0895      		ret
+ 515               		.data
+ 516               	.LC6:
+ 517 0043 7772 6974 		.string	"writing fixed image\n"
+ 517      696E 6720 
+ 517      6669 7865 
+ 517      6420 696D 
+ 517      6167 650A 
+ 518               		.section	.text.COG_write_fixed_image,"ax",@progbits
+ 519               	.global	COG_write_fixed_image
+ 521               	COG_write_fixed_image:
+ 522 0000 CF93      		push r28
+ 523 0002 DF93      		push r29
+ 524               	/* prologue: function */
+ 525               	/* frame size = 0 */
+ 526               	/* stack size = 2 */
+ 527               	.L__stack_usage = 2
+ 528 0004 C82F      		mov r28,r24
+ 529 0006 80E0      		ldi r24,lo8(.LC6)
+ 530 0008 90E0      		ldi r25,hi8(.LC6)
+ 531 000a 64E1      		ldi r22,lo8(20)
+ 532 000c 0E94 0000 		call usart_sendarray
+ 533 0010 D0E0      		ldi r29,lo8(0)
+ 534               	.L47:
+ 535 0012 8D2F      		mov r24,r29
+ 536 0014 6C2F      		mov r22,r28
+ 537 0016 0E94 0000 		call COG_write_fixed_line
+ 538 001a DF5F      		subi r29,lo8(-(1))
+ 539 001c D036      		cpi r29,lo8(96)
+ 540 001e 01F4      		brne .L47
+ 541               	/* epilogue start */
+ 542 0020 DF91      		pop r29
+ 543 0022 CF91      		pop r28
+ 544 0024 0895      		ret
+ 546               		.section	.text.COG_off,"ax",@progbits
+ 547               	.global	COG_off
+ 549               	COG_off:
+ 550               	/* prologue: function */
+ 551               	/* frame size = 0 */
+ 552               	/* stack size = 0 */
+ 553               	.L__stack_usage = 0
+ 554 0000 85E5      		ldi r24,lo8(85)
+ 555 0002 0E94 0000 		call COG_write_fixed_image
+ 556 0006 8FEF      		ldi r24,lo8(-1)
+ 557 0008 65E5      		ldi r22,lo8(85)
+ 558 000a 0E94 0000 		call COG_write_fixed_line
+ 559 000e 8FE7      		 ldi r24,lo8(79999)
+ 560 0010 98E3      	    ldi r25,hi8(79999)
+ 561 0012 A1E0      	    ldi r26,hlo8(79999)
+ 562 0014 8150      	    1:subi r24,1
+ 563 0016 9040      	    sbci r25,0
+ 564 0018 A040      	    sbci r26,0
+ 565 001a 01F4      	    brne 1b
+ 566 001c 00C0      		rjmp .
+ 567 001e 0000      		nop
+ 568 0020 C498      		cbi 56-32,4
+ 569 0022 8FEF      		 ldi r24,lo8(799999)
+ 570 0024 94E3      	    ldi r25,hi8(799999)
+ 571 0026 ACE0      	    ldi r26,hlo8(799999)
+ 572 0028 8150      	    1:subi r24,1
+ 573 002a 9040      	    sbci r25,0
+ 574 002c A040      	    sbci r26,0
+ 575 002e 01F4      	    brne 1b
+ 576 0030 00C0      		rjmp .
+ 577 0032 0000      		nop
+ 578 0034 C49A      		sbi 56-32,4
+ 579 0036 80E0      		ldi r24,lo8(0)
+ 580 0038 0E94 0000 		call spi_sendbyte
+ 581 003c 80E0      		ldi r24,lo8(0)
+ 582 003e 0E94 0000 		call spi_sendbyte
+ 583 0042 83E0      		ldi r24,lo8(3)
+ 584 0044 61E0      		ldi r22,lo8(1)
+ 585 0046 0E94 0000 		call COG_sendbyte
+ 586 004a 82E0      		ldi r24,lo8(2)
+ 587 004c 65E0      		ldi r22,lo8(5)
+ 588 004e 0E94 0000 		call COG_sendbyte
+ 589 0052 85E0      		ldi r24,lo8(5)
+ 590 0054 6EE0      		ldi r22,lo8(14)
+ 591 0056 0E94 0000 		call COG_sendbyte
+ 592 005a 85E0      		ldi r24,lo8(5)
+ 593 005c 62E0      		ldi r22,lo8(2)
+ 594 005e 0E94 0000 		call COG_sendbyte
+ 595 0062 84E0      		ldi r24,lo8(4)
+ 596 0064 6CE0      		ldi r22,lo8(12)
+ 597 0066 0E94 0000 		call COG_sendbyte
+ 598 006a 8FE7      		 ldi r24,lo8(399999)
+ 599 006c 9AE1      	    ldi r25,hi8(399999)
+ 600 006e A6E0      	    ldi r26,hlo8(399999)
+ 601 0070 8150      	    1:subi r24,1
+ 602 0072 9040      	    sbci r25,0
+ 603 0074 A040      	    sbci r26,0
+ 604 0076 01F4      	    brne 1b
+ 605 0078 00C0      		rjmp .
+ 606 007a 0000      		nop
+ 607 007c 85E0      		ldi r24,lo8(5)
+ 608 007e 60E0      		ldi r22,lo8(0)
+ 609 0080 0E94 0000 		call COG_sendbyte
+ 610 0084 87E0      		ldi r24,lo8(7)
+ 611 0086 6DE0      		ldi r22,lo8(13)
+ 612 0088 0E94 0000 		call COG_sendbyte
+ 613 008c 84E0      		ldi r24,lo8(4)
+ 614 008e 60E5      		ldi r22,lo8(80)
+ 615 0090 0E94 0000 		call COG_sendbyte
+ 616 0094 8FEF      		 ldi r24,lo8(127999)
+ 617 0096 93EF      	    ldi r25,hi8(127999)
+ 618 0098 A1E0      	    ldi r26,hlo8(127999)
+ 619 009a 8150      	    1:subi r24,1
+ 620 009c 9040      	    sbci r25,0
+ 621 009e A040      	    sbci r26,0
+ 622 00a0 01F4      	    brne 1b
+ 623 00a2 00C0      		rjmp .
+ 624 00a4 0000      		nop
+ 625 00a6 84E0      		ldi r24,lo8(4)
+ 626 00a8 60EA      		ldi r22,lo8(-96)
+ 627 00aa 0E94 0000 		call COG_sendbyte
+ 628 00ae 8FEF      		 ldi r24,lo8(127999)
+ 629 00b0 93EF      	    ldi r25,hi8(127999)
+ 630 00b2 A1E0      	    ldi r26,hlo8(127999)
+ 631 00b4 8150      	    1:subi r24,1
+ 632 00b6 9040      	    sbci r25,0
+ 633 00b8 A040      	    sbci r26,0
+ 634 00ba 01F4      	    brne 1b
+ 635 00bc 00C0      		rjmp .
+ 636 00be 0000      		nop
+ 637 00c0 84E0      		ldi r24,lo8(4)
+ 638 00c2 60E0      		ldi r22,lo8(0)
+ 639 00c4 0E94 0000 		call COG_sendbyte
+ 640 00c8 1C98      		cbi 35-32,4
+ 641 00ca C698      		cbi 56-32,6
+ 642 00cc C498      		cbi 56-32,4
+ 643 00ce 80E0      		ldi r24,lo8(0)
+ 644 00d0 0E94 0000 		call spi_sendbyte
+ 645 00d4 80E0      		ldi r24,lo8(0)
+ 646 00d6 0E94 0000 		call spi_sendbyte
+ 647 00da C198      		cbi 56-32,1
+ 648 00dc C298      		cbi 56-32,2
+ 649 00de C098      		cbi 56-32,0
+ 650 00e0 199A      		sbi 35-32,1
+ 651 00e2 8FEF      		 ldi r24,lo8(479999)
+ 652 00e4 92E5      	    ldi r25,hi8(479999)
+ 653 00e6 A7E0      	    ldi r26,hlo8(479999)
+ 654 00e8 8150      	    1:subi r24,1
+ 655 00ea 9040      	    sbci r25,0
+ 656 00ec A040      	    sbci r26,0
+ 657 00ee 01F4      	    brne 1b
+ 658 00f0 00C0      		rjmp .
+ 659 00f2 0000      		nop
+ 660 00f4 1998      		cbi 35-32,1
+ 661               	/* epilogue start */
+ 662 00f6 0895      		ret
+ 664               	.global __do_copy_data
 DEFINED SYMBOLS
                             *ABS*:00000000 COG.c
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:2      *ABS*:0000003f __SREG__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:3      *ABS*:0000003e __SP_H__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:4      *ABS*:0000003d __SP_L__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:5      *ABS*:00000034 __CCP__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:11     .text.COG_busy:00000000 COG_busy
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:28     .text.COG_sendbyte:00000000 COG_sendbyte
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:74     .text.COG_sendarray:00000000 COG_sendarray
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:129    .text.COG_startup:00000000 COG_startup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:203    .text.COG_init:00000000 COG_init
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:352    .text.COG_write_array:00000000 COG_write_array
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:399    .text.COG_write_fixed_line:00000000 COG_write_fixed_line
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:516    .text.COG_write_fixed_image:00000000 COG_write_fixed_image
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccsYzb2g.s:544    .text.COG_off:00000000 COG_off
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:11     .text.COG_busy:00000000 COG_busy
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:28     .text.COG_sendbyte:00000000 COG_sendbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:74     .text.COG_sendarray:00000000 COG_sendarray
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:129    .text.COG_startup:00000000 COG_startup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:203    .text.COG_init:00000000 COG_init
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:352    .text.COG_write_array:00000000 COG_write_array
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:399    .text.COG_write_fixed_line:00000000 COG_write_fixed_line
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:521    .text.COG_write_fixed_image:00000000 COG_write_fixed_image
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccfDzOfJ.s:549    .text.COG_off:00000000 COG_off
 
 UNDEFINED SYMBOLS
 spi_sendbyte

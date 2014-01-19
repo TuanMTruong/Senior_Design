@@ -29,97 +29,95 @@
   32               	.L3:
   33 0002 779B      		sbis 46-32,7
   34 0004 00C0      		rjmp .L3
-  35 0006 0E94 0000 		call usart_sendbyte
-  36               	/* epilogue start */
-  37 000a 0895      		ret
-  39               		.section	.text.spi_sendarray,"ax",@progbits
-  40               	.global	spi_sendarray
-  42               	spi_sendarray:
-  43 0000 EF92      		push r14
-  44 0002 FF92      		push r15
-  45 0004 1F93      		push r17
-  46 0006 DF93      		push r29
-  47 0008 CF93      		push r28
-  48 000a 0F92      		push __tmp_reg__
-  49 000c CDB7      		in r28,__SP_L__
-  50 000e DEB7      		in r29,__SP_H__
-  51               	/* prologue: function */
-  52               	/* frame size = 1 */
-  53               	/* stack size = 6 */
-  54               	.L__stack_usage = 6
-  55 0010 182F      		mov r17,r24
-  56 0012 412F      		mov r20,r17
-  57 0014 592F      		mov r21,r25
-  58 0016 7A01      		movw r14,r20
-  59 0018 00C0      		rjmp .L6
-  60               	.L7:
-  61 001a F701      		movw r30,r14
-  62 001c 8191      		ld r24,Z+
-  63 001e 7F01      		movw r14,r30
-  64 0020 6983      		std Y+1,r22
-  65 0022 0E94 0000 		call spi_sendbyte
-  66 0026 6981      		ldd r22,Y+1
-  67               	.L6:
-  68 0028 8E2D      		mov r24,r14
-  69 002a 811B      		sub r24,r17
-  70 002c 8617      		cp r24,r22
-  71 002e 00F0      		brlo .L7
-  72               	/* epilogue start */
-  73 0030 0F90      		pop __tmp_reg__
-  74 0032 CF91      		pop r28
-  75 0034 DF91      		pop r29
-  76 0036 1F91      		pop r17
-  77 0038 FF90      		pop r15
-  78 003a EF90      		pop r14
-  79 003c 0895      		ret
-  81               		.section	.text.spi_on,"ax",@progbits
-  82               	.global	spi_on
-  84               	spi_on:
-  85               	/* prologue: function */
-  86               	/* frame size = 0 */
-  87               	/* stack size = 0 */
-  88               	.L__stack_usage = 0
-  89 0000 6B9A      		sbi 45-32,3
-  90 0002 80E0      		ldi r24,lo8(0)
-  91 0004 0E94 0000 		call spi_sendbyte
-  92 0008 80E0      		ldi r24,lo8(0)
-  93 000a 0E94 0000 		call spi_sendbyte
-  94 000e 8AE0      		ldi r24,lo8(10)
-  95 0010 90E0      		ldi r25,hi8(10)
-  96 0012 0E94 0000 		call _delay_us
-  97               	/* epilogue start */
-  98 0016 0895      		ret
- 100               		.section	.text.spi_off,"ax",@progbits
- 101               	.global	spi_off
- 103               	spi_off:
- 104               	/* prologue: function */
- 105               	/* frame size = 0 */
- 106               	/* stack size = 0 */
- 107               	.L__stack_usage = 0
- 108 0000 6B98      		cbi 45-32,3
- 109 0002 80E0      		ldi r24,lo8(0)
- 110 0004 0E94 0000 		call spi_sendbyte
- 111 0008 80E0      		ldi r24,lo8(0)
- 112 000a 0E94 0000 		call spi_sendbyte
- 113 000e 8AE0      		ldi r24,lo8(10)
- 114 0010 90E0      		ldi r25,hi8(10)
- 115 0012 0E94 0000 		call _delay_us
- 116               	/* epilogue start */
- 117 0016 0895      		ret
+  35               	/* epilogue start */
+  36 0006 0895      		ret
+  38               		.section	.text.spi_sendarray,"ax",@progbits
+  39               	.global	spi_sendarray
+  41               	spi_sendarray:
+  42 0000 EF92      		push r14
+  43 0002 FF92      		push r15
+  44 0004 1F93      		push r17
+  45 0006 DF93      		push r29
+  46 0008 CF93      		push r28
+  47 000a 0F92      		push __tmp_reg__
+  48 000c CDB7      		in r28,__SP_L__
+  49 000e DEB7      		in r29,__SP_H__
+  50               	/* prologue: function */
+  51               	/* frame size = 1 */
+  52               	/* stack size = 6 */
+  53               	.L__stack_usage = 6
+  54 0010 182F      		mov r17,r24
+  55 0012 412F      		mov r20,r17
+  56 0014 592F      		mov r21,r25
+  57 0016 7A01      		movw r14,r20
+  58 0018 00C0      		rjmp .L6
+  59               	.L7:
+  60 001a F701      		movw r30,r14
+  61 001c 8191      		ld r24,Z+
+  62 001e 7F01      		movw r14,r30
+  63 0020 6983      		std Y+1,r22
+  64 0022 0E94 0000 		call spi_sendbyte
+  65 0026 6981      		ldd r22,Y+1
+  66               	.L6:
+  67 0028 8E2D      		mov r24,r14
+  68 002a 811B      		sub r24,r17
+  69 002c 8617      		cp r24,r22
+  70 002e 00F0      		brlo .L7
+  71               	/* epilogue start */
+  72 0030 0F90      		pop __tmp_reg__
+  73 0032 CF91      		pop r28
+  74 0034 DF91      		pop r29
+  75 0036 1F91      		pop r17
+  76 0038 FF90      		pop r15
+  77 003a EF90      		pop r14
+  78 003c 0895      		ret
+  80               		.section	.text.spi_on,"ax",@progbits
+  81               	.global	spi_on
+  83               	spi_on:
+  84               	/* prologue: function */
+  85               	/* frame size = 0 */
+  86               	/* stack size = 0 */
+  87               	.L__stack_usage = 0
+  88 0000 6B9A      		sbi 45-32,3
+  89 0002 80E0      		ldi r24,lo8(0)
+  90 0004 0E94 0000 		call spi_sendbyte
+  91 0008 80E0      		ldi r24,lo8(0)
+  92 000a 0E94 0000 		call spi_sendbyte
+  93 000e 8AE0      		ldi r24,lo8(10)
+  94 0010 90E0      		ldi r25,hi8(10)
+  95 0012 0E94 0000 		call _delay_us
+  96               	/* epilogue start */
+  97 0016 0895      		ret
+  99               		.section	.text.spi_off,"ax",@progbits
+ 100               	.global	spi_off
+ 102               	spi_off:
+ 103               	/* prologue: function */
+ 104               	/* frame size = 0 */
+ 105               	/* stack size = 0 */
+ 106               	.L__stack_usage = 0
+ 107 0000 6B98      		cbi 45-32,3
+ 108 0002 80E0      		ldi r24,lo8(0)
+ 109 0004 0E94 0000 		call spi_sendbyte
+ 110 0008 80E0      		ldi r24,lo8(0)
+ 111 000a 0E94 0000 		call spi_sendbyte
+ 112 000e 8AE0      		ldi r24,lo8(10)
+ 113 0010 90E0      		ldi r25,hi8(10)
+ 114 0012 0E94 0000 		call _delay_us
+ 115               	/* epilogue start */
+ 116 0016 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 spi.c
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:2      *ABS*:0000003f __SREG__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:3      *ABS*:0000003e __SP_H__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:4      *ABS*:0000003d __SP_L__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:5      *ABS*:00000034 __CCP__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:11     .text.spi_setup:00000000 spi_setup
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:26     .text.spi_sendbyte:00000000 spi_sendbyte
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:42     .text.spi_sendarray:00000000 spi_sendarray
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:84     .text.spi_on:00000000 spi_on
-/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//ccDnOyVU.s:103    .text.spi_off:00000000 spi_off
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:2      *ABS*:0000003f __SREG__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:3      *ABS*:0000003e __SP_H__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:4      *ABS*:0000003d __SP_L__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:5      *ABS*:00000034 __CCP__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:11     .text.spi_setup:00000000 spi_setup
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:26     .text.spi_sendbyte:00000000 spi_sendbyte
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:41     .text.spi_sendarray:00000000 spi_sendarray
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:83     .text.spi_on:00000000 spi_on
+/var/folders/y3/l87hd1j977s0dlpscsplzjsw0000gq/T//cccBeAoZ.s:102    .text.spi_off:00000000 spi_off
 
 UNDEFINED SYMBOLS
-usart_sendbyte
 _delay_us

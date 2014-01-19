@@ -29,7 +29,7 @@ void spi_setup(void){
 void spi_sendbyte(uint8_t data){
 	SPDR = data;                //send data
 	while(!(SPSR & (1<<SPIF))){}; //wait till done
-	usart_sendbyte(data);
+	//usart_sendbyte(data);
 	return;
 }
 

@@ -160,7 +160,7 @@ LOAD /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x77a
+.text           0x00000000      0x782
  *(.vectors)
  .vectors       0x00000000       0x8c /usr/local/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr51/crtm128.o
                 0x00000000                __vectors
@@ -297,20 +297,20 @@ LOAD /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a
                 0x0000046a      0x10e obj/COG.o
                 0x0000046a                COG_init
  .text.COG_write_fixed_line
-                0x00000578       0xc0 obj/COG.o
+                0x00000578       0xc8 obj/COG.o
                 0x00000578                COG_write_fixed_line
  .text.COG_write_fixed_image
-                0x00000638       0x22 obj/COG.o
-                0x00000638                COG_write_fixed_image
- .text.COG_off  0x0000065a       0xd8 obj/COG.o
-                0x0000065a                COG_off
- .text.libgcc   0x00000732       0x44 /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a(_udivmodsi4.o)
-                0x00000732                __udivmodsi4
-                0x00000776                . = ALIGN (0x2)
+                0x00000640       0x22 obj/COG.o
+                0x00000640                COG_write_fixed_image
+ .text.COG_off  0x00000662       0xd8 obj/COG.o
+                0x00000662                COG_off
+ .text.libgcc   0x0000073a       0x44 /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a(_udivmodsi4.o)
+                0x0000073a                __udivmodsi4
+                0x0000077e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000776        0x0 /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a(_exit.o)
-                0x00000776                exit
-                0x00000776                _exit
+ .fini9         0x0000077e        0x0 /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a(_exit.o)
+                0x0000077e                exit
+                0x0000077e                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -329,11 +329,11 @@ LOAD /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000776        0x4 /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a(_exit.o)
+ .fini0         0x0000077e        0x4 /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a(_exit.o)
  *(.fini0)
-                0x0000077a                _etext = .
+                0x00000782                _etext = .
 
-.data           0x00800100       0x82 load address 0x0000077a
+.data           0x00800100       0x82 load address 0x00000782
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100       0x2a obj/main.o
@@ -354,8 +354,8 @@ LOAD /usr/local/bin/../lib/gcc/avr/4.5.1/avr51/libgcc.a
  *(.bss*)
  *(COMMON)
                 0x00800183                PROVIDE (__bss_end, .)
-                0x0000077a                __data_load_start = LOADADDR (.data)
-                0x000007fc                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000782                __data_load_start = LOADADDR (.data)
+                0x00000804                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800183        0x0
                 0x00800183                PROVIDE (__noinit_start, .)
@@ -537,6 +537,5 @@ usart_sendarray                                   obj/usart.o
                                                   obj/COG.o
                                                   obj/main.o
 usart_sendbyte                                    obj/usart.o
-                                                  obj/spi.o
 usart_setup                                       obj/usart.o
                                                   obj/main.o

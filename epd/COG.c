@@ -81,9 +81,9 @@ void COG_sendarray(uint8_t reg_index, uint8_t *data, uint8_t num_bytes){
 	spi_sendbyte(REG_HEADER);   	//2. send header for data
 	spi_sendbyte(reg_index);	//3. send reg_index
 
-	while(COG_busy());  //Check if COG is busy
 	PORTB |= (1<<CS_PIN);   	//4. toggle CS
 	_delay_us(10);
+	while(COG_busy());  //Check if COG is busy
 	PORTB &= ~(1<<CS_PIN);
 
 	spi_sendbyte(DATA_HEADER);  	//5. send DATA_HEADER
@@ -261,6 +261,10 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 	PORTB &= ~(1<<CS_PIN);
 	spi_sendbyte(DATA_HEADER);
 
+	while(COG_busy());  //Check if COG is busy
+        //Arduino code has special code for 1.44" here
+	//check line 490 of EPD.cpp for reference
+
 	for (pixel_counter = 0; pixel_counter<25; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
 		spi_sendbyte(pixel_data);
@@ -274,7 +278,6 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 		else{
 			spi_sendbyte(0x00);
 		}
-		
 	}
 	for(pixel_counter = 0; pixel_counter<25; pixel_counter++){
 		while(COG_busy());  //Check if COG is busy
@@ -282,7 +285,8 @@ void COG_write_fixed_line(uint8_t line, uint8_t pixel_data){
 	}
 	spi_sendbyte(0x00);
 	
-	//PORTB |= (1<<CS_PIN);   	//4. toggle CS
+	PORTB |= (1<<CS_PIN);   	//4. toggle CS
+
 	while(COG_busy());  //Check if COG is busy
 	COG_sendbyte(0x02, 0x2F);
 
