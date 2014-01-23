@@ -1,0 +1,714 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265
+{\fonttbl\f0\fnil\fcharset0 Consolas;\f1\fnil\fcharset0 Consolas-Bold;\f2\fnil\fcharset0 Consolas-Italic;
+}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red53\green65\blue117;\red133\green0\blue2;
+\red17\green137\blue135;\red243\green235\blue0;\red14\green114\blue164;\red135\green136\blue117;\red135\green135\blue135;
+}
+\margl1440\margr1440\vieww10800\viewh16200\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs24 \cf2 \'a0
+\f1\b \cf3 void
+\f0\b0 \cf2  
+\f1\b \cf4 clear
+\f0\b0 \cf2 () \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b this->
+\f0\b0 frame_fixed_repeat(\cf5 \cb6 0xff\cf2 , EPD_compensate\cb1 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b this->
+\f0\b0 frame_fixed_repeat(\cf5 0xff\cf2 , EPD_white);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b this->
+\f0\b0 frame_fixed_repeat(\cf5 0xaa\cf2 , EPD_inverse);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b this->
+\f0\b0 frame_fixed_repeat(\cf5 0xaa\cf2 , EPD_normal);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\pard\pardeftab720
+
+\f1\b \cf3 v\cb6 oid
+\f0\b0 \cf2  EPD_Class
+\f1\b ::
+\f0\b0 frame_fixed_repeat(
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  fixed_value, EPD_stage stage)\cb1  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 long
+\f0\b0 \cf2  stage_time 
+\f1\b =
+\f0\b0  
+\f1\b this->
+\f0\b0 factored_stage_time;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b do
+\f0\b0  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 unsigned
+\f0\b0 \cf2  
+\f1\b \cf3 long
+\f0\b0 \cf2  t_start 
+\f1\b =
+\f0\b0  millis();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cb6 this->
+\f0\b0 frame_fixed(fixed_value, stage);\cb1 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 unsigned
+\f0\b0 \cf2  
+\f1\b \cf3 long
+\f0\b0 \cf2  t_end 
+\f1\b =
+\f0\b0  millis();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (t_end 
+\f1\b >
+\f0\b0  t_start) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0stage_time 
+\f1\b -=
+\f0\b0  t_end 
+\f1\b -
+\f0\b0  t_start;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\} 
+\f1\b else
+\f0\b0  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0stage_time 
+\f1\b -=
+\f0\b0  t_start 
+\f1\b -
+\f0\b0  t_end 
+\f1\b +
+\f0\b0  \cf5 1\cf2  
+\f1\b +
+\f0\b0  ULONG_MAX;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\} 
+\f1\b while
+\f0\b0  (stage_time 
+\f1\b >
+\f0\b0  \cf5 0\cf2 );\
+\}
+\f1\b \cf3 \
+\
+\
+void
+\f0\b0 \cf2  EPD_Class
+\f1\b ::
+\f0\b0 frame_fixed(
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  fixed_value, EPD_stage stage) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b for
+\f0\b0  (
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  line 
+\f1\b =
+\f0\b0  \cf5 0\cf2 ; line 
+\f1\b <
+\f0\b0  
+\f1\b this->
+\f0\b0 lines_per_display ; 
+\f1\b ++
+\f0\b0 line) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cb6 this->
+\f0\b0 line(line, \cf5 0\cf2 , fixed_value, \cf7 false\cf2 , stage);\
+\pard\pardeftab720
+\cf2 \cb1 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\}\
+\
+//line = 0,1,2,..  | *data = 0 | fixe value = \cf5 \cb6 0xff\cf2  | read_prog = false | stage = EPD_compensate\cb1 \
+\
+\pard\pardeftab720
+
+\f1\b \cf3 void
+\f0\b0 \cf2  EPD_Class
+\f1\b ::
+\f0\b0 line(
+\f1\b \cf3 uint16_t
+\f0\b0 \cf2  line, 
+\f1\b const
+\f0\b0  
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  
+\f1\b *
+\f0\b0 data, 
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  fixed_value, 
+\f1\b \cf3 bool
+\f0\b0 \cf2  read_progmem, EPD_stage stage) \{\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_on();\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // charge pump voltage levels
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Delay_us(\cf5 10\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_send(
+\f1\b this->
+\f0\b0 EPD_Pin_EPD_CS, CU8(\cf5 0x70\cf2 , \cf5 0x04\cf2 ), \cf5 2\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Delay_us(\cf5 10\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_send(
+\f1\b this->
+\f0\b0 EPD_Pin_EPD_CS, 
+\f1\b this->
+\f0\b0 gate_source, 
+\f1\b this->
+\f0\b0 gate_source_length);\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // send data
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Delay_us(\cf5 10\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_send(
+\f1\b this->
+\f0\b0 EPD_Pin_EPD_CS, CU8(\cf5 0x70\cf2 , \cf5 0x0a\cf2 ), \cf5 2\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Delay_us(\cf5 10\cf2 );\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // CS low
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0digitalWrite(
+\f1\b this->
+\f0\b0 EPD_Pin_EPD_CS, LOW);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(\cf5 0x72\cf2 , 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // border byte only necessary for 1.44" EPD
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (EPD_1_44 
+\f1\b ==
+\f0\b0  
+\f1\b this->
+\f0\b0 size) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(\cf5 0x00\cf2 , 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 //SPI_send(this->EPD_Pin_EPD_CS, CU8(0x00), 1);
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // even pixels
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b for
+\f0\b0  (
+\f1\b \cf3 uint16_t
+\f0\b0 \cf2  b 
+\f1\b =
+\f0\b0  
+\f1\b this->
+\f0\b0 bytes_per_line; b 
+\f1\b >
+\f0\b0  \cf5 0\cf2 ; 
+\f1\b --
+\f0\b0 b) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (\cf5 0\cf2  
+\f1\b !=
+\f0\b0  data) \{\
+\pard\pardeftab720
+
+\f1\b \cf9 #if defined(__MSP430_CPU__)
+\f0\b0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  pixels 
+\f1\b =
+\f0\b0  data[b 
+\f1\b -
+\f0\b0  \cf5 1\cf2 ] 
+\f1\b &
+\f0\b0  \cf5 0xaa\cf2 ;\
+
+\f1\b \cf9 #else
+\f0\b0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // AVR has multiple memory spaces
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  pixels;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (read_progmem) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  pgm_read_byte_near(data 
+\f1\b +
+\f0\b0  b 
+\f1\b -
+\f0\b0  \cf5 1\cf2 ) 
+\f1\b &
+\f0\b0  \cf5 0xaa\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\} 
+\f1\b else
+\f0\b0  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  data[b 
+\f1\b -
+\f0\b0  \cf5 1\cf2 ] 
+\f1\b &
+\f0\b0  \cf5 0xaa\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+
+\f1\b \cf9 #endif
+\f0\b0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b switch
+\f0\b0 (stage) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cb6 case
+\f0\b0  EPD_compensate\cb1 :  
+\f2\i \cf8 // B -> W, W -> B (Current Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0xaa\cf2  
+\f1\b |
+\f0\b0  ((pixels 
+\f1\b ^
+\f0\b0  \cf5 0xaa\cf2 ) 
+\f1\b >>
+\f0\b0  \cf5 1\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_white:       
+\f2\i \cf8 // B -> N, W -> W (Current Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0x55\cf2  
+\f1\b +
+\f0\b0  ((pixels 
+\f1\b ^
+\f0\b0  \cf5 0xaa\cf2 ) 
+\f1\b >>
+\f0\b0  \cf5 1\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_inverse:     
+\f2\i \cf8 // B -> N, W -> B (New Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0x55\cf2  
+\f1\b |
+\f0\b0  (pixels 
+\f1\b ^
+\f0\b0  \cf5 0xaa\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_normal:       
+\f2\i \cf8 // B -> B, W -> W (New Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0xaa\cf2  
+\f1\b |
+\f0\b0  (pixels 
+\f1\b >>
+\f0\b0  \cf5 1\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(pixels, 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\} 
+\f1\b else
+\f0\b0  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(fixed_value, 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // scan line
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b for
+\f0\b0  (
+\f1\b \cf3 uint16_t
+\f0\b0 \cf2  b 
+\f1\b =
+\f0\b0  \cf5 0\cf2 ; b 
+\f1\b <
+\f0\b0  
+\f1\b this->
+\f0\b0 bytes_per_scan; 
+\f1\b ++
+\f0\b0 b) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (line 
+\f1\b /
+\f0\b0  \cf5 4\cf2  
+\f1\b ==
+\f0\b0  b) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(\cf5 0xc0\cf2  
+\f1\b >>
+\f0\b0  (\cf5 2\cf2  
+\f1\b *
+\f0\b0  (line 
+\f1\b &
+\f0\b0  \cf5 0x03\cf2 )), 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\} 
+\f1\b else
+\f0\b0  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(\cf5 0x00\cf2 , 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // odd pixels
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b for
+\f0\b0  (
+\f1\b \cf3 uint16_t
+\f0\b0 \cf2  b 
+\f1\b =
+\f0\b0  \cf5 0\cf2 ; b 
+\f1\b <
+\f0\b0  
+\f1\b this->
+\f0\b0 bytes_per_line; 
+\f1\b ++
+\f0\b0 b) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (\cf5 0\cf2  
+\f1\b !=
+\f0\b0  data) \{\
+
+\f1\b \cf9 #if defined(__MSP430_CPU__)
+\f0\b0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  pixels 
+\f1\b =
+\f0\b0  data[b] 
+\f1\b &
+\f0\b0  \cf5 0x55\cf2 ;\
+
+\f1\b \cf9 #else
+\f0\b0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // AVR has multiple memory spaces
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  pixels;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (read_progmem) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  pgm_read_byte_near(data 
+\f1\b +
+\f0\b0  b) 
+\f1\b &
+\f0\b0  \cf5 0x55\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\} 
+\f1\b else
+\f0\b0  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  data[b] 
+\f1\b &
+\f0\b0  \cf5 0x55\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+
+\f1\b \cf9 #endif
+\f0\b0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b switch
+\f0\b0 (stage) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cb6 case
+\f0\b0  EPD_compensate:\cb1   
+\f2\i \cf8 // B -> W, W -> B (Current Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0xaa\cf2  
+\f1\b |
+\f0\b0  (pixels 
+\f1\b ^
+\f0\b0  \cf5 0x55\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_white:       
+\f2\i \cf8 // B -> N, W -> W (Current Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0x55\cf2  
+\f1\b +
+\f0\b0  (pixels 
+\f1\b ^
+\f0\b0  \cf5 0x55\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_inverse:     
+\f2\i \cf8 // B -> N, W -> B (New Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0x55\cf2  
+\f1\b |
+\f0\b0  ((pixels 
+\f1\b ^
+\f0\b0  \cf5 0x55\cf2 ) 
+\f1\b <<
+\f0\b0  \cf5 1\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_normal:       
+\f2\i \cf8 // B -> B, W -> W (New Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0xaa\cf2  
+\f1\b |
+\f0\b0  pixels;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  p1 
+\f1\b =
+\f0\b0  (pixels 
+\f1\b >>
+\f0\b0  \cf5 6\cf2 ) 
+\f1\b &
+\f0\b0  \cf5 0x03\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  p2 
+\f1\b =
+\f0\b0  (pixels 
+\f1\b >>
+\f0\b0  \cf5 4\cf2 ) 
+\f1\b &
+\f0\b0  \cf5 0x03\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  p3 
+\f1\b =
+\f0\b0  (pixels 
+\f1\b >>
+\f0\b0  \cf5 2\cf2 ) 
+\f1\b &
+\f0\b0  \cf5 0x03\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b \cf3 uint8_t
+\f0\b0 \cf2  p4 
+\f1\b =
+\f0\b0  (pixels 
+\f1\b >>
+\f0\b0  \cf5 0\cf2 ) 
+\f1\b &
+\f0\b0  \cf5 0x03\cf2 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  (p1 
+\f1\b <<
+\f0\b0  \cf5 0\cf2 ) 
+\f1\b |
+\f0\b0  (p2 
+\f1\b <<
+\f0\b0  \cf5 2\cf2 ) 
+\f1\b |
+\f0\b0  (p3 
+\f1\b <<
+\f0\b0  \cf5 4\cf2 ) 
+\f1\b |
+\f0\b0  (p4 
+\f1\b <<
+\f0\b0  \cf5 6\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(pixels, 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\} 
+\f1\b else
+\f0\b0  \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(fixed_value, 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b if
+\f0\b0  (
+\f1\b this->
+\f0\b0 filler) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_put_wait(\cf5 0x00\cf2 , 
+\f1\b this->
+\f0\b0 EPD_Pin_BUSY);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // CS high
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0digitalWrite(
+\f1\b this->
+\f0\b0 EPD_Pin_EPD_CS, HIGH);\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f2\i \cf8 // output data to panel
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Delay_us(\cf5 10\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_send(
+\f1\b this->
+\f0\b0 EPD_Pin_EPD_CS, CU8(\cf5 0x70\cf2 , \cf5 0x02\cf2 ), \cf5 2\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Delay_us(\cf5 10\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_send(
+\f1\b this->
+\f0\b0 EPD_Pin_EPD_CS, CU8(\cf5 0x72\cf2 , \cf5 0x2f\cf2 ), \cf5 2\cf2 );\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SPI_off();\
+\}\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
++++++++++++++++++++++++++++++++++++++++++++++++++++++++\
+\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b switch
+\f0\b0 (stage) \{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_compensate:  
+\f2\i \cf8 // B -> W, W -> B (Current Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0xaa\cf2  
+\f1\b |
+\f0\b0  ((pixels 
+\f1\b ^
+\f0\b0  \cf5 0xaa\cf2 ) 
+\f1\b >>
+\f0\b0  \cf5 1\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_white:       
+\f2\i \cf8 // B -> N, W -> W (Current Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0x55\cf2  
+\f1\b +
+\f0\b0  ((pixels 
+\f1\b ^
+\f0\b0  \cf5 0xaa\cf2 ) 
+\f1\b >>
+\f0\b0  \cf5 1\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_inverse:     
+\f2\i \cf8 // B -> N, W -> B (New Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0x55\cf2  
+\f1\b |
+\f0\b0  (pixels 
+\f1\b ^
+\f0\b0  \cf5 0xaa\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b case
+\f0\b0  EPD_normal:       
+\f2\i \cf8 // B -> B, W -> W (New Image)
+\f0\i0 \cf2 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pixels 
+\f1\b =
+\f0\b0  \cf5 0xaa\cf2  
+\f1\b |
+\f0\b0  (pixels 
+\f1\b >>
+\f0\b0  \cf5 1\cf2 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f1\b break
+\f0\b0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+}
