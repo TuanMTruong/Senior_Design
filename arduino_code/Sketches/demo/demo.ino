@@ -1,6 +1,5 @@
 // -*- mode: c++ -*-
 // Copyright 2013 Pervasive Displays, Inc.
-// testing
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at:
@@ -45,8 +44,8 @@
 #define SCREEN_SIZE 200
 
 // select two images from:  text_image text-hello cat aphrodite venus saturn
-#define IMAGE_1  text_image
-#define IMAGE_2  cat
+#define IMAGE_1  tekbots
+#define IMAGE_2  tuan
 
 // set up images from screen size2
 #if (SCREEN_SIZE == 144)
@@ -218,8 +217,9 @@ static int state = 0;
 
 // main loop
 void loop() {
-	int temperature = S5813A.read();
-	Serial.print("Temperature = ");
+	//int temperature = S5813A.read();
+	int temperature = 18;  //use 18-20, correspondes to 64-70 roughly
+        Serial.print("Temperature = ");
 	Serial.print(temperature);
 	Serial.println(" Celcius");
 
