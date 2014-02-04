@@ -41,11 +41,12 @@
 
 // Change this for different display size
 // supported sizes: 144 200 270
-#define SCREEN_SIZE 200
+// 128 x 96
+#define SCREEN_SIZE 144
 
 // select two images from:  text_image text-hello cat aphrodite venus saturn
-#define IMAGE_1  tekbots
-#define IMAGE_2  tuan
+#define IMAGE_1  time
+#define IMAGE_2  bentley
 
 // set up images from screen size2
 #if (SCREEN_SIZE == 144)
