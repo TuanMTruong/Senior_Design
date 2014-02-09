@@ -1,0 +1,111 @@
+# NetScript
+# 
+# Exported from sensor_2.sch at 1/30/14 1:47 AM
+# 
+# EAGLE Version 6.4.0 Copyright (c) 1988-2013 CadSoft
+# 
+Change Class 0;
+Signal '1.5V'     'C7'       '1' \
+                  'R10'      '2' \
+                  'R2'       '2' \
+                  'R8'       '2' \
+                  'R9'       '1' \
+                  'TP1'      'TP' \
+                  ;
+Change Class 0;
+Signal '5V'       'C6'       '1' \
+                  'IC1'      '13' \
+                  'IC3'      '7' \
+                  'JP3'      '1' \
+                  'JP4'      '2' \
+                  'R9'       '2' \
+                  ;
+Change Class 0;
+Signal 'AGND'     'C3'       '2' \
+                  'C4'       '2' \
+                  'C6'       '2' \
+                  'C7'       '2' \
+                  'IC1'      '8' \
+                  'IC3'      '4' \
+                  'JP1'      '2' \
+                  'JP2'      '1' \
+                  'JP4'      '1' \
+                  'R10'      '1' \
+                  ;
+Change Class 0;
+Signal 'EN'       'IC3'      '5' \
+                  'JP3'      '2' \
+                  ;
+Change Class 0;
+Signal 'G+'       'IC1'      '7' \
+                  'R5'       '2' \
+                  ;
+Change Class 0;
+Signal 'GND_PLANE' 'JP1'      '1' \
+                  ;
+Change Class 0;
+Signal 'IN+'      'IC1'      '6' \
+                  'T1'       'C' \
+                  ;
+Change Class 0;
+Signal 'IN-'      'C4'       '1' \
+                  'IC1'      '3' \
+                  'R4'       '2' \
+                  'T2'       'C' \
+                  ;
+Change Class 0;
+Signal 'N$1'      'IC1'      '1' \
+                  'R7'       '2' \
+                  ;
+Change Class 0;
+Signal 'N$2'      'IC1'      '16' \
+                  'R7'       '1' \
+                  ;
+Change Class 0;
+Signal 'N$3'      'C5'       '1' \
+                  'IC1'      '11' \
+                  'R4'       '1' \
+                  ;
+Change Class 0;
+Signal 'N$4'      'C2'       '1' \
+                  'R2'       '1' \
+                  ;
+Change Class 0;
+Signal 'N$9'      'C1'       '1' \
+                  'C2'       '2' \
+                  'IC3'      '2' \
+                  'R1'       '2' \
+                  'TP3'      'TP' \
+                  ;
+Change Class 0;
+Signal 'N$10'     'C5'       '2' \
+                  'IC3'      '3' \
+                  'R8'       '1' \
+                  'TP2'      'TP' \
+                  ;
+Change Class 0;
+Signal 'N$11'     'C1'       '2' \
+                  'IC3'      '6' \
+                  'R1'       '1' \
+                  'R3'       '2' \
+                  ;
+Change Class 0;
+Signal 'OUTPUT'   'C3'       '1' \
+                  'JP5'      '1' \
+                  'R3'       '1' \
+                  ;
+Change Class 0;
+Signal 'REF'      'IC1'      '9' \
+                  'JP2'      '2' \
+                  ;
+Change Class 0;
+Signal 'RESET+'   'R5'       '1' \
+                  'R6'       '2' \
+                  'T1'       'B' \
+                  'T2'       'B' \
+                  ;
+Change Class 0;
+Signal 'RESET-'   'R6'       '1' \
+                  'T1'       'E' \
+                  'T2'       'E' \
+                  ;

@@ -45,8 +45,9 @@
 #define SCREEN_SIZE 144
 
 // select two images from:  text_image text-hello cat aphrodite venus saturn
-#define IMAGE_1  time
-#define IMAGE_2  bentley
+#define IMAGE_1  clockscreen3
+#define IMAGE_2  clockscreen
+#define IMAGE_3  two
 
 // set up images from screen size2
 #if (SCREEN_SIZE == 144)
@@ -96,6 +97,9 @@
 #define IMAGE_2_FILE MAKE_JOIN(IMAGE_2,FILE_SUFFIX)
 #define IMAGE_2_BITS MAKE_NAME(IMAGE_2,NAME_SUFFIX)
 
+#define IMAGE_3_FILE MAKE_JOIN(IMAGE_3,FILE_SUFFIX)
+#define IMAGE_3_BITS MAKE_NAME(IMAGE_3,NAME_SUFFIX)
+
 
 // Add Images library to compiler path
 #include <Images.h>  // this is just an empty file
@@ -112,6 +116,13 @@ PROGMEM const
 #define unsigned
 #define char uint8_t
 #include IMAGE_2_FILE
+#undef char
+#undef unsigned
+
+PROGMEM const
+#define unsigned
+#define char uint8_t
+#include IMAGE_3_FILE
 #undef char
 #undef unsigned
 
@@ -237,18 +248,18 @@ void loop() {
 		break;
 
 	case 1:         // clear -> text
-		EPD.image(IMAGE_1_BITS);
+		EPD.image(IMAGE_1_BITS, IMAGE_3_BITS);
 		++state;
 		break;
 
 	case 2:         // text -> picture
-		EPD.image(IMAGE_1_BITS, IMAGE_2_BITS);
+		EPD.image(IMAGE_1_BITS, IMAGE_2_BITS, IMAGE_3_BITS);
 		++state;
 		break;
 
 	case 3:        // picture -> text
-		EPD.image(IMAGE_2_BITS, IMAGE_1_BITS);
-		state = 2;  // backe to picture nex time
+		EPD.image(IMAGE_2_BITS, IMAGE_1_BITS, IMAGE_3_BITS);
+		state = 2;  // back to picture next time
 		break;
 	}
 	EPD.end();   // power down the EPD panel
