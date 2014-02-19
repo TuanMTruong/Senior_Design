@@ -29,7 +29,7 @@
 // * back to text display
 
 
-#include <inttypes.h>
+#include <inttypes.h> 
 #include <ctype.h>
 
 // required libraries
@@ -46,7 +46,7 @@
 
 // select two images from:  text_image text-hello cat aphrodite venus saturn
 #define IMAGE_1  clockscreen3
-#define IMAGE_2  clockscreen
+#define IMAGE_2  tuan
 #define IMAGE_3  two
 
 // set up images from screen size2
