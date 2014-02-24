@@ -105,11 +105,11 @@
         </option>
         <option>
           <name>GStackSize2</name>
-          <state>80</state>
+          <state>160</state>
         </option>
         <option>
           <name>GHeapSize2</name>
-          <state>80</state>
+          <state>160</state>
         </option>
         <option>
           <name>RadioDataModelType</name>
@@ -325,7 +325,7 @@
         </option>
         <option>
           <name>newCCIncludePaths</name>
-          <state></state>
+          <state>E:\IAR_epd\RTC Calendar</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -682,7 +682,7 @@
         </option>
         <option>
           <name>SecondaryOutputFile</name>
-          <state></state>
+          <state>(None for the selected format)</state>
         </option>
         <option>
           <name>XDefines</name>
@@ -734,7 +734,7 @@
         </option>
         <option>
           <name>XclFile</name>
-          <state>lnk0t.xcl</state>
+          <state>$TOOLKIT_DIR$\CONFIG\lnk430F5528.xcl</state>
         </option>
         <option>
           <name>XclFileSlave</name>
@@ -822,7 +822,7 @@
         </option>
         <option>
           <name>xcProgramEntryLabel</name>
-          <state></state>
+          <state>__program_start</state>
         </option>
         <option>
           <name>DebugInformation</name>
@@ -862,7 +862,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state></state>
+          <state>epd.a43</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
@@ -979,7 +979,11 @@
         <debug>1</debug>
         <option>
           <name>CUTest</name>
-          <state>###Uninitialized###</state>
+          <state>-I$TOOLKIT_DIR$\inc</state>
+          <state>-@$TOOLKIT_DIR$\bin\iar.cmd</state>
+          <state>-@$PROJ_DIR$\source.txt</state>
+          <state>-@$PROJ_DIR$\include.txt</state>
+          <state>--preinclude=$PROJ_DIR$\IAR_ULPAdvisor_Defs.h</state>
         </option>
         <option>
           <name>ULPRules</name>
@@ -2012,13 +2016,31 @@
   </configuration>
   <group>
     <name>epd</name>
+    <file>
+      <name>$PROJ_DIR$\raw_files\epd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\raw_files\epd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>images</name>
+    <file>
+      <name>$PROJ_DIR$\..\epd\Sketches\libraries\Images\Images.h</name>
+    </file>
   </group>
   <group>
     <name>spi</name>
     <file>
       <name>$PROJ_DIR$\raw_files\spi.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\raw_files\spi.h</name>
+    </file>
   </group>
+  <file>
+    <name>$PROJ_DIR$\raw_files\main.c</name>
+  </file>
 </project>
 
 

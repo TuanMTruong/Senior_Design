@@ -2,54 +2,137 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2421790674</fileChecksum>
+  <fileChecksum>2158841732</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\Debug\Obj\epd.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\epd.d43</file>
+      <file>$TOOLKIT_DIR$\config\lnk430F5528.xcl</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ystdio.h</file>
       <file>$PROJ_DIR$\Debug\Obj\spi.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\spi.r43</file>
-      <file>$PROJ_DIR$\raw_files\spi.c</file>
-      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\RTC.h</file>
       <file>$PROJ_DIR$\Debug\Exe\epd.ulp</file>
-      <file>$PROJ_DIR$\Debug\Exe\epd.d43</file>
+      <file>$TOOLKIT_DIR$\config\multiplier32_loc2.xcl</file>
+      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430xsfn.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\epd.pbd</file>
+      <file>$PROJ_DIR$\..\epd\Sketches\libraries\Images\Images.h</file>
+      <file>$PROJ_DIR$\raw_files\main.c</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430xsfn.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\raw_files\epd.h</file>
+      <file>$PROJ_DIR$\raw_files\epd.c</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\stdio.h</file>
       <file>$TOOLKIT_DIR$\inc\msp430f5528.h</file>
-      <file>$TOOLKIT_DIR$\inc\in430.h</file>
+      <file>$PROJ_DIR$\raw_files\spi.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\stdlib.h</file>
+      <file>$PROJ_DIR$\raw_files\two_1_44.xbm</file>
+      <file>$PROJ_DIR$\raw_files\clockscreen3_1_44.xbm</file>
+      <file>$PROJ_DIR$\raw_files\Images.h</file>
+      <file>$PROJ_DIR$\raw_files\tuan_1_44.xbm</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
       <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\epd.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\epd.r43</file>
+      <file>$TOOLKIT_DIR$\inc\in430.h</file>
+      <file>$PROJ_DIR$\raw_files\spi.c</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
-          <name>ULP430</name>
-          <file> 5</file>
+          <name>XLINK</name>
+          <file> 1</file>
         </tool>
         <tool>
-          <name>XLINK</name>
-          <file> 6</file>
+          <name>ULP430</name>
+          <file> 9</file>
         </tool>
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\epd.d43</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 2 10 35 5 12</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\raw_files\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 24</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 11 22 36 31 23 19 8 25 0 6 30 17 32 34 13 7 21 3 28 27 29 26</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 11 22 36 31 23 19 8 25 0 6 30 17 32 34 13 7 21 3 28 27 29 26</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\raw_files\epd.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 35</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 33</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 11 22 36 31 19 23 25 0 6 30 17 32 34 13 7 21 3</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 11 22 36 31 19 23 25 0 6 30 17 32 34 13 7 21 3</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\raw_files\spi.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 1</file>
+          <name>ICC430</name>
+          <file> 5</file>
         </tool>
         <tool>
-          <name>ICC430</name>
-          <file> 2</file>
+          <name>BICOMP</name>
+          <file> 4</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 4 7 8 9</file>
+          <name>ICC430</name>
+          <file> 11 22 36 31 23 19</file>
         </tool>
         <tool>
-          <name>ICC430</name>
-          <file> 4 7 8 9</file>
+          <name>BICOMP</name>
+          <file> 11 22 36 31 23 19</file>
         </tool>
       </inputs>
     </file>
@@ -58,7 +141,16 @@
       <tool>XLINK</tool>
     </forcedrebuild>
     <forcedrebuild>
-      <name>[REBUILD_ALL]</name>
+      <name>$PROJ_DIR$\raw_files\main.c</name>
+      <tool>ICC430</tool>
+    </forcedrebuild>
+    <forcedrebuild>
+      <name>$PROJ_DIR$\raw_files\epd.c</name>
+      <tool>ICC430</tool>
+    </forcedrebuild>
+    <forcedrebuild>
+      <name>$PROJ_DIR$\raw_files\spi.c</name>
+      <tool>ICC430</tool>
     </forcedrebuild>
   </configuration>
   <configuration>

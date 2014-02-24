@@ -1,4 +1,4 @@
-"E:\IAR_epd\raw_files\spi.c"
+"E:\IAR_epd\raw_files\epd.c"
 -std=c99
 -ferror-limit=100
 -I
@@ -205,7 +205,7 @@ E:\IAR_epd\RTC Calendar
 -D__HAS_LOCATED_DECLARATION__=1
 -D__IAR_COMPILERBASE__=593416
 -D__DATE__="Feb 22 2014"
--D__TIME__="23:55:23"
+-D__TIME__="23:55:22"
 -D__STDC__=1
 -D__STDC_VERSION__=199901L
 -D__STDC_HOSTED__=1
