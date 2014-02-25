@@ -290,6 +290,7 @@ void frame_data(PROGMEM const char *image, PROGMEM const char *digit1, EPD_stage
 }
 
 //timerB used to replace millis() arduino function
+/* TODO: attempting to not use timing fuction millis()
 void timer_b_setup(){
   UCSCTL3 = SELREF_2;   //set DC0 FLL reference = REFO
   UCSCTL4 |= SELA_2;    //set ACLK = REFO
@@ -328,37 +329,40 @@ void timer_b_setup(){
 __interrupt void TIMERB0_ISR (void){
   TBCCR0 += 200;                //relode period
 }
+*/
 
 //TODO: find out what frame_cb is from original code, not included here
 void frame_fixed_repeat(char fixed_value, EPD_stage stage){
-  long stage_time = factored_stage_time;
-  do {          //TODO: need timing function
-    unsigned long t_start = millis();
+  //long stage_time = factored_stage_time;
+  //do {          //TODO: need timing function
+    //unsigned long t_start = millis();
     frame_fixed(fixed_value, stage);
-    unsigned long t_end = millis();
-    if(t_end > t_start){
-      stage_time -= t_end - t_start;
-    }
-    else{
-      stage_time -= t_start - t_end + 1 + ULONG_MAX;
-    }
-  }while(stage_time > 0);
+    __delay_cycles(ms_delay*480);
+    //unsigned long t_end = millis();
+    //if(t_end > t_start){
+    //  stage_time -= t_end - t_start;
+    //}
+    //else{
+    //  stage_time -= t_start - t_end + 1 + ULONG_MAX;
+    //}
+  //}while(stage_time > 0);
 }
 
 void frame_data_repeat(PROGMEM const char *image, PROGMEM const char *digit1, EPD_stage stage){
-  long stage_time = factored_stage_time;
-  do {
+  //long stage_time = factored_stage_time;
+  //do {
     //TODO: need timing function
-    unsigned long t_start = millis();
+    //unsigned long t_start = millis();
     frame_data(image, digit1, stage);
-    unsigned long t_end = millis();
-    if(t_end > t_start){
-      stage_time -= t_end - t_start;
-    }
-    else{
-      stage_time -= t_start - t_end + 1 + ULONG_MAX;
-    }
-  }while(stage_time > 0);
+    __delay_cycles(ms_delay*480);
+    //unsigned long t_end = millis();
+    //if(t_end > t_start){
+    //  stage_time -= t_end - t_start;
+   //}
+    //else{
+    //  stage_time -= t_start - t_end + 1 + ULONG_MAX;
+    //}
+  //}while(stage_time > 0);
 }
 
 void line(long line_num, const char *data, char fixed_value, int read_progmem, EPD_stage stage){

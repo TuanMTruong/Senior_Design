@@ -38,34 +38,34 @@ void spi_setup(void){
   return;
 }
 
-static void SPI_on(){
+void SPI_on(){
   spi_setup();
   SPI_put(0x00);
   SPI_put(0x00);
   __delay_cycles(us_delay*10);
 }
 
-static void SPI_off(){
+void SPI_off(){
   SPI_put(0x00);
   SPI_put(0x00);
   __delay_cycles(us_delay*10);
   UCB1IE &= ~UCRXIE;
 }  
 
-static void SPI_put(char data){
+void SPI_put(char data){
   UCB1TXBUF = data;
   LPM0;
   while((UCB1STAT & UCBUSY));
   return;
 }
 
-static void SPI_put_wait(char c, int busy_pin){
+void SPI_put_wait(char c, int busy_pin){
   SPI_put(c);
   //wait for COG ready
   while(P6IN && busy_pin){}
 }
 
-static void SPI_send(char cs_pin, const char *buffer, long length){
+void SPI_send(char cs_pin, const char *buffer, long length){
   //CS low
   P6OUT &= ~(1<<cs_pin);
   
@@ -78,7 +78,7 @@ static void SPI_send(char cs_pin, const char *buffer, long length){
   P6OUT |= (1<<cs_pin);
 }
 
-static void PWM_start(int pin){
+void PWM_start(int pin){
   //TODO: set pwm at 50% duty cycle
   TA0CCR0 = 12000;      //PWM period, 12000 ACLK ticks or 1/second
   TA0CCR1 = 6000;       //PWM duty cycle, time cycle on vs off, on 50%
@@ -88,7 +88,7 @@ static void PWM_start(int pin){
                                 //ACLK and count up to TA0CCR0 mode MC_1
 }
 
-static void PWM_stop(int pin){
+void PWM_stop(int pin){
   //TODO: turn off pwm, not sure setting TA0CCR1 to zero work
   TA0CCR1 = 0;          //on 0% of time
 }

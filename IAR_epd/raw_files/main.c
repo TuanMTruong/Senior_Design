@@ -87,11 +87,20 @@ __interrupt void Timer_A (void){
   incrementSeconds();
 }*/
 
-//io setup
+/*io setup
+    P6.2        cs
+    P6.3        panel_on
+    P6.4        busy            (input to mcu)
+    P6.5        reset
+    P6.6        border
+    P6.7        discharge
+    P1.1        pwm             */
 void setup(){
 //TODO: set DDRs
   P1DIR |= BIT1;        //disp pwm
   P1SEL |= BIT1;        //selected for pwm
+  P6DIR |= BIT2+BIT3+BIT5+BIT6+BIT7;
+  P6DIR &= ~BIT4;
 }
 
 static int state = 0;
@@ -100,7 +109,7 @@ void main(){
   //TODO: complete main
   WDTCTL = WDTPW + WDTHOLD;     //stop watchdog timer
   begin();      //power up EPD panel
-  
+  setup();
  
   switch(state){
   default:
