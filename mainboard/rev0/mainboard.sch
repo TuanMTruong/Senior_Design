@@ -6639,6 +6639,30 @@ www.irf.com&lt;p&gt;
 <wire x1="-50.8" y1="27.94" x2="-40.64" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 </net>
+<net name="SPYBY_RST" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="RST/NMI/SBWTDIO"/>
+<wire x1="40.64" y1="40.64" x2="48.26" y2="40.64" width="0.1524" layer="91"/>
+<label x="48.26" y="40.64" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="G$1" pin="D+"/>
+<wire x1="-292.1" y1="20.32" x2="-281.94" y2="20.32" width="0.1524" layer="91"/>
+<label x="-281.94" y="20.32" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SPYBY_TEST" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="TEST/SBWTCK"/>
+<wire x1="40.64" y1="38.1" x2="48.26" y2="38.1" width="0.1524" layer="91"/>
+<label x="48.26" y="38.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="G$1" pin="D-"/>
+<wire x1="-292.1" y1="17.78" x2="-281.94" y2="17.78" width="0.1524" layer="91"/>
+<label x="-281.94" y="17.78" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
