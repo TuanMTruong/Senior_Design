@@ -112,7 +112,7 @@
 <wire x1="-0.6" y1="9.6" x2="9.6" y2="9.6" width="0.127" layer="21"/>
 <wire x1="9.6" y1="9.6" x2="9.6" y2="-0.6" width="0.127" layer="21"/>
 <wire x1="9.6" y1="-0.6" x2="-0.6" y2="-0.6" width="0.127" layer="21"/>
-<smd name="17" x="0.75" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
+<smd name="17" x="0.75" y="0" dx="1.016" dy="0.2286" layer="1" rot="R90"/>
 <smd name="18" x="1.25" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="19" x="1.75" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="20" x="2.25" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
@@ -127,8 +127,8 @@
 <smd name="29" x="6.75" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="30" x="7.25" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="31" x="7.75" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
-<smd name="32" x="8.25" y="0" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
-<smd name="64" x="0.75" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
+<smd name="32" x="8.25" y="0" dx="1.016" dy="0.2286" layer="1" rot="R90"/>
+<smd name="64" x="0.75" y="9" dx="1.016" dy="0.2286" layer="1" rot="R90"/>
 <smd name="63" x="1.25" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="62" x="1.75" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="61" x="2.25" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
@@ -143,8 +143,8 @@
 <smd name="52" x="6.75" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="51" x="7.25" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
 <smd name="50" x="7.75" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
-<smd name="49" x="8.25" y="9" dx="1.016" dy="0.3048" layer="1" rot="R90"/>
-<smd name="16" x="0" y="0.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
+<smd name="49" x="8.25" y="9" dx="1.016" dy="0.2286" layer="1" rot="R90"/>
+<smd name="16" x="0" y="0.75" dx="1.016" dy="0.2286" layer="1" rot="R180"/>
 <smd name="15" x="0" y="1.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="14" x="0" y="1.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="13" x="0" y="2.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
@@ -159,8 +159,8 @@
 <smd name="4" x="0" y="6.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="3" x="0" y="7.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="2" x="0" y="7.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
-<smd name="1" x="0" y="8.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
-<smd name="33" x="9" y="0.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
+<smd name="1" x="0" y="8.25" dx="1.016" dy="0.2286" layer="1" rot="R180"/>
+<smd name="33" x="9" y="0.75" dx="1.016" dy="0.2286" layer="1" rot="R180"/>
 <smd name="34" x="9" y="1.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="35" x="9" y="1.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="36" x="9" y="2.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
@@ -175,7 +175,7 @@
 <smd name="45" x="9" y="6.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="46" x="9" y="7.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="47" x="9" y="7.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
-<smd name="48" x="9" y="8.25" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
+<smd name="48" x="9" y="8.25" dx="1.016" dy="0.2286" layer="1" rot="R180"/>
 <circle x="-0.5" y="9.5" radius="0.5" width="0.5" layer="21"/>
 <polygon width="0.127" layer="1">
 <vertex x="1.5" y="6.5"/>
@@ -286,12 +286,12 @@
 <vertex x="0.725" y="2.775"/>
 <vertex x="0.725" y="2.14"/>
 </polygon>
-<pad name="P$21" x="1.2" y="2.3" drill="0.2"/>
-<pad name="P$22" x="1.2" y="1.2" drill="0.2"/>
-<pad name="P$23" x="2.3" y="1.2" drill="0.2"/>
-<pad name="P$24" x="2.2" y="2.3" drill="0.2"/>
-<pad name="P$25" x="3.3" y="2.3" drill="0.2"/>
-<pad name="P$26" x="3.3" y="1.2" drill="0.2"/>
+<pad name="P$21" x="1.2" y="2.3" drill="0.381"/>
+<pad name="P$22" x="1.2" y="1.2" drill="0.381"/>
+<pad name="P$23" x="2.3" y="1.2" drill="0.381"/>
+<pad name="P$24" x="2.2" y="2.3" drill="0.381"/>
+<pad name="P$25" x="3.3" y="2.3" drill="0.381"/>
+<pad name="P$26" x="3.3" y="1.2" drill="0.381"/>
 <circle x="-0.635" y="-0.635" radius="0.381" width="0.635" layer="21"/>
 <polygon width="0.127" layer="29">
 <vertex x="-0.5" y="2.14"/>
