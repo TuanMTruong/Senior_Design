@@ -4567,17 +4567,17 @@ www.irf.com&lt;p&gt;
 <part name="Q4" library="transistor-small-signal" deviceset="BSS84" device=""/>
 <part name="U$9" library="TuansLib" deviceset="BQ27410" device=""/>
 <part name="SUPPLY20" library="supply2" deviceset="GND" device=""/>
-<part name="C22" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C23" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="R18" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="R19" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="R20" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="R21" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="C22" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
+<part name="C23" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
+<part name="R18" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="0.01"/>
+<part name="R19" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
+<part name="R20" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
+<part name="R21" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="1.8M"/>
 <part name="SUPPLY21" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY22" library="supply2" deviceset="GND" device=""/>
-<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="C24" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C25" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
+<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
+<part name="C24" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
+<part name="C25" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.47uF"/>
 <part name="U$10" library="TuansLib" deviceset="DMG2305UX" device=""/>
 <part name="SUPPLY23" library="supply2" deviceset="GND" device=""/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
