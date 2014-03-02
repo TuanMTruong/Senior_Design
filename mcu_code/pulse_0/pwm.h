@@ -5,4 +5,11 @@
 
 #include "msp430.h"
 
+#define PWMOUT 	P1OUT
+#define PWM_PIN 0x02
+#define true 	1
+#define false 	0
+
+
 void timer_init(void);
+void pwm_on(char state);

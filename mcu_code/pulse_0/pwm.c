@@ -6,6 +6,8 @@
 #include "msp430.h"
 #include "pwm.h"
 
+volatile char pwm_status = 0;
+
 //timer used for PWM
 void timer_init(void){
 	TA0CCTL0 = CCIE;	//CCR0 interrupt enable
@@ -13,5 +15,24 @@ void timer_init(void){
 	TA0CTL = TASSEL_2 + MC_1 + TACLR;	// SMCLK, upmode, clear TAR
 }
 
+void pwm_on(char state){
+	if (state) {
+		pwm_status = true;
+	}
+	else {
+		pwm_status = false;
+	}
+}
 
+// Timer0 A0 interrupt service routine
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void TIMER0_A0_ISR(void)
+{
+	if (pwm_status){
+		PWMOUT ^= PWM_PIN;		// Toggle P1.1
+	}
+	else {
+		PWMOUT &= ~(PWM_PIN);
+	}
+}
 
