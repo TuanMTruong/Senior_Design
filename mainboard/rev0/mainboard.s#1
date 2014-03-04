@@ -4513,10 +4513,10 @@ www.irf.com&lt;p&gt;
 <part name="D1" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
 <part name="D2" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
 <part name="SUPPLY7" library="supply2" deviceset="GND" device=""/>
-<part name="R7" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
-<part name="R8" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
-<part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
-<part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
+<part name="R7" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R8" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
 <part name="U$8" library="TuansLib" deviceset="FH12-40S-0.5SH" device=""/>
 <part name="C3" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
 <part name="C4" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
@@ -4592,10 +4592,10 @@ www.irf.com&lt;p&gt;
 <part name="D6" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
 <part name="D7" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
 <part name="D8" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
-<part name="R23" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="80"/>
-<part name="R24" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="80"/>
-<part name="R25" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="80"/>
-<part name="R26" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="80"/>
+<part name="R23" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R24" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R25" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R26" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
 <part name="C28" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
 <part name="C29" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
 <part name="C30" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.47uF"/>
