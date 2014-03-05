@@ -7,7 +7,7 @@
 #include "usart.h"
 
 #define TX_BUFFER_SIZE 10
-#define RX_BUFFER_SIZE 10
+#define RX_BUFFER_SIZE 50
 
 static volatile char tx_buffer[TX_BUFFER_SIZE];
 static volatile char tx_buffer_front;

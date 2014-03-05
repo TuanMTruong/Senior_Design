@@ -16,11 +16,11 @@ static volatile char tx_buffer_back;
 
 void spi_init(void){
 	//set data direction
-	P4DIR |= SPI_MOSI | SPI_CLK;
+	P4DIR |= SPI_MOSI | SPI_CLK | SPI_STE;
 	P4DIR &= ~(SPI_MISO);
 	
 	//switch pins from GPIO to SPI functionality
-	P4SEL |= SPI_MOSI | SPI_MISO | SPI_CLK;
+	P4SEL |= SPI_MOSI | SPI_MISO | SPI_CLK;	//CHECK: SPI_STE set manually
 	
 	//Enable software reset
 	UCB1CTL1 |= UCSWRST;

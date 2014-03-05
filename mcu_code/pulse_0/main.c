@@ -8,7 +8,7 @@
  */
 
 /* Hardware Description:
-* Ext. Interface	Port #		I/O to MSP
+ * Ext. Interface	Port #		I/O to MSP
   --------------	------		----------
  * DISP_PWM 		P1.1		O
  * BUTTONS 		P2.0-2.3	I
@@ -92,7 +92,7 @@ int main( void )
 	timer_init();	//set timer for PWM
 	spi_init();	//set SPI
 	usart_init();
-	led_startup();	//run LED start up pattern
+	//led_startup();	//run LED start up pattern
 	
 	P1DS &= ~BIT1;		//set pin strength
 	
@@ -100,6 +100,7 @@ int main( void )
 	spi_put(0x80);
 	spi_put(0xA1);
 	
+	/*
 	spi_put(0xF6);
 	usart_put(0xAB);
 	usart_put(0xAB);
@@ -108,6 +109,7 @@ int main( void )
 	usart_put(0xAB);
 	usart_put(0xAB);
 	usart_put(0xAB);
+	*/
 	
 	__bis_SR_register(LPM0_bits + GIE);	// Enter LPM0, enable interrupts
 	__no_operation();			// For debugger
