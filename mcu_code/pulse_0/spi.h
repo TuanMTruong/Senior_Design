@@ -1,6 +1,6 @@
 /* Author: Tuan Truong & Garrett Clay
-   Date: 3.1.2014
-   Brief: Allow for SPI communication from MSP to EPD.
+Date: 3.1.2014
+Brief: Allow for SPI communication from MSP to EPD.
 */
 
 #include "msp430.h"

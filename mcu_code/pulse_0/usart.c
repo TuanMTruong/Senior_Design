@@ -1,13 +1,13 @@
 /* Author: Garrett Clay
-   Date: 3.1.2014
-   Brief: Allow for SPI communication from MSP to EPD.
+Date: 3.1.2014
+Brief: Allow for SPI communication from MSP to EPD.
 */
 
 #include "msp430.h"
 #include "usart.h"
 
-#define TX_BUFFER_SIZE 10
-#define RX_BUFFER_SIZE 50
+#define TX_BUFFER_SIZE 5
+#define RX_BUFFER_SIZE 20
 
 static volatile char tx_buffer[TX_BUFFER_SIZE];
 static volatile char tx_buffer_front;
@@ -16,50 +16,54 @@ static volatile char rx_buffer[RX_BUFFER_SIZE];
 static volatile char rx_buffer_front;
 static volatile char rx_buffer_back;
 
-
+//open
+//0xAA - tine request
+//0xAB - heart
+//data[]
+//closing?
 void usart_init(void){
 	//set data direction
 	P4DIR |= USART_TX;
 	P4DIR &= ~(USART_RX);
-
+	
 	//switch pins from GPIO to USART functionality
 	P4SEL |= USART_RX | USART_TX;
-
+	
 	UCA1CTL1 |= UCSWRST;	//enable software reset
 	UCA1CTL1 |= UCSSEL_2;	//select SMCLK as source
 	UCA1CTL0 =  UCMODE_3;	//set no parity, LSB, 8bit, 1SB, ASYNC
-
+	
 	UCA1BR0 = 140;		//set buad rate at 115200
 	UCA0BR1 = 0x00;
-
+	
 	UCA1MCTL |= UCBRS_7 | UCBRF_0;
-
+	
 	UCA1CTL1 &= ~(UCSWRST);
-
+	
 	UCA1IE |= UCRXIE | UCTXIE; 
 }
 
 void usart_put(char data){
 	char i;
-
+	
 	i = tx_buffer_front + 1;
 	if (i >= TX_BUFFER_SIZE) i = 0;
 	while (tx_buffer_back == i) ; // wait until space in buffer
 	tx_buffer[i] = data;
 	tx_buffer_front = i;
 	UCA1IE |=  UCTXIE;
+	UCA1IFG |= UCTXIFG;
 }
 
 char usart_get(void){
 	char c, i;
 	char back = rx_buffer_back;
-	char front = rx_buffer_front;
-	while (front == back) ; // wait for character
-        i = rx_buffer_back + 1;
-        if (i >= RX_BUFFER_SIZE) i = 0;
-        c = rx_buffer[i];
-        rx_buffer_back = i;
-        return c;
+	while (rx_buffer_front == back) ; // wait for character
+	i = rx_buffer_back + 1;
+	if (i >= RX_BUFFER_SIZE) i = 0;
+	c = rx_buffer[i];
+	rx_buffer_back = i;
+	return c;
 }
 
 
@@ -77,6 +81,7 @@ __interrupt void USCI_A1_ISR(void){
 			rx_buffer[i] = temp;
 			rx_buffer_front = i;
 		}
+		
 		
 		break;
 		case 4: //USART Transmit buffer empty

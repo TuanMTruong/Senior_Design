@@ -1,17 +1,17 @@
 /* Author: Tuan Truong & Garrett Clay
-   Date: 3.1.2014
-   Brief: Allow for SPI communication from MSP to EPD.
+Date: 3.1.2014
+Brief: Allow for SPI communication from MSP to EPD.
 */
 
 #include "msp430.h"
 #include "spi.h"
 #include "clock.h"
 
-#define TX_BUFFER_SIZE 10
+#define TX_BUFFER_SIZE 9
 
-static volatile char tx_buffer[TX_BUFFER_SIZE];
-static volatile char tx_buffer_front;
-static volatile char tx_buffer_back;
+volatile char tx_buffer[TX_BUFFER_SIZE];
+volatile char tx_buffer_front;
+volatile char tx_buffer_back;
 
 
 void spi_init(void){
@@ -25,13 +25,13 @@ void spi_init(void){
 	//Enable software reset
 	UCB1CTL1 |= UCSWRST;
 	
-	//sample on rising edge, MSB, 3 wire asynchronous SPI
-	UCB1CTL0 |=  UCMSB | UCMST |UCCKPH;
+	//sample on rising edge, MSB, 3 wire asynchronous SPI, master
+	UCB1CTL0 |=  UCMSB | UCMST | UCCKPL;
 	//CLK select
-	UCB1CTL1 |= UCSSEL_2;
+	UCB1CTL1 |= UCSSEL_3;
 	//bit prescale (TODO: look in to this)
-	UCB1BR0 = 0xff;
-	UCB1BR1 = 0;
+	UCB1BR0 = 0x04;
+	UCB1BR1 = 0x00;
 	
 	//diable software reset
 	UCB1CTL1 &= ~UCSWRST;
@@ -40,16 +40,18 @@ void spi_init(void){
 }
 
 void spi_on(void){
-	spi_init();
+	//spi_init();
 	spi_put(0x00);
-  	spi_put(0x00);
- 	__delay_cycles(US_DELAY*10);
+	spi_put(0x00);
+	delay_us(10);
+	//__delay_cycles(US_DELAY*10);
 }
 
 void spi_off(void){
-  	spi_put(0x00);
-  	spi_put(0x00);
-  	__delay_cycles(US_DELAY*10);
+	spi_put(0x00);
+	spi_put(0x00);
+	delay_us(10);
+	//__delay_cycles(US_DELAY*10);
 }
 
 void spi_put(char data){
@@ -59,25 +61,28 @@ void spi_put(char data){
 	while(tx_buffer_back == i);	//wait for buffer space
 	tx_buffer[i] = data;
 	tx_buffer_front = i;
+	
 	UCB1IE |= UCTXIE;	//enable spi tx
+	UCB1IFG |= 0x02;
 	//UCB1TXBUF = data;
 }
 
 void spi_put_wait(char c, int busy_pin){
 	spi_put(c);
 	//wait for COG ready
-	while(P6IN && busy_pin){}
+	while(P6IN & (1<<busy_pin));
+	
 }
 
 void spi_send(char cs_pin, const char *buffer, long length){
 	//CS low
 	P6OUT &= ~(1<<cs_pin);
-  
+	
 	//send all data
 	for(long i = 0; i < length; i++){
-	spi_put(*buffer++);
+		spi_put(*buffer++);
 	}
-  
+	
 	//CS high
 	P6OUT |= (1<<cs_pin);
 }
@@ -86,7 +91,7 @@ void spi_send(char cs_pin, const char *buffer, long length){
 
 #pragma vector=USCI_B1_VECTOR
 __interrupt void USCI_B1_ISR(void){
-	char i;
+	char j;
 	char temp;
 	switch(__even_in_range(UCB1IV,4)){
 		case 0:
@@ -97,10 +102,11 @@ __interrupt void USCI_B1_ISR(void){
 		temp = tx_buffer_back;
 		if(tx_buffer_front != temp){
 			//load buffer
-			i = tx_buffer_back + 1;
-			if(i >= TX_BUFFER_SIZE){i = 0;}
-			UCB1TXBUF = tx_buffer[i];
-			tx_buffer_back = i;
+			j = tx_buffer_back + 1;
+			if(j >= TX_BUFFER_SIZE){j = 0;}
+			while(UCB1STAT & UCBUSY);
+			UCB1TXBUF = tx_buffer[j];
+			tx_buffer_back = j;
 		}
 		else{
 			UCB1IE &= ~UCTXIE;	//disable spi tx
@@ -110,7 +116,7 @@ __interrupt void USCI_B1_ISR(void){
 		break;
 	}
 }
-			
-		
-			       	       
-			       
+
+
+
+

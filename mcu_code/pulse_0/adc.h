@@ -4,3 +4,8 @@
 */
 
 #include "msp430.h"
+
+#define NUM_OF_RESULTS	2	//CHECK: index in adc.h matches 
+
+void adc_init(void);
+int get_adc(void);

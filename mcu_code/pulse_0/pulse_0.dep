@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>4092238438</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\adc.c</file>
+      <file>$PROJ_DIR$\clock.h</file>
+      <file>$PROJ_DIR$\adc.h</file>
+      <file>$PROJ_DIR$\epd.c</file>
+      <file>$PROJ_DIR$\clock.c</file>
+      <file>$PROJ_DIR$\epd.h</file>
+      <file>$PROJ_DIR$\heart.c</file>
+      <file>$PROJ_DIR$\heart.h</file>
+      <file>$PROJ_DIR$\i2c.c</file>
+      <file>$PROJ_DIR$\pwm.c</file>
+      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
+      <file>$PROJ_DIR$\spi.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\adc.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\i2c.r43</file>
+      <file>$PROJ_DIR$\main.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\epd.r43</file>
+      <file>$PROJ_DIR$\Debug\Exe\pulse_0.d43</file>
+      <file>$PROJ_DIR$\pwm.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\usart.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\heart.r43</file>
+      <file>$PROJ_DIR$\usart.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\epd.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\heart.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\pulse_0.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\msp430f5528.h</file>
+      <file>$PROJ_DIR$\numbers.xbm</file>
+      <file>$PROJ_DIR$\spi.h</file>
+      <file>$PROJ_DIR$\usart.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\usart.r43</file>
+      <file>$TOOLKIT_DIR$\config\multiplier32_loc2.xcl</file>
+      <file>$PROJ_DIR$\Debug\Obj\pwm.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\i2c.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\pwm.pbi</file>
+      <file>$TOOLKIT_DIR$\config\lnk430F5528.xcl</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi.pbi</file>
+      <file>$PROJ_DIR$\i2c.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\clock.pbi</file>
+      <file>$PROJ_DIR$\Debug\Exe\pulse_0.ulp</file>
+      <file>$PROJ_DIR$\Debug\Obj\twi.r43</file>
+      <file>$TOOLKIT_DIR$\inc\in430.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\adc.r43</file>
+      <file>$PROJ_DIR$\twi.c</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430xsfn.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\twi.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\clock.r43</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ULP430</name>
+          <file> 39</file>
+        </tool>
+        <tool>
+          <name>XLINK</name>
+          <file> 16</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\adc.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 43</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 2</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 2</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\epd.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 15</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 21</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 5 27 17 1 26</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 5 27 17 1 26</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\clock.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 48</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 38</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 28 1 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 28 1 5</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\heart.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 19</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 22</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 7 2</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 7 2</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\i2c.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 13</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 33</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 37 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 37 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\pwm.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 31</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 34</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 17</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\spi.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 23</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 27 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 27 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 42</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 32</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 17 27 1 28 2 5 7</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 17 27 1 28 2 5 7</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\pulse_0.d43</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 35 30 43 48 15 19 13 42 31 23 29 46</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\usart.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 29</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 25 41 45 28</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 25 41 45 28</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\twi.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 40</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 47</file>
+        </tool>
+      </outputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

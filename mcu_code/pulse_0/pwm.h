@@ -1,6 +1,6 @@
 /* Author: Garrett Clay
-   Date: 3.1.2014
-   Brief: Allow for PWM communication from MSP to EPD.
+Date: 3.1.2014
+Brief: Allow for PWM communication from MSP to EPD.
 */
 
 #include "msp430.h"
@@ -11,5 +11,5 @@
 #define false 	0
 
 
-void timer_init(void);
+void pwm_init(void);
 void pwm_on(char state);
