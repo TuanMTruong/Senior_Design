@@ -3660,9 +3660,16 @@ www.irf.com&lt;p&gt;
 <part name="C31" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="12.5pF"/>
 <part name="C32" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="12.5pF"/>
 <part name="SUPPLY24" library="supply2" deviceset="GND" device=""/>
-<part name="U$4" library="TuansLib" deviceset="RA_TAC_BUTTON" device="&quot;EVQPUK&quot;"/>
-<part name="U$5" library="TuansLib" deviceset="RA_TAC_BUTTON" device="&quot;EVQPUK&quot;"/>
-<part name="U$6" library="TuansLib" deviceset="RA_TAC_BUTTON" device="&quot;EVQPUK&quot;"/>
+<part name="U$4" library="TuansLib" deviceset="RA_TAC_BUTTON" device="&quot;EVQPUK&quot;">
+<attribute name="PART#" value="EVQ-PUK02K"/>
+</part>
+<part name="U$5" library="TuansLib" deviceset="RA_TAC_BUTTON" device="&quot;EVQPUK&quot;">
+<attribute name="PART#" value="EVQ-PUK02K"/>
+</part>
+<part name="U$6" library="TuansLib" deviceset="RA_TAC_BUTTON" device="&quot;EVQPUK&quot;">
+<attribute name="PART#" value="EVQ-PUK02K"/>
+</part>
+<part name="SUPPLY26" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3832,9 +3839,16 @@ www.irf.com&lt;p&gt;
 <attribute name="VALUE" x="82.296" y="-14.097" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="SUPPLY24" gate="GND" x="66.04" y="-17.78"/>
-<instance part="U$4" gate="G$1" x="-30.48" y="-116.84"/>
-<instance part="U$5" gate="G$1" x="-30.48" y="-127"/>
-<instance part="U$6" gate="G$1" x="-30.48" y="-137.16"/>
+<instance part="U$4" gate="G$1" x="-30.48" y="-116.84">
+<attribute name="PART#" x="-30.48" y="-116.84" size="3.81" layer="96" display="off"/>
+</instance>
+<instance part="U$5" gate="G$1" x="-30.48" y="-127">
+<attribute name="PART#" x="-30.48" y="-127" size="3.81" layer="96" display="off"/>
+</instance>
+<instance part="U$6" gate="G$1" x="-30.48" y="-137.16">
+<attribute name="PART#" x="-30.48" y="-137.16" size="3.81" layer="96" display="off"/>
+</instance>
+<instance part="SUPPLY26" gate="GND" x="-391.16" y="-20.32"/>
 </instances>
 <busses>
 </busses>
@@ -4087,6 +4101,22 @@ www.irf.com&lt;p&gt;
 <wire x1="66.04" y1="-12.7" x2="68.58" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="-12.7" x2="66.04" y2="-15.24" width="0.1524" layer="91"/>
 <junction x="66.04" y="-12.7"/>
+</segment>
+<segment>
+<pinref part="U$9" gate="G$1" pin="SRN"/>
+<wire x1="-396.24" y1="-15.24" x2="-391.16" y2="-15.24" width="0.1524" layer="91"/>
+<pinref part="SUPPLY26" gate="GND" pin="GND"/>
+<wire x1="-391.16" y1="-15.24" x2="-391.16" y2="-17.78" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C23" gate="G$1" pin="2"/>
+<wire x1="-472.44" y1="-27.94" x2="-472.44" y2="-30.48" width="0.1524" layer="91"/>
+<wire x1="-472.44" y1="-30.48" x2="-462.28" y2="-30.48" width="0.1524" layer="91"/>
+<pinref part="SUPPLY22" gate="GND" pin="GND"/>
+<wire x1="-462.28" y1="-30.48" x2="-462.28" y2="-33.02" width="0.1524" layer="91"/>
+<pinref part="R18" gate="G$1" pin="2"/>
+<wire x1="-462.28" y1="-30.48" x2="-462.28" y2="-27.94" width="0.1524" layer="91"/>
+<junction x="-462.28" y="-30.48"/>
 </segment>
 </net>
 <net name="BATT_PWR" class="0">
@@ -5159,24 +5189,6 @@ www.irf.com&lt;p&gt;
 <pinref part="R13" gate="G$1" pin="2"/>
 <pinref part="Q4" gate="G$1" pin="D"/>
 <wire x1="167.64" y1="-91.44" x2="167.64" y2="-93.98" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="PM_SRN" class="0">
-<segment>
-<pinref part="C23" gate="G$1" pin="2"/>
-<wire x1="-472.44" y1="-27.94" x2="-472.44" y2="-30.48" width="0.1524" layer="91"/>
-<wire x1="-472.44" y1="-30.48" x2="-462.28" y2="-30.48" width="0.1524" layer="91"/>
-<pinref part="SUPPLY22" gate="GND" pin="GND"/>
-<wire x1="-462.28" y1="-30.48" x2="-462.28" y2="-33.02" width="0.1524" layer="91"/>
-<pinref part="R18" gate="G$1" pin="2"/>
-<wire x1="-462.28" y1="-30.48" x2="-462.28" y2="-27.94" width="0.1524" layer="91"/>
-<junction x="-462.28" y="-30.48"/>
-<label x="-474.98" y="-33.02" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U$9" gate="G$1" pin="SRN"/>
-<wire x1="-396.24" y1="-15.24" x2="-391.16" y2="-15.24" width="0.1524" layer="91"/>
-<label x="-391.16" y="-15.24" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PM_SRP" class="0">

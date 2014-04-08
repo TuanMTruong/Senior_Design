@@ -458,29 +458,6 @@
 <wire x1="1.905" y1="0.635" x2="1.905" y2="4.445" width="0.127" layer="21"/>
 <wire x1="1.905" y1="4.445" x2="0.635" y2="4.445" width="0.127" layer="21"/>
 </package>
-<package name="SWITCH_SLIDE">
-<pad name="2" x="0" y="0" drill="0.8" shape="square"/>
-<pad name="3" x="2" y="0" drill="0.8" shape="square"/>
-<pad name="1" x="-2" y="0" drill="0.8" shape="square"/>
-<pad name="P$4" x="4.85" y="0" drill="1.41" shape="square"/>
-<pad name="P$5" x="-4.85" y="0" drill="1.4" shape="square"/>
-<wire x1="-6.5" y1="2" x2="-6.5" y2="-2" width="0.127" layer="21"/>
-<wire x1="-6.5" y1="-2" x2="6.5" y2="-2" width="0.127" layer="21"/>
-<wire x1="6.5" y1="-2" x2="6.5" y2="2" width="0.127" layer="21"/>
-<wire x1="6.5" y1="2" x2="-6.5" y2="2" width="0.127" layer="21"/>
-</package>
-<package name="JS2202011AQN">
-<pad name="1" x="2.0066" y="0" drill="0.9144"/>
-<pad name="2" x="4.4958" y="0" drill="0.9144"/>
-<pad name="3" x="6.985" y="0" drill="0.9144"/>
-<pad name="6" x="6.985" y="3.302" drill="0.9144"/>
-<pad name="5" x="4.4958" y="3.302" drill="0.9144"/>
-<pad name="4" x="2.0066" y="3.302" drill="0.9144"/>
-<wire x1="0" y1="-0.508" x2="0" y2="3.81" width="0.127" layer="21"/>
-<wire x1="0" y1="3.81" x2="8.9916" y2="3.81" width="0.127" layer="21"/>
-<wire x1="8.9916" y1="3.81" x2="8.9916" y2="-0.508" width="0.127" layer="21"/>
-<wire x1="8.9916" y1="-0.508" x2="0" y2="-0.508" width="0.127" layer="21"/>
-</package>
 <package name="ECS-327-12.5-17X-C-TR">
 <wire x1="0" y1="0" x2="0" y2="3.8" width="0.127" layer="21"/>
 <wire x1="0" y1="3.8" x2="8" y2="3.8" width="0.127" layer="21"/>
@@ -787,23 +764,6 @@
 <circle x="3.81" y="2.54" radius="1.54501875" width="0.254" layer="94"/>
 <circle x="3.81" y="7.62" radius="1.54501875" width="0.254" layer="94"/>
 <circle x="3.81" y="12.7" radius="1.54501875" width="0.254" layer="94"/>
-</symbol>
-<symbol name="SWITCH">
-<wire x1="-5.08" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
-<pin name="@1" x="-2.54" y="-5.08" length="middle" rot="R90"/>
-<pin name="@2" x="0" y="-5.08" length="middle" rot="R90"/>
-<pin name="@3" x="2.54" y="-5.08" length="middle" rot="R90"/>
-<wire x1="-5.08" y1="0" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="5.08" x2="-2.54" y2="5.08" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="5.08" x2="0" y2="5.08" width="0.254" layer="94"/>
-<wire x1="0" y1="5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
-<wire x1="5.08" y1="5.08" x2="5.08" y2="0" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="5.08" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="7.62" x2="0" y2="7.62" width="0.254" layer="94"/>
-<wire x1="0" y1="7.62" x2="0" y2="5.08" width="0.254" layer="94"/>
-<wire x1="-1.27" y1="4.826" x2="-1.27" y2="2.794" width="0.254" layer="94"/>
-<wire x1="-1.27" y1="2.794" x2="0" y2="2.794" width="0.254" layer="94"/>
-<wire x1="-1.27" y1="2.794" x2="-2.54" y2="2.794" width="0.254" layer="94"/>
 </symbol>
 <symbol name="CRYSTAL">
 <pin name="P$1" x="-5.08" y="2.54" visible="pad" length="short"/>
@@ -1124,33 +1084,6 @@
 <connect gate="G$1" pin="P$1" pad="1"/>
 <connect gate="G$1" pin="P$2" pad="2"/>
 <connect gate="G$1" pin="P$3" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="SWITCH_SLIDE">
-<gates>
-<gate name="G$1" symbol="SWITCH" x="-2.54" y="-2.54"/>
-</gates>
-<devices>
-<device name="" package="SWITCH_SLIDE">
-<connects>
-<connect gate="G$1" pin="@1" pad="1"/>
-<connect gate="G$1" pin="@2" pad="2"/>
-<connect gate="G$1" pin="@3" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="MICRO_SWITCH" package="JS2202011AQN">
-<connects>
-<connect gate="G$1" pin="@1" pad="1 4"/>
-<connect gate="G$1" pin="@2" pad="2 5"/>
-<connect gate="G$1" pin="@3" pad="3 6"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -3651,9 +3584,6 @@ www.irf.com&lt;p&gt;
 <part name="U$12" library="TuansLib" deviceset="HEADER_3PIN_50MIL" device=""/>
 <part name="SUPPLY16" library="supply2" deviceset="GND" device=""/>
 <part name="Q6" library="SparkFun-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="2N7002PW"/>
-<part name="U$13" library="TuansLib" deviceset="SWITCH_SLIDE" device="MICRO_SWITCH">
-<attribute name="PART#" value="JS202011AQN"/>
-</part>
 <part name="X1" library="TuansLib" deviceset="CRYSTAL" device="&quot;32.768&quot;"/>
 <part name="C31" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="12.5pF"/>
 <part name="C32" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="12.5pF"/>
@@ -3821,9 +3751,6 @@ www.irf.com&lt;p&gt;
 <instance part="Q6" gate="G$1" x="-447.04" y="-154.94" smashed="yes" rot="MR0">
 <attribute name="NAME" x="-452.12" y="-152.4" size="1.778" layer="95" rot="MR0"/>
 <attribute name="VALUE" x="-403.86" y="-160.02" size="1.778" layer="96" rot="MR0"/>
-</instance>
-<instance part="U$13" gate="G$1" x="-256.54" y="-48.26">
-<attribute name="PART#" x="-256.54" y="-48.26" size="3.81" layer="96" display="off"/>
 </instance>
 <instance part="X1" gate="G$1" x="63.5" y="-7.62"/>
 <instance part="C31" gate="G$1" x="60.96" y="-12.7" smashed="yes" rot="R90">
@@ -4146,10 +4073,9 @@ www.irf.com&lt;p&gt;
 <junction x="-449.58" y="-2.54"/>
 </segment>
 <segment>
-<pinref part="U$13" gate="G$1" pin="@2"/>
-<wire x1="-256.54" y1="-53.34" x2="-256.54" y2="-55.88" width="0.1524" layer="91"/>
-<wire x1="-256.54" y1="-55.88" x2="-269.24" y2="-55.88" width="0.1524" layer="91"/>
-<label x="-284.48" y="-55.88" size="1.778" layer="95"/>
+<pinref part="R6" gate="G$1" pin="2"/>
+<wire x1="-241.3" y1="-20.32" x2="-241.3" y2="-35.56" width="0.1524" layer="91"/>
+<label x="-241.3" y="-38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -5220,15 +5146,6 @@ www.irf.com&lt;p&gt;
 <pinref part="Q6" gate="G$1" pin="G"/>
 <wire x1="-439.42" y1="-154.94" x2="-431.8" y2="-154.94" width="0.1524" layer="91"/>
 <label x="-431.8" y="-154.94" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$20" class="0">
-<segment>
-<pinref part="U$13" gate="G$1" pin="@3"/>
-<wire x1="-254" y1="-53.34" x2="-254" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="R6" gate="G$1" pin="2"/>
-<wire x1="-254" y1="-55.88" x2="-241.3" y2="-55.88" width="0.1524" layer="91"/>
-<wire x1="-241.3" y1="-55.88" x2="-241.3" y2="-20.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="XIN" class="0">
