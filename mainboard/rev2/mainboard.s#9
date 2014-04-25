@@ -177,21 +177,7 @@
 <smd name="47" x="9" y="7.75" dx="1.016" dy="0.3048" layer="1" rot="R180"/>
 <smd name="48" x="9" y="8.25" dx="1.016" dy="0.2286" layer="1" rot="R180"/>
 <circle x="-0.5" y="9.5" radius="0.5" width="0.5" layer="21"/>
-<polygon width="0.127" layer="1">
-<vertex x="1.5" y="6.5"/>
-<vertex x="1.5" y="1.5"/>
-<vertex x="7.5" y="1.5"/>
-<vertex x="7.5" y="7.5"/>
-<vertex x="2.5" y="7.5"/>
-</polygon>
-<polygon width="0.127" layer="29">
-<vertex x="1.5" y="6.5"/>
-<vertex x="1.5" y="1.5"/>
-<vertex x="7.5" y="1.5"/>
-<vertex x="7.5" y="7.5"/>
-<vertex x="2.5" y="7.5"/>
-</polygon>
-<rectangle x1="0.635" y1="0.635" x2="8.255" y2="8.255" layer="41"/>
+<rectangle x1="0.635" y1="0.635" x2="8.255" y2="8.255" layer="39"/>
 <polygon width="0.127" layer="31">
 <vertex x="1.5" y="6.5"/>
 <vertex x="1.5" y="1.5"/>
@@ -199,6 +185,7 @@
 <vertex x="7.5" y="7.5"/>
 <vertex x="2.5" y="7.5"/>
 </polygon>
+<smd name="P$1" x="4.445" y="4.445" dx="6.096" dy="6.096" layer="1"/>
 </package>
 <package name="RN-42">
 <wire x1="0" y1="0" x2="0" y2="25.8" width="0.127" layer="21"/>
@@ -801,7 +788,7 @@
 <connect gate="G$1" pin="AVSS2" pad="56"/>
 <connect gate="G$1" pin="DVCC1" pad="15"/>
 <connect gate="G$1" pin="DVCC2" pad="40"/>
-<connect gate="G$1" pin="DVSS1" pad="16"/>
+<connect gate="G$1" pin="DVSS1" pad="16 P$1"/>
 <connect gate="G$1" pin="DVSS2" pad="39"/>
 <connect gate="G$1" pin="P1.0/TA0CLK/ACLK" pad="18"/>
 <connect gate="G$1" pin="P1.1/TA0.0" pad="19"/>
@@ -934,7 +921,7 @@
 <connect gate="G$1" pin="STAT2" pad="8"/>
 <connect gate="G$1" pin="SW" pad="19"/>
 <connect gate="G$1" pin="USB" pad="6"/>
-<connect gate="G$1" pin="VSS@0" pad="3"/>
+<connect gate="G$1" pin="VSS@0" pad="3 P$21 P$22 P$23 P$24 P$25 P$26"/>
 <connect gate="G$1" pin="VSS@1" pad="9"/>
 <connect gate="G$1" pin="VSS@2" pad="18"/>
 </connects>
@@ -4951,12 +4938,7 @@ www.irf.com&lt;p&gt;
 <net name="SENSOR_DATA" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="P6.1/CB1/A1"/>
-<wire x1="40.64" y1="20.32" x2="45.72" y2="20.32" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="P6.0/CB0/A0"/>
-<wire x1="45.72" y1="20.32" x2="48.26" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="40.64" y1="22.86" x2="45.72" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="45.72" y1="22.86" x2="45.72" y2="20.32" width="0.1524" layer="91"/>
-<junction x="45.72" y="20.32"/>
+<wire x1="40.64" y1="20.32" x2="48.26" y2="20.32" width="0.1524" layer="91"/>
 <label x="48.26" y="20.32" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -5139,14 +5121,14 @@ www.irf.com&lt;p&gt;
 </net>
 <net name="SENSOR_EN" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="P1.2/TA0.1"/>
-<wire x1="-40.64" y1="15.24" x2="-48.26" y2="15.24" width="0.1524" layer="91"/>
-<label x="-66.04" y="15.24" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="Q6" gate="G$1" pin="G"/>
 <wire x1="-439.42" y1="-162.56" x2="-431.8" y2="-162.56" width="0.1524" layer="91"/>
 <label x="-431.8" y="-162.56" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="P6.0/CB0/A0"/>
+<wire x1="40.64" y1="22.86" x2="48.26" y2="22.86" width="0.1524" layer="91"/>
+<label x="48.26" y="22.86" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="XIN" class="0">

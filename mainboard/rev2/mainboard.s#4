@@ -185,7 +185,7 @@
 <vertex x="7.5" y="7.5"/>
 <vertex x="2.5" y="7.5"/>
 </polygon>
-<smd name="P$1" x="4.445" y="4.445" dx="6.096" dy="6.096" layer="1"/>
+<smd name="P$1" x="4.445" y="4.445" dx="6.604" dy="6.604" layer="1"/>
 </package>
 <package name="RN-42">
 <wire x1="0" y1="0" x2="0" y2="25.8" width="0.127" layer="21"/>
@@ -429,17 +429,17 @@
 <wire x1="2.9845" y1="-1.5875" x2="-2.9845" y2="-1.5875" width="0.127" layer="21"/>
 </package>
 <package name="HEADER_2PIN_50MIL">
-<pad name="1" x="1.27" y="1.27" drill="0.6858" diameter="1.016"/>
-<pad name="2" x="1.27" y="2.54" drill="0.6858" diameter="1.016"/>
+<pad name="1" x="1.27" y="1.27" drill="0.6858" diameter="0.889"/>
+<pad name="2" x="1.27" y="2.54" drill="0.6858" diameter="0.889"/>
 <wire x1="0.635" y1="3.175" x2="0.635" y2="0.635" width="0.127" layer="21"/>
 <wire x1="0.635" y1="0.635" x2="1.905" y2="0.635" width="0.127" layer="21"/>
 <wire x1="1.905" y1="0.635" x2="1.905" y2="3.175" width="0.127" layer="21"/>
 <wire x1="1.905" y1="3.175" x2="0.635" y2="3.175" width="0.127" layer="21"/>
 </package>
 <package name="HEADER_3PIN_50MIL">
-<pad name="1" x="1.27" y="1.27" drill="0.6604" diameter="1.016"/>
-<pad name="2" x="1.27" y="2.54" drill="0.6604" diameter="1.016"/>
-<pad name="3" x="1.27" y="3.81" drill="0.6604" diameter="1.016"/>
+<pad name="1" x="1.27" y="1.27" drill="0.6604" diameter="0.889"/>
+<pad name="2" x="1.27" y="2.54" drill="0.6604" diameter="0.889"/>
+<pad name="3" x="1.27" y="3.81" drill="0.6604" diameter="0.889"/>
 <wire x1="0.635" y1="4.445" x2="0.635" y2="0.635" width="0.127" layer="21"/>
 <wire x1="0.635" y1="0.635" x2="1.905" y2="0.635" width="0.127" layer="21"/>
 <wire x1="1.905" y1="0.635" x2="1.905" y2="4.445" width="0.127" layer="21"/>

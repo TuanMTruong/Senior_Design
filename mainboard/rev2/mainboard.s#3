@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="6.4">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -429,17 +429,17 @@
 <wire x1="2.9845" y1="-1.5875" x2="-2.9845" y2="-1.5875" width="0.127" layer="21"/>
 </package>
 <package name="HEADER_2PIN_50MIL">
-<pad name="1" x="1.27" y="1.27" drill="0.6858" diameter="1.016"/>
-<pad name="2" x="1.27" y="2.54" drill="0.6858" diameter="1.016"/>
+<pad name="1" x="1.27" y="1.27" drill="0.6858" diameter="0.889"/>
+<pad name="2" x="1.27" y="2.54" drill="0.6858" diameter="0.889"/>
 <wire x1="0.635" y1="3.175" x2="0.635" y2="0.635" width="0.127" layer="21"/>
 <wire x1="0.635" y1="0.635" x2="1.905" y2="0.635" width="0.127" layer="21"/>
 <wire x1="1.905" y1="0.635" x2="1.905" y2="3.175" width="0.127" layer="21"/>
 <wire x1="1.905" y1="3.175" x2="0.635" y2="3.175" width="0.127" layer="21"/>
 </package>
 <package name="HEADER_3PIN_50MIL">
-<pad name="1" x="1.27" y="1.27" drill="0.6604" diameter="1.016"/>
-<pad name="2" x="1.27" y="2.54" drill="0.6604" diameter="1.016"/>
-<pad name="3" x="1.27" y="3.81" drill="0.6604" diameter="1.016"/>
+<pad name="1" x="1.27" y="1.27" drill="0.6604" diameter="0.889"/>
+<pad name="2" x="1.27" y="2.54" drill="0.6604" diameter="0.889"/>
+<pad name="3" x="1.27" y="3.81" drill="0.6604" diameter="0.889"/>
 <wire x1="0.635" y1="4.445" x2="0.635" y2="0.635" width="0.127" layer="21"/>
 <wire x1="0.635" y1="0.635" x2="1.905" y2="0.635" width="0.127" layer="21"/>
 <wire x1="1.905" y1="0.635" x2="1.905" y2="4.445" width="0.127" layer="21"/>
@@ -3494,47 +3494,47 @@ www.irf.com&lt;p&gt;
 <part name="R8" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
 <part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
 <part name="U$8" library="TuansLib" deviceset="FH12-40S-0.5SH" device=""/>
-<part name="C3" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C4" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C5" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C6" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C7" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C8" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C9" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C10" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C11" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C12" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C13" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
+<part name="C3" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/10v/Y5V"/>
+<part name="C4" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
+<part name="C5" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
+<part name="C6" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/25v/Y5V"/>
+<part name="C7" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
+<part name="C8" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/25v/Y5V"/>
+<part name="C9" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/25v/Y5V"/>
+<part name="C10" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
+<part name="C11" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
+<part name="C12" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
+<part name="C13" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
 <part name="SUPPLY8" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY9" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY10" library="supply2" deviceset="GND" device=""/>
-<part name="C15" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C16" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C17" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C18" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
+<part name="C15" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/25v/Y5V"/>
+<part name="C16" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/25v/Y5V"/>
+<part name="C17" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
+<part name="C18" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/16v/Y5V"/>
 <part name="SUPPLY11" library="supply2" deviceset="GND" device=""/>
-<part name="R11" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R11" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="2k"/>
 <part name="Q1" library="SparkFun-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="2N7002PW"/>
 <part name="Q2" library="SparkFun-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="2N7002PW"/>
 <part name="Q3" library="SparkFun-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="2N7002PW"/>
 <part name="SUPPLY12" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY13" library="supply2" deviceset="GND" device=""/>
-<part name="R12" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="R13" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="R14" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
+<part name="R12" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="100k"/>
+<part name="R13" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="100k"/>
+<part name="R14" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="100k"/>
 <part name="D3" library="diode" deviceset="BAT54S" device=""/>
-<part name="C14" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
+<part name="C14" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="100n/16v/X7R"/>
 <part name="SUPPLY14" library="supply2" deviceset="GND" device=""/>
 <part name="Q5" library="transistor-small-signal" deviceset="BSS84" device=""/>
-<part name="R15" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="R17" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES"/>
-<part name="C19" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
-<part name="C20" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
+<part name="R15" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="0R"/>
+<part name="R17" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="33k"/>
+<part name="C19" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="2.2u/10v/Y"/>
+<part name="C20" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1u/16v/Y"/>
 <part name="Q7" library="SparkFun-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="2N7002PW"/>
 <part name="SUPPLY15" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY17" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY18" library="supply2" deviceset="GND" device=""/>
-<part name="C21" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
+<part name="C21" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="1u/10v/X7R"/>
 <part name="SUPPLY19" library="supply2" deviceset="GND" device=""/>
 <part name="Q4" library="transistor-small-signal" deviceset="BSS84" device=""/>
 <part name="U$9" library="TuansLib" deviceset="BQ27410" device=""/>
@@ -3550,7 +3550,7 @@ www.irf.com&lt;p&gt;
 <part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="10K"/>
 <part name="C24" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
 <part name="C25" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.47uF"/>
-<part name="U$10" library="TuansLib" deviceset="DMG2305UX" device=""/>
+<part name="AP2305" library="TuansLib" deviceset="DMG2305UX" device=""/>
 <part name="SUPPLY23" library="supply2" deviceset="GND" device=""/>
 <part name="C26" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP"/>
 <part name="C27" library="SparkFun-Capacitors" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
@@ -3627,7 +3627,7 @@ www.irf.com&lt;p&gt;
 <text x="-485.14" y="58.42" size="5.08" layer="97">PWR Monitoring</text>
 <text x="-170.18" y="33.02" size="1.778" layer="96">10uH</text>
 <text x="-170.18" y="25.4" size="1.778" layer="96">L1</text>
-<text x="167.64" y="-15.24" size="3.81" layer="97">*Garrett, fill out comp value</text>
+<text x="154.94" y="-17.78" size="3.81" layer="97">*Garrett, fill out comp value</text>
 <text x="-231.14" y="-55.88" size="3.81" layer="97">*micro pwr switch added</text>
 <text x="-434.34" y="-180.34" size="3.81" layer="97">*sensor pwr fet added</text>
 <text x="-434.34" y="-190.5" size="3.81" layer="97">*fet needs to be tested</text>
@@ -3660,19 +3660,52 @@ www.irf.com&lt;p&gt;
 <instance part="R8" gate="G$1" x="-50.8" y="-127"/>
 <instance part="R9" gate="G$1" x="-50.8" y="-137.16"/>
 <instance part="U$8" gate="G$1" x="287.02" y="-60.96"/>
-<instance part="C3" gate="G$1" x="274.32" y="20.32" rot="R90"/>
-<instance part="C4" gate="G$1" x="266.7" y="17.78" rot="R90"/>
-<instance part="C5" gate="G$1" x="261.62" y="12.7" rot="R90"/>
-<instance part="C6" gate="G$1" x="256.54" y="7.62" rot="R90"/>
-<instance part="C7" gate="G$1" x="251.46" y="2.54" rot="R90"/>
-<instance part="C8" gate="G$1" x="246.38" y="-2.54" rot="R90"/>
-<instance part="C9" gate="G$1" x="246.38" y="-10.16" rot="R90"/>
-<instance part="C10" gate="G$1" x="251.46" y="-15.24" rot="R90"/>
-<instance part="C11" gate="G$1" x="256.54" y="-20.32" rot="R90"/>
-<instance part="C12" gate="G$1" x="261.62" y="-25.4" rot="R90"/>
-<instance part="C13" gate="G$1" x="266.7" y="-30.48" rot="R90"/>
+<instance part="C3" gate="G$1" x="274.32" y="20.32" smashed="yes" rot="R90">
+<attribute name="NAME" x="279.019" y="21.844" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="271.399" y="21.844" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C4" gate="G$1" x="266.7" y="17.78" smashed="yes" rot="R90">
+<attribute name="NAME" x="271.399" y="19.304" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="263.779" y="19.304" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C5" gate="G$1" x="261.62" y="12.7" smashed="yes" rot="R90">
+<attribute name="NAME" x="266.319" y="14.224" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="258.699" y="14.224" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C6" gate="G$1" x="256.54" y="7.62" smashed="yes" rot="R90">
+<attribute name="NAME" x="261.239" y="9.144" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="253.619" y="9.144" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C7" gate="G$1" x="251.46" y="2.54" smashed="yes" rot="R90">
+<attribute name="NAME" x="256.159" y="4.064" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="248.539" y="4.064" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C8" gate="G$1" x="246.38" y="-2.54" smashed="yes" rot="R90">
+<attribute name="NAME" x="251.079" y="-1.016" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="243.459" y="-1.016" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C9" gate="G$1" x="246.38" y="-10.16" smashed="yes" rot="R90">
+<attribute name="NAME" x="251.079" y="-8.636" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="238.379" y="-8.636" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C10" gate="G$1" x="251.46" y="-15.24" smashed="yes" rot="R90">
+<attribute name="NAME" x="256.159" y="-13.716" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="243.459" y="-13.716" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C11" gate="G$1" x="256.54" y="-20.32" smashed="yes" rot="R90">
+<attribute name="NAME" x="261.239" y="-18.796" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="248.539" y="-18.796" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C12" gate="G$1" x="261.62" y="-25.4" smashed="yes" rot="R90">
+<attribute name="NAME" x="266.319" y="-23.876" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="253.619" y="-23.876" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C13" gate="G$1" x="266.7" y="-30.48" smashed="yes" rot="R90">
+<attribute name="NAME" x="271.399" y="-28.956" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="258.699" y="-28.956" size="1.778" layer="96" rot="R180"/>
+</instance>
 <instance part="SUPPLY8" gate="GND" x="248.92" y="30.48"/>
-<instance part="SUPPLY9" gate="GND" x="246.38" y="15.24"/>
+<instance part="SUPPLY9" gate="GND" x="238.76" y="15.24"/>
 <instance part="SUPPLY10" gate="GND" x="251.46" y="-45.72"/>
 <instance part="C15" gate="G$1" x="266.7" y="-111.76" rot="R90"/>
 <instance part="C16" gate="G$1" x="266.7" y="-119.38" rot="R90"/>
@@ -3693,9 +3726,15 @@ www.irf.com&lt;p&gt;
 <instance part="SUPPLY14" gate="GND" x="134.62" y="-182.88"/>
 <instance part="Q5" gate="G$1" x="147.32" y="25.4"/>
 <instance part="R15" gate="G$1" x="198.12" y="33.02"/>
-<instance part="R17" gate="G$1" x="139.7" y="17.78" rot="R180"/>
+<instance part="R17" gate="G$1" x="139.7" y="17.78" smashed="yes" rot="R180">
+<attribute name="NAME" x="143.51" y="16.2814" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="143.51" y="21.082" size="1.778" layer="96" rot="R180"/>
+</instance>
 <instance part="C19" gate="G$1" x="205.74" y="25.4" rot="R180"/>
-<instance part="C20" gate="G$1" x="147.32" y="12.7" rot="R180"/>
+<instance part="C20" gate="G$1" x="147.32" y="12.7" smashed="yes" rot="R180">
+<attribute name="NAME" x="145.796" y="9.779" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="145.796" y="14.859" size="1.778" layer="96" rot="R180"/>
+</instance>
 <instance part="Q7" gate="G$1" x="132.08" y="5.08"/>
 <instance part="SUPPLY15" gate="GND" x="205.74" y="12.7"/>
 <instance part="SUPPLY17" gate="GND" x="147.32" y="-2.54"/>
@@ -3716,7 +3755,7 @@ www.irf.com&lt;p&gt;
 <instance part="R22" gate="G$1" x="-386.08" y="20.32" rot="R270"/>
 <instance part="C24" gate="G$1" x="-449.58" y="-12.7"/>
 <instance part="C25" gate="G$1" x="-457.2" y="25.4"/>
-<instance part="U$10" gate="G$1" x="167.64" y="38.1" rot="MR90"/>
+<instance part="AP2305" gate="G$1" x="167.64" y="38.1" rot="MR90"/>
 <instance part="SUPPLY23" gate="GND" x="-457.2" y="17.78"/>
 <instance part="C26" gate="G$1" x="-381" y="-116.84"/>
 <instance part="C27" gate="G$1" x="-279.4" y="-109.22"/>
@@ -3863,8 +3902,8 @@ www.irf.com&lt;p&gt;
 </segment>
 <segment>
 <pinref part="C3" gate="G$1" pin="1"/>
-<wire x1="269.24" y1="20.32" x2="246.38" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="246.38" y1="20.32" x2="246.38" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="269.24" y1="20.32" x2="238.76" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="238.76" y1="20.32" x2="238.76" y2="17.78" width="0.1524" layer="91"/>
 <pinref part="SUPPLY9" gate="GND" pin="GND"/>
 </segment>
 <segment>
@@ -4113,7 +4152,7 @@ www.irf.com&lt;p&gt;
 <wire x1="147.32" y1="30.48" x2="147.32" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="33.02" x2="134.62" y2="33.02" width="0.1524" layer="91"/>
 <label x="124.46" y="33.02" size="1.778" layer="95"/>
-<pinref part="U$10" gate="G$1" pin="SOURCE"/>
+<pinref part="AP2305" gate="G$1" pin="SOURCE"/>
 <wire x1="147.32" y1="33.02" x2="160.02" y2="33.02" width="0.1524" layer="91"/>
 <junction x="147.32" y="33.02"/>
 </segment>
@@ -4597,7 +4636,7 @@ www.irf.com&lt;p&gt;
 <net name="VCOM_DRIVER" class="0">
 <segment>
 <pinref part="U$8" gate="G$1" pin="VCOM_DRIVER"/>
-<label x="236.22" y="-33.02" size="1.778" layer="95"/>
+<label x="238.76" y="-35.56" size="1.778" layer="95"/>
 <wire x1="281.94" y1="-33.02" x2="254" y2="-33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -4805,7 +4844,7 @@ www.irf.com&lt;p&gt;
 <net name="N$47" class="0">
 <segment>
 <pinref part="R15" gate="G$1" pin="1"/>
-<pinref part="U$10" gate="G$1" pin="DRAIN"/>
+<pinref part="AP2305" gate="G$1" pin="DRAIN"/>
 <wire x1="182.88" y1="33.02" x2="193.04" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -4818,7 +4857,7 @@ www.irf.com&lt;p&gt;
 <wire x1="147.32" y1="17.78" x2="147.32" y2="15.24" width="0.1524" layer="91"/>
 <wire x1="144.78" y1="17.78" x2="147.32" y2="17.78" width="0.1524" layer="91"/>
 <junction x="147.32" y="17.78"/>
-<pinref part="U$10" gate="G$1" pin="GATE"/>
+<pinref part="AP2305" gate="G$1" pin="GATE"/>
 <wire x1="147.32" y1="17.78" x2="167.64" y2="17.78" width="0.1524" layer="91"/>
 <wire x1="167.64" y1="17.78" x2="167.64" y2="22.86" width="0.1524" layer="91"/>
 </segment>
