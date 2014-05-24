@@ -1,0 +1,9 @@
+Hbeat
+
+
+We chose a project in wearables after identifying the tremendous opportunity for innovation, design and meaningful data collection. During our initial research, we found that there were two distinct categories in the watch-form-factor wearables market; health bands and smart watches. No designs included elements from both. Additionally, in the health band market, the majority extrapolated off of accelerometer data rather than collecting the users biometrics directly. Since we started our project, we have seen both Samsung and Garmin release designs with similar intent to ours. 
+
+Our wearable heart rate monitoring system balances smart watch capabilities with personalized health monitoring. From a smart watch perspective, the user can control the music on their android device with the touch of a button. With the biosensor, the user is able to accurately track their heart rate using the noninvasive, photo-sensor on the backside of the watch. The users heart rate is sensed and calculated locally, then transmitted wirelessly to a custom android application where it is logged. 
+
+Convenient features and personalized bio-monitoring are meaningless without a long battery life. We chose to maximize our battery life by using several low-power components including the MSP430 micro controller, electronic paper display and power monitoring system. 
+

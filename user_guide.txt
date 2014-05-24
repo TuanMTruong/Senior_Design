@@ -1,0 +1,14 @@
+Charging
+To charge the HBeat system, simply plug in a micro-usb cable into the port on the side of the watch. An orange light will illuminate indicating the watch is charging. When the system is fully charged, the orange light will turn off. 
+
+Pairing
+To pair the HBeat system with an Android phone, first download the custom application. Next open the application and click “connect.” (CHECK THIS - what does it actually say) A list of devices will appear. Click on “Firefly-??.” (CHECK THIS - what does it actually say) Once the watch and phone are paired, the Bluetooth symbol on the watch will disappear and will be replaced by the time and users heart rate. At this point, you can see the users heart rate in the Android application indicating that the two devices are paired. 
+
+Music Control
+To begin playing music from the watch, press the button on the top left once. This button is a play/pause. If the phone is playing, the button will pause the music. If the phone is paused or not playing music, the button will play music. 
+
+To go to the next song, press the button in the lower left. 
+
+Heart Rate
+The heart rate sensor collects data by being in contact with the users wrist. Simply put the watch on and it will automatically begin calculating the users heart rate. The watch updates the local display and transmits the users heart rate to the paired phone once every minute automatically. To manually update the screen and transmit the heart rate to a phone, press the button in the lower right. 
+
